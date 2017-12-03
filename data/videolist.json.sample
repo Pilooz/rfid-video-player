@@ -1,0 +1,35 @@
+{
+	"tags": [{
+		"tag": ["0110FB663BB7"],
+		"media": "videos/video1.mp4"
+	}, 
+{
+		"tag": ["0110FB661A96"],
+		"media": "videos/video2.mp4"
+	}, 
+	{
+		"tag": ["0110FB65F976"],
+		"media": "videos/video3.mp4"
+	}, 
+	{
+		"tag": ["0110FB5DEB5C"],
+		"media": "videos/video4.mp4"
+	}, 
+	{
+		"tag": ["0110FB5DF047"],
+		"media": "videos/video5.mp4"
+	}, 
+	{
+		"tag": ["0110FB6644C8"],
+		"media": "videos/video6.mp4"
+	},
+	{
+		"tag": ["0110FB6DF077", "0110FB71F269"],
+		"media": "videos/video7.mp4"
+	}, 
+	{
+		"tag": ["0110FB6D34B3", "0110FB6D52D5"],
+		"media": "videos/video8.mp4"
+	}
+]
+}
