@@ -1,19 +1,29 @@
 #!/usr/bin/python
 
-import serial, time
+import serial, time, json
 
+# Loading media database
+videoDB = json.load(open('data/videolist.json'))
 
-#initialization and open the port
-
-#possible timeout values:
-#    1. None: wait forever, block call
-#    2. 0: non-blocking mode, return immediately
-#    3. x, x is bigger than 0, float allowed, timeout block call
-
+# initialization and open the serial port
 ser = serial.Serial()
 ser.port = "/dev/ttyUSB0"
 ser.baudrate = 115200
 
+#-----------------------------------------------------------------------------
+# Extract_tag : Verifying tag format, and extracting value
+#               <TAG:xxxxxxxxxx>
+#-----------------------------------------------------------------------------
+def extract_tag(line):
+  patterns = ["<TAG:", ">"]
+  # See if enclosure is correct and return tag
+  if (line.find(patterns[0]) == 0 and line.find(patterns[1]) > -1):
+    return line.split(patterns[0], 1)[1].split(patterns[1])[0]
+  return "NONE"
+
+##############################################################################
+#   M A I N 
+##############################################################################
 try: 
   ser.open()
 except Exception, e:
@@ -31,11 +41,28 @@ if ser.isOpen():
       
       while True:
         try:
+          #
+          # Waiting for Serial inputs (some tags!)
+          #
           response = ser.readline()
-          print("read data: " + response)
-        
+          # Analysing message
+          tag = extract_tag(response)
+          print("Tag read : %s" % tag)
+
+          #
+          # Seeking in media database
+          #
+#          if (media.select()):
+#            media.play()
+#          else:
+            # no media associated, saying it should !
+
+          #
+          # 
+          #
         except KeyboardInterrupt:
           ser.close()
+          print "\nBye bye... Get in touch !"
           break
 
       ser.close()
