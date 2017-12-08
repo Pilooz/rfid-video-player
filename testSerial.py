@@ -7,7 +7,7 @@ videoDB = json.load(open('data/videolist.json'))
 
 # initialization and open the serial port
 ser = serial.Serial()
-ser.port = "/dev/ttyAMA0"
+ser.port = "/dev/ttyACM0"
 ser.baudrate = 115200
 
 #-----------------------------------------------------------------------------
@@ -15,10 +15,16 @@ ser.baudrate = 115200
 #               <TAG:xxxxxxxxxx>
 #-----------------------------------------------------------------------------
 def extract_tag(line):
-  print ("...have read : ->{}<-" .format(line))
   patterns = ["<TAG:", ">"]
   # See if enclosure is correct and return tag
   if (line.find(patterns[0]) == 0 and line.find(patterns[1]) > -1):
+    return line.split(patterns[0], 1)[1].split(patterns[1])[0]
+  return "NONE"
+
+def extract_reader(line):
+  patterns = ["<READER:", ">"]
+  # See if enclosure is correct and return tag
+  if (line.find(patterns[0]) > 0 and line.find(patterns[1]) > -1):
     return line.split(patterns[0], 1)[1].split(patterns[1])[0]
   return "NONE"
 
@@ -48,7 +54,8 @@ if ser.isOpen():
           response = ser.readline()
           # Analysing message
           tag = extract_tag(response)
-          print("Tag read : %s" % tag)
+          reader = extract_reader(response)
+          print("Tag {} on reader #{}" . format(tag, reader))
 
           #
           # Seeking in media database
