@@ -44,11 +44,13 @@ boolean currently_reading_2 = false;
    Setup function
  ***************************************************/
 void setup()
-{
+{ 
   rfid_reader_1.begin(RFID_SPEED);
   //rfid_reader_2.begin(RFID_SPEED);
   Serial.begin(SERIAL_SPEED);
+  delay(50);
   // Flushing all serials now
+  Serial.println("<MESSAGE:SETUP_OK>");
 }
 
 /***************************************************
