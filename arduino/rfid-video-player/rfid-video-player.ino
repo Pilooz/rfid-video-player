@@ -27,10 +27,14 @@
 #define RX2 4
 #define TX2 5
 
+#define RFID1 "1"
+#define RFID2 "2"
+
 SoftwareSerial rfid_reader_1(RX1, TX1);
 SoftwareSerial rfid_reader_2(RX2, TX2);
 
 String ReceivedCode = "";
+String readerName = "";
 
 // Assume nn concurrentialy reading. On after the other
 boolean currently_reading_1 = false;
@@ -42,7 +46,7 @@ boolean currently_reading_2 = false;
 void setup()
 {
   rfid_reader_1.begin(RFID_SPEED);
-  rfid_reader_2.begin(RFID_SPEED);
+  //rfid_reader_2.begin(RFID_SPEED);
   Serial.begin(SERIAL_SPEED);
   // Flushing all serials now
 }
@@ -68,6 +72,7 @@ void read_rfid1() {
   if (rfid_reader_1.available())
   {
     currently_reading_1 = true;
+    readerName = RFID1;
     c = rfid_reader_1.read();
     decode_tag(c);
   } else {
@@ -83,6 +88,7 @@ void read_rfid2() {
   if (rfid_reader_2.available())
   {
     currently_reading_2 = true;
+    readerName = RFID2;
     c = rfid_reader_2.read();
     decode_tag(c);
   } else {
@@ -111,6 +117,9 @@ void decode_tag(char c) {
 void sendSerial(String s) {
   Serial.print("<TAG:");
   Serial.print(s);
+  Serial.print(">");
+  Serial.print("<READER:");
+  Serial.print(readerName);
   Serial.println(">");
 }
 
