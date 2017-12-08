@@ -1,53 +1,53 @@
 /******************************************************************************************
-  Lecture de 2 modules RFID de facon non concurrentielle 
-  => auto exclusion à la lecture des tags
-  
-  Cablage du module RFID GROVE (SeedStudio) N°1
-  Rouge=>5V
-  Noir=>GND
-  Blanc=>3
-  Jaune=>2
+  Lecture de 2 modules RFID 125KHz sur 2 ports séries différents, et renvoie du tag lu sur
+  le port Serie USB.
 
-  Cablage du module RFID GROVE (SeedStudio) N°2
+  Le microcontrolleur qui fonctionne pour ce sketch est le TEENSY 3.2 qui possède jusqu'à 6 liaaisons
+  séries.
+
+  Cablage des lecteurs RFID :
+  ---------------------------
+  Cablage du module RFID GROVE (SeedStudio) N°1 sur Serial1
   Rouge=>5V
   Noir=>GND
-  Blanc=>5
-  Jaune=>4
+  Blanc=>1
+  Jaune=>0
+
+  Cablage du module RFID GROVE (SeedStudio) N°2 sur Serial2
+  Rouge=>5V
+  Noir=>GND
+  Blanc=>9
+  Jaune=>10
 ******************************************************************************************/
-
-#include <SoftwareSerial.h>
-// Strat and end of rfid tag
+// Start and end of rfid tag
 #define START 0x02
 #define END 0x03
 #define RFID_SPEED 9600 //transmission speed with rfid reader
 #define SERIAL_SPEED 115200 //transmission speed on Serial
-// TX & RX Pins
-#define RX1 2
-#define TX1 3
-#define RX2 4
-#define TX2 5
+
+#define VCC2 12
+#define BUILD_LED 11
 
 #define RFID1 "1"
 #define RFID2 "2"
 
-SoftwareSerial rfid_reader_1(RX1, TX1);
-SoftwareSerial rfid_reader_2(RX2, TX2);
-
-String ReceivedCode = "";
+String ReceivedCode1 = "";
+String ReceivedCode2 = "";
 String readerName = "";
-
-// Assume nn concurrentialy reading. On after the other
-boolean currently_reading_1 = false;
-boolean currently_reading_2 = false;
 
 /***************************************************
    Setup function
  ***************************************************/
 void setup()
-{ 
-  rfid_reader_1.begin(RFID_SPEED);
-  //rfid_reader_2.begin(RFID_SPEED);
+{
+  // USB Serial
   Serial.begin(SERIAL_SPEED);
+  delay(50);
+  // rfid_reader_1
+  Serial1.begin(RFID_SPEED);
+  delay(50);
+  //rfid_reader_2
+  Serial2.begin(RFID_SPEED);
   delay(50);
   // Flushing all serials now
   Serial.println("<MESSAGE:SETUP_OK>");
@@ -58,12 +58,8 @@ void setup()
  ***************************************************/
 void loop()
 {
-  if (!currently_reading_2) {
-    read_rfid1();
-  }
-  if (!currently_reading_1) {
-    read_rfid2();
-  }
+  read_rfid1();
+  read_rfid2();
 }
 
 /***************************************************
@@ -71,14 +67,11 @@ void loop()
  ***************************************************/
 void read_rfid1() {
   char c;
-  if (rfid_reader_1.available())
+  if (Serial1.available())
   {
-    currently_reading_1 = true;
     readerName = RFID1;
-    c = rfid_reader_1.read();
-    decode_tag(c);
-  } else {
-    currently_reading_1 = false;
+    c = Serial1.read();
+    decode_tag1(c);
   }
 }
 
@@ -87,29 +80,41 @@ void read_rfid1() {
  ***************************************************/
 void read_rfid2() {
   char c;
-  if (rfid_reader_2.available())
+  if (Serial2.available())
   {
-    currently_reading_2 = true;
     readerName = RFID2;
-    c = rfid_reader_2.read();
-    decode_tag(c);
-  } else {
-    currently_reading_2 = false;
+    c = Serial2.read();
+    decode_tag2(c);
   }
 }
 
 /***************************************************
-   decoding RFID tag
+   decoding RFID1 tag
  ***************************************************/
-void decode_tag(char c) {
+void decode_tag1(char c) {
   static int Counter = 0;
-  if (isprint(c)) ReceivedCode += c;
+  if (isprint(c)) ReceivedCode1 += c;
   if (c == START) Counter = 0;
   else Counter++;
   if (c == END)
   {
-    sendSerial(ReceivedCode);
-    ReceivedCode = "";
+    sendSerial(ReceivedCode1);
+    ReceivedCode1 = "";
+  }
+}
+
+/***************************************************
+   decoding RFID2 tag
+ ***************************************************/
+void decode_tag2(char c) {
+  static int Counter = 0;
+  if (isprint(c)) ReceivedCode2 += c;
+  if (c == START) Counter = 0;
+  else Counter++;
+  if (c == END)
+  {
+    sendSerial(ReceivedCode2);
+    ReceivedCode2 = "";
   }
 }
 
