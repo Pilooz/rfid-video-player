@@ -13,7 +13,7 @@
       - media (renseigne lorsque que le media associe a ete trouve.)
 
 """
-import cv
+import os
 
 class MediaAssoc:
 	""" Media class dealing with tags and associated medias """
@@ -22,15 +22,16 @@ class MediaAssoc:
   		self.db = db
   		self.wait = False 
   		self.lastTag = None
+  		self.playing = False 
 
-  	def tagExists(self, tag):
-  		""" returns a element of db if exists, otherwise None """
-  		for elt in self.db["tags"]:
-  			for t in elt["tag"]:
-  				if (t == tag):
-  					self.lastTag = tag
-  					return elt
-  		return None
+	def tagExists(self, tag):
+		""" returns a element of db if exists, otherwise None """
+		for elt in self.db["tags"]:
+			for t in elt["tag"]:
+				if (t == tag):
+					self.lastTag = tag
+					return elt
+		return None
 
 	def needWaiting(self, tag):
 		""" Returns True is we need to wait for a second RFID reading """
@@ -50,29 +51,38 @@ class MediaAssoc:
 			return self.file
 		return None
 
-	def play(self):
-		return True
+	def play(self, file):
+		self.playing = True
+		os.system("omxplayer -b './" + file + "'")
+
+	def stop(self):
+		self.playing = False
+		os.system("killall omxplayer")
+
+	def isPlaying(self):
+		return self.playing
+	
+	#def play(self, file):
+  #  return True
 
 
 """
-  import cv
+    vidFile = cv.CaptureFromFile( "/home/pi/projets/rfid-video-player/{}".format(file)
 
-vidFile = cv.CaptureFromFile( '/home/mhughes/sintel_trailer-480p.mp4' )
+    nFrames = int(  cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FRAME_COUNT ) )
+    fps = cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FPS )
+    waitPerFrameInMillisec = int( 1/fps * 1000/1 )
+    print 'Num. Frames = ', nFrames
+    print 'Frame Rate = ', fps, ' frames per sec'
 
-nFrames = int(  cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FRAME_COUNT ) )
-fps = cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FPS )
-waitPerFrameInMillisec = int( 1/fps * 1000/1 )
+    for f in xrange( nFrames ):
+      frameImg = cv.QueryFrame( vidFile )
+      cv.ShowImage( "My Video Window",  frameImg )
+      cv.WaitKey( waitPerFrameInMillisec  )
 
-print 'Num. Frames = ', nFrames
-print 'Frame Rate = ', fps, ' frames per sec'
+    # When playing is done, delete the window
+    #  NOTE: this step is not strictly necessary, 
+    #         when the script terminates it will close all windows it owns anyways
+    cv.DestroyWindow( "My Video Window" )
+"""
 
-for f in xrange( nFrames ):
-  frameImg = cv.QueryFrame( vidFile )
-  cv.ShowImage( "My Video Window",  frameImg )
-  cv.WaitKey( waitPerFrameInMillisec  )
-
-# When playing is done, delete the window
-#  NOTE: this step is not strictly necessary, 
-#         when the script terminates it will close all windows it owns anyways
-cv.DestroyWindow( "My Video Window" )
-"""		
