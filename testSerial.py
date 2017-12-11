@@ -75,6 +75,7 @@ if ser.isOpen():
               if ( media != None ):
                 # 1.1. Media Found
                 print(media)
+                db.play(media)
               else:
                 # 1.2. Media not found
                 print("No media associated ! ")
