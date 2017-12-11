@@ -31,7 +31,6 @@ def extract_reader(line):
   if (line.find(patterns[0]) > 0 and line.find(patterns[1]) > -1):
     return line.split(patterns[0], 1)[1].split(patterns[1])[0]
   return None
-  
 
 ##############################################################################
 #   M A I N 
@@ -67,14 +66,18 @@ if ser.isOpen():
 
           # 1. if tag is not NONE, seek media database to see if a meddia is associated
           if (tag != None):
+            # See if we have to stop precendent media.
+            if(db.isPlaying()):
+              db.stop()
+
             if (db.needWaiting(tag)):
               print("Waiting for another tag bites the dust...")
             else:
               media = db.getFile(tag)
-              print("------------> {}".format(media))
               if ( media != None ):
                 # 1.1. Media Found
-                print(media)
+                print("Playing '{}'...".format(media))
+                db.play(media)
               else:
                 # 1.2. Media not found
                 print("No media associated ! ")
@@ -82,7 +85,6 @@ if ser.isOpen():
                 # 2. See if we need to wait for another tag
                   # 2.1. No need to wait : print the TagId and say we have to add media
                   # 2.2. waiting for another tag, so say it with a little message
-
 
           else:
             # Tag has not been sent correctly... Don't care...
