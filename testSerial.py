@@ -31,7 +31,6 @@ def extract_reader(line):
   if (line.find(patterns[0]) > 0 and line.find(patterns[1]) > -1):
     return line.split(patterns[0], 1)[1].split(patterns[1])[0]
   return None
-  
 
 ##############################################################################
 #   M A I N 
@@ -83,7 +82,6 @@ if ser.isOpen():
                 # 2. See if we need to wait for another tag
                   # 2.1. No need to wait : print the TagId and say we have to add media
                   # 2.2. waiting for another tag, so say it with a little message
-
 
           else:
             # Tag has not been sent correctly... Don't care...
