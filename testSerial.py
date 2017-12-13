@@ -7,7 +7,7 @@ from MediaAssoc import MediaAssoc
 videoDB = json.load(open('data/videolist.json'))
 
 # Init of the mediaAssoc Class
-media = MediaAssoc(videoDB)
+media = MediaAssoc(videoDB, "./videos")
 
 # initialization and open the serial port
 ser = serial.Serial()
@@ -28,12 +28,34 @@ def extract_tag(line):
     return line.split(patterns[0], 1)[1].split(patterns[1])[0]
   return None
 
+#-----------------------------------------------------------------------------
+# extract_reader : Verifying reader format, and extracting value
+#               <READER:xx>
+#-----------------------------------------------------------------------------
 def extract_reader(line):
   patterns = ["<READER:", ">"]
   # See if enclosure is correct and return tag
   if (line.find(patterns[0]) > 0 and line.find(patterns[1]) > -1):
     return line.split(patterns[0], 1)[1].split(patterns[1])[0]
   return None
+
+#-----------------------------------------------------------------------------
+# Displaying some JSON string in console to help in configuring 
+# media <-> tag association
+#-----------------------------------------------------------------------------
+def displaysCoeInConsole(tag):
+  print ""
+  print "=========================================================="
+  print "This tag is not associated with a video..."
+  print "Please edit data/videolist.json and add an association : "
+  print ""
+  print "{"
+  print ("  \"tag\": [\"{}\"]".format(tag))
+  print "  \"media\": \"videos/myNewVideo.mp4\""
+  print "},"
+  print "=========================================================="
+  print ""    
+
 
 ##############################################################################
 #   M A I N 
@@ -100,17 +122,8 @@ if ser.isOpen():
               else:
                 # 1.2. Media not found
                 media.displayError("noTagAssociation")
-                print ""
-                print "=========================================================="
-                print "This tag is not associated with a video..."
-                print "Please edit data/videolist.json and add an association : "
-                print ""
-                print "{"
-                print ("  \"tag\": [\"{}\"]".format(tag))
-                print "  \"media\": \"videos/myNewVideo.mp4\""
-                print "},"
-                print "=========================================================="
-                print ""    
+                # Print error in console
+                displaysCoeInConsole(tag)
 
           else:
             # Tag has not been sent correctly... Don't care...
@@ -124,7 +137,7 @@ if ser.isOpen():
 
       ser.close()
   except Exception, e1:
-    print "error communicating...: " + str(e1)
+    print "Fatal error : " + str(e1)
 
 else:
   print "cannot open serial port "
