@@ -2,26 +2,16 @@
 # media : Seeking media database, and storing result in a structure
 #             Returns false if no media found
 #-----------------------------------------------------------------------------
-"""
-  Note : 
-  On a besoin d'une classe "mediaAssoc"
-   - qui comporte la BDD
-   - les methodes de recherche
-   - les attributs
-      - DB
-      - Wait  (True lorsque qu'on doit attendre une autre lecture avant de jouer un media)
-      - media (renseigne lorsque que le media associe a ete trouve.)
-
-"""
 import os
 import os.path
 from subprocess import Popen
 
 class MediaAssoc:
 	""" Media class dealing with tags and associated medias """
-	def __init__(self, db): # constructor
+	def __init__(self, db, mediaPath): # constructor
   		self.file = ""		
   		self.db = db
+  		self.mediaPath = mediaPath
   		self.wait = False 
   		self.lastTag = None
   		self.playing = False 
@@ -51,10 +41,11 @@ class MediaAssoc:
 		if (elt != None):
 			print ("Found video '{}'".format(elt["media"]))
 			self.file = elt["media"]
-			return self.file
+			return self.mediaPath + "/" + self.file
 		return None
 
 	def play(self, file):
+		"""  plays video """
 		self.wait = False 
 		self.playing = True
 		if os.path.isfile(file):
@@ -64,14 +55,18 @@ class MediaAssoc:
 			self.displayError("mediaNotFound")
 
 	def stop(self):
+		""" stops all omxplayer instances """
 		os.system("killall omxplayer.bin")
 		self.wait = False
 		self.playing = False
 
 	def isPlaying(self):
+		""" getter. Let us know if a video is playing now """
 		return self.playing
 
 	def displayError(self, name):
+		""" display an error in video mode ! """
 		omxc = Popen(['omxplayer', '-b', "./videos/" + name + ".mp4" ])
+		self.wait = False
 		self.playing = True
 
