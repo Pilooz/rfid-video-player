@@ -7,7 +7,7 @@ from MediaAssoc import MediaAssoc
 videoDB = json.load(open('data/videolist.json'))
 
 # Init of the mediaAssoc Class
-db = MediaAssoc(videoDB)
+media = MediaAssoc(videoDB)
 
 # initialization and open the serial port
 ser = serial.Serial()
@@ -48,7 +48,7 @@ if ser.isOpen():
       ser.flushOutput()#flush output buffer, aborting current output 
 
       print("Serial intialized : {}, at {} bds." .format(ser.port, ser.baudrate))
-      print("Waiting for tags...")
+      print "Waiting for tags..." 
       
       while True:
         try:
@@ -67,20 +67,21 @@ if ser.isOpen():
           # 1. if tag is not NONE, seek media database to see if a meddia is associated
           if (tag != None):
             # See if we have to stop precendent media.
-            if(db.isPlaying()):
-              db.stop()
+            if(media.isPlaying()):
+              print "A video is allready playing, cleaning up..." 
+              media.stop()
 
-            if (db.needWaiting(tag)):
-              print("Waiting for another tag bites the dust...")
+            if (media.needWaiting(tag)):
+              print "Waiting for another tag bites the dust..."
             else:
-              media = db.getFile(tag)
-              if ( media != None ):
+              mediaFile = media.getFile(tag)
+              if ( mediaFile != None ):
                 # 1.1. Media Found
-                print("Playing '{}'...".format(media))
-                db.play(media)
+                print("Playing '{}'...".format(mediaFile))
+                media.play(mediaFile)
               else:
                 # 1.2. Media not found
-                print("No media associated ! ")
+                print "No media associated ! "
 
                 # 2. See if we need to wait for another tag
                   # 2.1. No need to wait : print the TagId and say we have to add media
@@ -88,7 +89,7 @@ if ser.isOpen():
 
           else:
             # Tag has not been sent correctly... Don't care...
-            print("Tag has not been sent correctly... Don't care...")
+            print "Tag has not been sent correctly... Don't care..."
 
 
         except KeyboardInterrupt:
