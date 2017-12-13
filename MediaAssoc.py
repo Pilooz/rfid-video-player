@@ -66,7 +66,7 @@ class MediaAssoc:
 
 	def displayError(self, name):
 		""" display an error in video mode ! """
-		omxc = Popen(['omxplayer', '-b', "./videos/messages/" + name + ".mp4" ])
+		omxc = Popen(['omxplayer', '-b', self.mediaPath +"/messages/" + name + ".mp4" ])
 		self.wait = False
 		self.playing = True
 
