@@ -1,4 +1,3 @@
-- Gérer les scénarios à 2 tags)
 - Gérer le "video Not Found"
 - Faire un fond d'écran noir qui incite à badger
 - Gérer le tag non référencé (Afficher le tag et un message qui incite à mettre l'aasocier à une vidéo.)

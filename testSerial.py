@@ -14,6 +14,9 @@ ser = serial.Serial()
 ser.port =  "/dev/ttyACM0" # "/dev/ttyACM0" #"/dev/ttyAMA0" #"/dev/ttyS0"
 ser.baudrate = 115200
 
+# To know on which reader was read the last tag
+lastReader = ""
+
 #-----------------------------------------------------------------------------
 # Extract_tag : Verifying tag format, and extracting value
 #               <TAG:xxxxxxxxxx>
@@ -55,9 +58,11 @@ if ser.isOpen():
           response = ""
           tag = ""
           reader = ""
+          okForPlayingMedia = False 
 
           # Waiting for Serial inputs (some tags!)
           response = ser.readline()
+          print(response)
 
           # Analysing message
           tag = extract_tag(response)
@@ -71,9 +76,22 @@ if ser.isOpen():
               print "A video is allready playing, cleaning up..." 
               media.stop()
 
+            # Complex scenario that needs 2 tags
             if (media.needWaiting(tag)):
-              print "Waiting for another tag bites the dust..."
+              # Second Tag on second reader
+              if(lastReader != reader and lastReader != ""):
+                # Ok for this combination of two tags : play media
+                lastReader = ""
+                okForPlayingMedia = True
+              else:  
+                print "Tag combination ! Waiting for another tag..."
+                lastReader = reader
+
             else:
+              okForPlayingMedia = True
+
+            # Playing media now
+            if (okForPlayingMedia):
               mediaFile = media.getFile(tag)
               if ( mediaFile != None ):
                 # 1.1. Media Found
@@ -92,9 +110,6 @@ if ser.isOpen():
                 print "},"
                 print "=========================================================="
                 print ""    
-                # 2. See if we need to wait for another tag
-                  # 2.1. No need to wait : print the TagId and say we have to add media
-                  # 2.2. waiting for another tag, so say it with a little message
 
           else:
             # Tag has not been sent correctly... Don't care...
