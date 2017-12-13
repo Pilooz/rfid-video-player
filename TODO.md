@@ -1,5 +1,4 @@
-- Gérer les scénarios à 2 tags
-- Mettre omxplayer dans une thread pour pouvoir l'interrompre (Tant qu'il est en lecture, le Serial attend pour transmettre ses données et les accumule)
+- Gérer les scénarios à 2 tags)
 - Gérer le "video Not Found"
 - Faire un fond d'écran noir qui incite à badger
 - Gérer le tag non référencé (Afficher le tag et un message qui incite à mettre l'aasocier à une vidéo.)
