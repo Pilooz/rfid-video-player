@@ -99,6 +99,7 @@ if ser.isOpen():
                 media.play(mediaFile)
               else:
                 # 1.2. Media not found
+                media.displayError("noTagAssociation")
                 print ""
                 print "=========================================================="
                 print "This tag is not associated with a video..."

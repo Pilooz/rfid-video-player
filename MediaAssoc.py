@@ -14,6 +14,7 @@
 
 """
 import os
+import os.path
 from subprocess import Popen
 
 class MediaAssoc:
@@ -54,9 +55,13 @@ class MediaAssoc:
 		return None
 
 	def play(self, file):
-		omxc = Popen(['omxplayer', '-b', "./" + file ])
 		self.wait = False 
 		self.playing = True
+		if os.path.isfile(file):
+			# exists
+			omxc = Popen(['omxplayer', '-b', "./" + file ])
+		else:
+			self.displayError("mediaNotFound")
 
 	def stop(self):
 		os.system("killall omxplayer.bin")
@@ -65,4 +70,8 @@ class MediaAssoc:
 
 	def isPlaying(self):
 		return self.playing
-	
+
+	def displayError(self, name):
+		omxc = Popen(['omxplayer', '-b', "./videos/" + name + ".mp4" ])
+		self.playing = True
+
