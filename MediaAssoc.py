@@ -14,6 +14,7 @@
 
 """
 import os
+from subprocess import Popen
 
 class MediaAssoc:
 	""" Media class dealing with tags and associated medias """
@@ -52,37 +53,14 @@ class MediaAssoc:
 		return None
 
 	def play(self, file):
+		omxc = Popen(['omxplayer', '-b', "./" + file ])
+		#os.system("omxplayer -b './" + file + "'")
 		self.playing = True
-		os.system("omxplayer -b './" + file + "'")
 
 	def stop(self):
+		os.system("killall omxplayer.bin")
 		self.playing = False
-		os.system("killall omxplayer")
 
 	def isPlaying(self):
 		return self.playing
 	
-	#def play(self, file):
-  #  return True
-
-
-"""
-    vidFile = cv.CaptureFromFile( "/home/pi/projets/rfid-video-player/{}".format(file)
-
-    nFrames = int(  cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FRAME_COUNT ) )
-    fps = cv.GetCaptureProperty( vidFile, cv.CV_CAP_PROP_FPS )
-    waitPerFrameInMillisec = int( 1/fps * 1000/1 )
-    print 'Num. Frames = ', nFrames
-    print 'Frame Rate = ', fps, ' frames per sec'
-
-    for f in xrange( nFrames ):
-      frameImg = cv.QueryFrame( vidFile )
-      cv.ShowImage( "My Video Window",  frameImg )
-      cv.WaitKey( waitPerFrameInMillisec  )
-
-    # When playing is done, delete the window
-    #  NOTE: this step is not strictly necessary, 
-    #         when the script terminates it will close all windows it owns anyways
-    cv.DestroyWindow( "My Video Window" )
-"""
-
