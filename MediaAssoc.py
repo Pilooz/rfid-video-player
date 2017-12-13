@@ -39,6 +39,7 @@ class MediaAssoc:
 		elt = self.tagExists(tag)
 		if (elt != None):
 			if (len(elt["tag"]) > 1):
+				self.wait = True
 				return True
 			return False 
 		return False 	
@@ -54,11 +55,12 @@ class MediaAssoc:
 
 	def play(self, file):
 		omxc = Popen(['omxplayer', '-b', "./" + file ])
-		#os.system("omxplayer -b './" + file + "'")
+		self.wait = False 
 		self.playing = True
 
 	def stop(self):
 		os.system("killall omxplayer.bin")
+		self.wait = False
 		self.playing = False
 
 	def isPlaying(self):
