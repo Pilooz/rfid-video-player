@@ -11,7 +11,7 @@ media = MediaAssoc(videoDB)
 
 # initialization and open the serial port
 ser = serial.Serial()
-ser.port = "/dev/ttyACM0"
+ser.port =  "/dev/ttyACM0" # "/dev/ttyACM0" #"/dev/ttyAMA0" #"/dev/ttyS0"
 ser.baudrate = 115200
 
 #-----------------------------------------------------------------------------
@@ -81,8 +81,17 @@ if ser.isOpen():
                 media.play(mediaFile)
               else:
                 # 1.2. Media not found
-                print "No media associated ! "
-
+                print ""
+                print "=========================================================="
+                print "This tag is not associated with a video..."
+                print "Please edit data/videolist.json and add an association : "
+                print ""
+                print "{"
+                print ("  \"tag\": [\"{}\"]".format(tag))
+                print "  \"media\": \"videos/myNewVideo.mp4\""
+                print "},"
+                print "=========================================================="
+                print ""    
                 # 2. See if we need to wait for another tag
                   # 2.1. No need to wait : print the TagId and say we have to add media
                   # 2.2. waiting for another tag, so say it with a little message
