@@ -1,0 +1,12 @@
+- automatiser le démarrage au boot 
+	- ce thread semble intéressant : https://www.raspberrypi.org/forums/viewtopic.php?t=54517
+	- 
+- Refactoring des noms des fichiers, arborescence (rep tests pour les fichiers de test)
+- Ajout d'un bouton touch pour arrêter le raspberry pi (http://codelab.fr/6210)
+- Ajouter un fichier de conf YAML pour initialiser des variables comme 
+		- media_path
+		- button_pin pour GPIO
+		- port et vitesse Liasion serie
+		- ...
+- documentaion code 
+- documentation usage
