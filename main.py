@@ -5,6 +5,7 @@ from MediaAssoc import MediaAssoc
 import logging
 from logging.handlers import RotatingFileHandler
 
+# Logging in a file : ./log/rfid-video-player.log
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s')
@@ -18,10 +19,11 @@ stream_handler.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
 
 # Loading media database
-videoDB = json.load(open('data/videolist.json'))
+mediaList = json.load(open('data/media.json'))
+keywords = json.load(open('data/keywords.json'))
 
 # Init of the mediaAssoc Class
-media = MediaAssoc(videoDB, "./videos")
+media = MediaAssoc(mediaList, keywords, "./videos", logger)
 
 # initialization and open the serial port
 ser = serial.Serial()

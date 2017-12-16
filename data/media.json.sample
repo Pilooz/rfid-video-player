@@ -1,0 +1,20 @@
+{
+	"medialist" : [
+	{
+		"media" :  "man-of-constant-sorrow.mp4",
+ 		"keywords" : ["key1", "key2"]
+ 	},
+	{
+		"media" :  "video2.mp4",
+ 		"keywords" : ["key1", "key3"]
+ 	},
+	{
+		"media" :  "video3.mp4",
+ 		"keywords" : ["key2", "key3"]
+ 	},
+	{
+		"media" :  "video3.mp4",
+ 		"keywords" : ["key4"]
+ 	}
+ ]
+ }
