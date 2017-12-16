@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import serial, time, json
 from MediaAssoc import MediaAssoc
