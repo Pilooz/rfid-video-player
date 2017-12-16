@@ -2,6 +2,20 @@
 
 import serial, time, json
 from MediaAssoc import MediaAssoc
+import logging
+from logging.handlers import RotatingFileHandler
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] : %(message)s')
+file_handler = RotatingFileHandler('./log/rfid-video-player.log', 'a', 1000000, 1)
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+# second handler qui va rediriger chaque ecriture de log sur la console
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.DEBUG)
+logger.addHandler(stream_handler)
 
 # Loading media database
 videoDB = json.load(open('data/videolist.json'))
@@ -43,18 +57,18 @@ def extract_reader(line):
 # Displaying some JSON string in console to help in configuring 
 # media <-> tag association
 #-----------------------------------------------------------------------------
-def displaysCoeInConsole(tag):
-  print ""
-  print "=========================================================="
-  print "This tag is not associated with a video..."
-  print "Please edit data/videolist.json and add an association : "
-  print ""
-  print "{"
-  print ("  \"tag\": [\"{}\"]".format(tag))
-  print "  \"media\": \"videos/myNewVideo.mp4\""
-  print "},"
-  print "=========================================================="
-  print ""    
+def displaysCodeInConsole(tag):
+  logger.warn("")
+  logger.warn("==========================================================")
+  logger.warn("This tag is not associated with a video...")
+  logger.warn("Please edit data/videolist.json and add an association : ")
+  logger.warn("")
+  logger.warn("{")
+  logger.warn("  \"tag\": [\"{}\"]".format(tag))
+  logger.warn("  \"media\": \"videos/myNewVideo.mp4\"")
+  logger.warn("},")
+  logger.warn("==========================================================")
+  logger.warn("")
 
 
 ##############################################################################
@@ -63,7 +77,7 @@ def displaysCoeInConsole(tag):
 try: 
   ser.open()
 except Exception, e:
-  print "error open serial port: " + str(e)
+  logger.info("error open serial port: " + str(e))
   exit()
 
 if ser.isOpen():
@@ -72,8 +86,8 @@ if ser.isOpen():
       ser.flushInput() #flush input buffer, discarding all its contents
       ser.flushOutput()#flush output buffer, aborting current output 
 
-      print("Serial intialized : {}, at {} bds." .format(ser.port, ser.baudrate))
-      print "Waiting for tags..." 
+      logger.info("Serial intialized : {}, at {} bds." .format(ser.port, ser.baudrate))
+      logger.info("Waiting for tags..." )
       
       while True:
         try:
@@ -89,13 +103,13 @@ if ser.isOpen():
           # Analysing message
           tag = extract_tag(response)
           reader = extract_reader(response)
-          print("Tag {} on reader #{}" . format(tag, reader))
+          logger.info("Tag {} on reader #{}" . format(tag, reader))
 
           # 1. if tag is not NONE, seek media database to see if a meddia is associated
           if (tag != None):
             # See if we have to stop precendent media.
             if(media.isPlaying()):
-              print "A video is allready playing, cleaning up..." 
+              logger.info("A video is allready playing, cleaning up..." )
               media.stop()
 
             # Complex scenario that needs 2 tags
@@ -106,7 +120,7 @@ if ser.isOpen():
                 lastReader = ""
                 okForPlayingMedia = True
               else:  
-                print "Tag combination ! Waiting for another tag..."
+                logger.info("Tag combination ! Waiting for another tag...")
                 lastReader = reader
 
             else:
@@ -117,28 +131,28 @@ if ser.isOpen():
               mediaFile = media.getFile(tag)
               if ( mediaFile != None ):
                 # 1.1. Media Found
-                print("Playing '{}'...".format(mediaFile))
+                logger.info("Playing '{}'...".format(mediaFile))
                 media.play(mediaFile)
               else:
                 # 1.2. Media not found
                 media.displayError("noTagAssociation")
                 # Print error in console
-                displaysCoeInConsole(tag)
+                displaysCodeInConsole(tag)
 
           else:
             # Tag has not been sent correctly... Don't care...
-            print "Tag has not been sent correctly... Don't care..."
+            logger.info("Tag has not been sent correctly... Don't care...")
 
 
         except KeyboardInterrupt:
           ser.close()
-          print "\nBye bye... Get in touch !"
+          logger.info("\nBye bye... Get in touch !")
           break
 
       ser.close()
   except Exception, e1:
-    print "Fatal error : " + str(e1)
+    logger.error("Fatal error : " + str(e1))
 
 else:
-  print "cannot open serial port "
+  logger.critical("cannot open serial port ")
 
