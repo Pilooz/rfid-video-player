@@ -4,3 +4,4 @@
 # directories
 videos/*.*
 data/*.json
+log/*
