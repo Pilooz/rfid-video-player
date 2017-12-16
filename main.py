@@ -58,17 +58,16 @@ def extract_reader(line):
 # media <-> tag association
 #-----------------------------------------------------------------------------
 def displaysCodeInConsole(tag):
-  logger.warn("")
-  logger.warn("==========================================================")
-  logger.warn("This tag is not associated with a video...")
-  logger.warn("Please edit data/videolist.json and add an association : ")
-  logger.warn("")
-  logger.warn("{")
-  logger.warn("  \"tag\": [\"{}\"]".format(tag))
-  logger.warn("  \"media\": \"videos/myNewVideo.mp4\"")
-  logger.warn("},")
-  logger.warn("==========================================================")
-  logger.warn("")
+  logger.warn("\n \
+    \n========================================================== \
+    \nThis tag is not associated with a video... \
+    \nPlease edit data/videolist.json and add an association :  \
+    \n \
+    \n { \
+    \n   \"tag\": [\"" + tag + "\"] \
+    \n     \"media\": \"videos/myNewVideo.mp4\" \
+    \n }, \
+    \n ==========================================================\n")
 
 
 ##############################################################################
