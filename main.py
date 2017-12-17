@@ -3,6 +3,7 @@
 import serial, time, json
 from MediaAssoc import MediaAssoc
 import logging
+import pyautogui
 from logging.handlers import RotatingFileHandler
 
 # Logging in a file : ./log/rfid-video-player.log
@@ -32,6 +33,9 @@ ser.baudrate = 115200
 
 # To know on which reader was read the last tag
 lastReader = ""
+
+#moving mouse bottom right
+pyautogui.onScreen(1024, 720)
 
 #-----------------------------------------------------------------------------
 # Extract_tag : Verifying tag format, and extracting value
@@ -89,6 +93,8 @@ if ser.isOpen():
 
       logger.info("Serial intialized : {}, at {} bds." .format(ser.port, ser.baudrate))
       logger.info("Waiting for tags..." )
+      media.play("./videos/messages/noir.jpg")
+      media.displayMessage("waitingForTag", True)
       
       while True:
         try:
@@ -136,14 +142,13 @@ if ser.isOpen():
                 media.play(mediaFile)
               else:
                 # 1.2. Media not found
-                media.displayError("noTagAssociation")
+                media.displayMessage("noTagAssociation", False)
                 # Print error in console
                 displaysCodeInConsole(tag)
 
           else:
             # Tag has not been sent correctly... Don't care...
             logger.info("Tag has not been sent correctly... Don't care...")
-
 
         except KeyboardInterrupt:
           ser.close()
