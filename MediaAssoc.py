@@ -74,7 +74,7 @@ class MediaAssoc:
 			omxc = Popen(['omxplayer', '-b', "./" + file ])
 		else:
 			self.logger.warn("This media was not found !")
-			self.displayError("mediaNotFound")
+			self.displayMessage("mediaNotFound", False)
 
 	def stop(self):
 		""" stops all omxplayer instances """
@@ -87,9 +87,16 @@ class MediaAssoc:
 		""" getter. Let us know if a video is playing now """
 		return self.playing
 
-	def displayError(self, name):
+	def displayMessage(self, name, loop):
 		""" display an error in video mode ! """
-		omxc = Popen(['omxplayer', '-b', self.mediaPath +"/messages/" + name + ".mp4" ])
+		loopOpt = ""
+		if loop:
+			loopOpt = " --loop"
+			print "Looping video..."
+		omxc = Popen(['omxplayer', '-b' + loopOpt, self.mediaPath +"/messages/" + name + ".mp4" ])
 		self.wait = False
 		self.playing = True
+
+	#def displayWaitingState(self):
+	#	thread.start_new_thread(os.system("omxplayer -b -loop " + self.mediaPath +"/messages/waitingForTag.mp4"), ("") )
 
