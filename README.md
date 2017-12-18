@@ -18,3 +18,10 @@ Il est possible de les classer dans des sous-répertoires de ce dossier. Il faud
 L'application logue tout ce qu'il se passe au niveau des scénarios et des médias qui sont joués dans un fichier de log situé dan le répertoire `./log/rfid-video-player.log`.
 Notamment, pour les nouvelles étiquettes rfid non encore associées à des mots clé, on retrouve dans ce fichier 
 le code rfid nécessaire pour remplir la base de mots clé.
+
+#### BoM
+
+- Raspberry Pi 3
+- arduino teensy 
+- 125KHz Grove Rfid Reader x2 
+- écran TFT LCD Kuman 
