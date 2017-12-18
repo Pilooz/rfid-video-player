@@ -3,7 +3,6 @@
 import serial, time, json
 from MediaAssoc import MediaAssoc
 import logging
-import pyautogui
 from logging.handlers import RotatingFileHandler
 
 # Logging in a file : ./log/rfid-video-player.log
@@ -33,9 +32,6 @@ ser.baudrate = 115200
 
 # To know on which reader was read the last tag
 lastReader = ""
-
-#moving mouse bottom right
-pyautogui.onScreen(1024, 720)
 
 #-----------------------------------------------------------------------------
 # Extract_tag : Verifying tag format, and extracting value
