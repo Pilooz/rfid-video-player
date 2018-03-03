@@ -5,8 +5,8 @@
   Le microcontrolleur qui fonctionne pour ce sketch est le TEENSY 3.2 qui possède jusqu'à 6 liaaisons
   séries.
 
-  Cablage des lecteurs RFID :
-  ---------------------------
+  Cablage des lecteurs RFID pour le teensy 3.2 :
+  ----------------------------------------------
   Cablage du module RFID GROVE (SeedStudio) N°1 sur Serial1
   Rouge=>5V
   Noir=>GND
@@ -18,6 +18,21 @@
   Noir=>GND
   Blanc=>9
   Jaune=>10
+
+  Cablage des lecteurs RFID pour le Seeeduino 2560 ou Arduino Mega :
+  ------------------------------------------------------------------ 
+  Cablage du module RFID GROVE (SeedStudio) N°1 sur Serial1
+  Rouge=>5V
+  Noir=>GND
+  Blanc=>RX1
+  Jaune=>TX1
+
+  Cablage du module RFID GROVE (SeedStudio) N°2 sur Serial2
+  Rouge=>5V
+  Noir=>GND
+  Blanc=>RX2
+  Jaune=>TX2
+   
 ******************************************************************************************/
 // Start and end of rfid tag
 #define START 0x02
@@ -26,7 +41,8 @@
 #define SERIAL_SPEED 115200 //transmission speed on Serial
 
 #define VCC2 12
-#define BUILD_LED 11
+#define BUILD_LED 13
+#define BLINK_INTERVAL 1000
 
 #define RFID1 "1"
 #define RFID2 "2"
@@ -34,6 +50,9 @@
 String ReceivedCode1 = "";
 String ReceivedCode2 = "";
 String readerName = "";
+
+int ledState = LOW;     // ledState used to set the LED
+unsigned long previousMillis = 0;
 
 /***************************************************
    Setup function
@@ -51,6 +70,8 @@ void setup()
   delay(50);
   // Flushing all serials now
   Serial.println("<MESSAGE:SETUP_OK>");
+  // Switch on BUILD_LED
+  pinMode(BUILD_LED, OUTPUT);
 }
 
 /***************************************************
@@ -60,6 +81,20 @@ void loop()
 {
   read_rfid1();
   read_rfid2();
+  blink_led();
+}
+
+
+/***************************************************
+   Blinking led without blocking delay
+ ***************************************************/
+void blink_led() {
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= BLINK_INTERVAL) {
+    previousMillis = currentMillis;
+    ledState = !ledState;
+    digitalWrite(BUILD_LED, ledState);
+  }
 }
 
 /***************************************************
