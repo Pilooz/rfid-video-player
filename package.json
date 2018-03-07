@@ -1,0 +1,26 @@
+{
+  "name": "rfid-video-player",
+  "version": "1.0.0",
+  "description": "- Fichier keywords.json se trouvant dans le répertoire `data/` - Saisir un seul mot clé par champ \"keyword\", le champ \"codes\" peut contenir une liste de plusieurs codes issus des étiquettes RFID.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pilooz/rfid-video-player.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pilooz/rfid-video-player/issues"
+  },
+  "homepage": "https://github.com/Pilooz/rfid-video-player#readme",
+  "dependencies": {
+    "serialport": "^6.1.1"
+  }
+}
