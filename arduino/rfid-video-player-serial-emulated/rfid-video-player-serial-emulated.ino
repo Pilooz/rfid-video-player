@@ -15,6 +15,11 @@
   Noir=>GND
   Blanc=>5
   Jaune=>4
+
+  Ajout d'un lecteur RFID (Pour le Teensy 3.2 et le Seeeduino 2560). 
+  ------------------------------------------------------------------
+  Decommenter les lignes correspondantes à 3eme lecteur
+
 ******************************************************************************************/
 
 #include <SoftwareSerial.h>
@@ -28,15 +33,20 @@
 #define TX1 3
 #define RX2 4
 #define TX2 5
+// Selon les I/O disponibles
+// #define RX3 6
+// #define TX3 7
 
 SoftwareSerial rfid_reader_1(RX1, TX1);
 SoftwareSerial rfid_reader_2(RX2, TX2);
+// SoftwareSerial rfid_reader_3(RX3, TX3);
 
 String ReceivedCode = "";
 
 // Assume nn concurrentialy reading. On after the other
 boolean currently_reading_1 = false;
 boolean currently_reading_2 = false;
+// boolean currently_reading_3 = false;
 
 /***************************************************
    Setup function
@@ -45,21 +55,30 @@ void setup()
 {
   rfid_reader_1.begin(RFID_SPEED);
   rfid_reader_2.begin(RFID_SPEED);
+  // rfid_reader_3.begin(RFID_SPEED);
   Serial.begin(SERIAL_SPEED);
   // Flushing all serials now
 }
 
 /***************************************************
    Loop function
+   Lecture non concurrentielle des lecteurs jusqu'à 3
+   Pour plus delecteurs il faut revoir la logique
+     Il faut positionner un flag unique et global qui
+     empêche toute autre lecteur temps que 
+     la lecture précédente n'est pas finie
  ***************************************************/
 void loop()
 {
-  if (!currently_reading_2) {
+  if (!currently_reading_2 /* && !currently_reading_3 */) {
     read_rfid1();
   }
-  if (!currently_reading_1) {
+  if (!currently_reading_1 /* && !currently_reading_3 */) {
     read_rfid2();
   }
+  // if (!currently_reading_1 && !currently_reading_2 ) {
+  //   read_rfid3();
+  // }
 }
 
 /***************************************************

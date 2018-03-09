@@ -32,6 +32,14 @@
   Noir=>GND
   Blanc=>RX2
   Jaune=>TX2
+
+  Ajout d'un lecteur RFID (Pour le Teensy 3.2 et le Seeeduino 2560). 
+  ------------------------------------------------------------------
+  Decommenter les lignes correspondantes à RFID3/ReceivedCode3, dans le setup et la loop
+  ainsi que les fonctions read_rfid3 et decode_tag3.
+
+  Pour plus de lecteurs, il faudra passer sur du SoftwareSerial 
+  (Sketch rfid-video-palyer-serial-emulated.ino)
    
 ******************************************************************************************/
 // Start and end of rfid tag
@@ -46,9 +54,12 @@
 
 #define RFID1 "1"
 #define RFID2 "2"
+// #define RFID3 "3"
 
 String ReceivedCode1 = "";
 String ReceivedCode2 = "";
+// String ReceivedCode3 = "";
+
 String readerName = "";
 
 int ledState = LOW;     // ledState used to set the LED
@@ -68,6 +79,9 @@ void setup()
   //rfid_reader_2
   Serial2.begin(RFID_SPEED);
   delay(50);
+  // //rfid_reader_3
+  // Serial3.begin(RFID_SPEED);
+  // delay(50);
   // Flushing all serials now
   Serial.println("<MESSAGE:SETUP_OK>");
   // Switch on BUILD_LED
@@ -81,6 +95,7 @@ void loop()
 {
   read_rfid1();
   read_rfid2();
+  // read_rfid3();
   blink_led();
 }
 
@@ -123,6 +138,19 @@ void read_rfid2() {
   }
 }
 
+// /***************************************************
+//    reading Third RFID reader
+//  ***************************************************/
+// void read_rfid3() {
+//   char c;
+//   if (Serial3.available())
+//   {
+//     readerName = RFID3;
+//     c = Serial3.read();
+//     decode_tag3(c);
+//   }
+// }
+
 /***************************************************
    decoding RFID1 tag
  ***************************************************/
@@ -152,6 +180,21 @@ void decode_tag2(char c) {
     ReceivedCode2 = "";
   }
 }
+
+// /***************************************************
+//    decoding RFID3 tag
+//  ***************************************************/
+// void decode_tag3(char c) {
+//   static int Counter = 0;
+//   if (isprint(c)) ReceivedCode3 += c;
+//   if (c == START) Counter = 0;
+//   else Counter++;
+//   if (c == END)
+//   {
+//     sendSerial(ReceivedCode3);
+//     ReceivedCode3 = "";
+//   }
+// }
 
 /***************************************************
   sending decoded tag on serial
