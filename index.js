@@ -42,9 +42,6 @@ parser.on('data', function(msg){
 	}	
 });
 
-// function parseSerial(msg){
-// };
-
 port.open(function (err) {
   if (err) {
     return console.log('Error opening port: ', err.message);
@@ -61,7 +58,9 @@ io.on('connection', function(client){
   client.on('disconnect', function(){});
 });
 
-// Http server Listening
+//------------------------------------------------------------------------
+// HTTP Server configuration
+//------------------------------------------------------------------------
 server.listen( httpPort, function( ) {
   console.log( 'server Ip Address is %s', ip.address() );	 		
   console.log( 'it is listening at port %d', httpPort );
