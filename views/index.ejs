@@ -13,7 +13,7 @@
 
 	<script src="/js/jquery.min.js"></script>
  	<script src="/js/bootstrap.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
  
   </head>
 
@@ -42,8 +42,12 @@
 
 
 	<script type='text/javascript'>
-	$(document).ready(function(){
+  var socket = io.connect('http://localhost:3000');
 
+	$(document).ready(function(){
+    socket.on('rfidData', function(data) {
+      console.log(data);
+    });
 	});
 	</script>
   </body>
