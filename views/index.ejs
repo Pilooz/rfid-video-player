@@ -38,17 +38,35 @@
        <div class="container-fluid"> 
       </div>
 	</footer>
-	<div id="progress"></div>
+	<div id="progress">
+   <ul id="messages"></ul> 
+  </div>
 
 
-	<script type='text/javascript'>
-  var socket = io.connect('http://localhost:3000');
+	<script type='text/javascript'> 
+    var socket = io();
 
-	$(document).ready(function(){
     socket.on('rfidData', function(data) {
-      console.log(data);
+        addMessage("rfid #" + data.tag + " on reader #" + data.reader);
+        console.log(data);
+
+        // Respond with a message including this clients' id sent from the server
+        socket.emit('clientAcknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
     });
-	});
+    socket.on('time', function(data) {
+        addMessage(data.time);
+    });
+    socket.on('error', console.error.bind(console));
+    socket.on('message', console.log.bind(console));
+
+    function addMessage(message) {
+        var text = document.createTextNode(message),
+            el = document.createElement('li'),
+            messages = document.getElementById('messages');
+
+        el.appendChild(text);
+        messages.appendChild(el);
+    }
 	</script>
   </body>
 </html>

@@ -1,8 +1,8 @@
 var app 			= require('express')();
 var express			= require('express');
 var server 			= require('http').createServer(app);
-var io 				= require('socket.io')(server);
 const httpPort		= 3000;
+var io = require('socket.io').listen(server);
 var ip 				= require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
@@ -11,9 +11,29 @@ var path			= require('path');
 
 // RFID Data
 var serialData = {
-	tag: "",
-	reader: ""
+	tag: "1234567890",
+	reader: "1"
 };
+
+//------------------------------------------------------------------------
+// Init Socket to transmit Serial data to HTTP client
+//------------------------------------------------------------------------
+io.on('connection', function(socket) {
+    socket.emit('rfidData', serialData);
+    socket.on('clientAcknowledgment', console.log);
+});
+
+// just for POC
+// Send current time to all connected clients
+function sendEachTime() {
+    serialData.tag++;
+    io.emit('time', { time: new Date().toJSON() });
+    io.emit('rfidData', serialData);
+}
+
+// Send current time every 10 secs
+setInterval(sendEachTime, 5000);
+// End of POC.
 
 //------------------------------------------------------------------------
 // Reading Serial Port
@@ -39,6 +59,7 @@ parser.on('data', function(msg){
 	 	console.log("extracted rfid code : ", serialData.code);
 	 	serialData.reader = msg.split("<READER:")[1].split(">")[0]
 	 	console.log("extracted reader : ", serialData.reader);
+    io.emit('rfidData', serialData);
 	}	
 });
 
@@ -48,14 +69,6 @@ port.open(function (err) {
   } else {
   	console.log('Reading on ', portName);
   }
-});
-
-//------------------------------------------------------------------------
-// Init Socket to transmit Serial data to HTTP client
-//------------------------------------------------------------------------
-io.on('connection', function(client){
-  client.on('event', function(data){});
-  client.on('disconnect', function(){});
 });
 
 //------------------------------------------------------------------------
