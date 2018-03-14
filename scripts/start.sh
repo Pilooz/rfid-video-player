@@ -14,4 +14,4 @@ echo "                                                                     __/ |
 echo "                                                                    |___/           " >>$log
 
 cd /home/pi/projets/rfid-video-player
-sudo python main.py 1>>$log 2>>$log
+sudo python main.py 1>>$log 2>>$log 

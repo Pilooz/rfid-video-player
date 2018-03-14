@@ -27,7 +27,7 @@ media = MediaAssoc(mediaList, keywords, "./videos", logger)
 
 # initialization and open the serial port
 ser = serial.Serial()
-ser.port =  "/dev/ttyACM0" # "/dev/ttyACM0" #"/dev/ttyAMA0" #"/dev/ttyS0"
+ser.port =  "/dev/ttyUSB0"  #"/dev/ttyACM0" # "/dev/ttyACM0" #"/dev/ttyAMA0" #"/dev/ttyS0"
 ser.baudrate = 115200
 
 # To know on which reader was read the last tag
