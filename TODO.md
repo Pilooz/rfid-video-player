@@ -1,9 +1,4 @@
 - Ajout d'un bouton touch pour arrêter le raspberry pi (http://codelab.fr/6210)
-- Ajouter un fichier de conf YAML pour initialiser des variables comme 
-		- media_path
-		- button_pin pour GPIO
-		- port et vitesse Liasion serie
-		- ...
 - documentation usage
 
 ### Branche *NodeJS*
@@ -17,3 +12,9 @@
 		- une photo de l'objet taggué 
 		- une ressource sonore ou vidéo
 		- une liste de mots-clé provenant de la liste des mots-clé déjà présents dans la base.
+
+	- Ajouter un fichier de conf YAML pour initialiser des variables comme 
+		- media_path
+		- button_pin pour GPIO
+		- port et vitesse Liasion serie
+		- Type de sortie : Ecran ou Son, utile dans le cas où le dispositif ne sort que du son 
