@@ -9,8 +9,11 @@ var bodyParser		= require('body-parser');
 var index			= require('./routes/index');
 var path			= require('path');
 
+//var serialData = { tag: "", reader: "" };
+
 // RFID Data
-var serialData = {
+var lastRfidData = { tag: "", reader: "" };
+var rfidData = {
 	tag: "1234567890",
 	reader: "1"
 };
@@ -19,16 +22,16 @@ var serialData = {
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
-    socket.emit('rfidData', serialData);
-    socket.on('clientAcknowledgment', console.log);
+    socket.emit('server.rfidData', rfidData);
+    socket.on('client.acknowledgment', console.log);
 });
 
 // just for POC
 // Send current time to all connected clients
 function sendEachTime() {
-    serialData.tag++;
-    io.emit('time', { time: new Date().toJSON() });
-    io.emit('rfidData', serialData);
+    rfidData.tag++;
+    io.emit('server.time', { time: new Date().toJSON() });
+    io.emit('server.rfidData', rfidData);
 }
 
 // Send current time every 10 secs
@@ -55,11 +58,15 @@ parser.on('data', function(msg){
  	console.log('Received:', msg);
 	// If data is a tag
 	if(msg.indexOf("<TAG:") > -1) {
-	 	serialData.code = msg.split("<TAG:").join("").split(">")[0]
-	 	console.log("extracted rfid code : ", serialData.code);
-	 	serialData.reader = msg.split("<READER:")[1].split(">")[0]
-	 	console.log("extracted reader : ", serialData.reader);
-    io.emit('rfidData', serialData);
+	 	rfidData.code = msg.split("<TAG:").join("").split(">")[0]
+	 	console.log("extracted rfid code : ", rfidData.code);
+	 	rfidData.reader = msg.split("<READER:")[1].split(">")[0]
+	 	console.log("extracted reader : ", rfidData.reader);
+    // Emit Socket only if rfid is different of the last reading
+    if (lastRfidData.tag != rfidData.tag ) {  
+      io.emit('server.rfidData', rfidData);
+      lastRfidData = rfidData;
+    }
 	}	
 });
 

@@ -46,18 +46,18 @@
 	<script type='text/javascript'> 
     var socket = io();
 
-    socket.on('rfidData', function(data) {
+    socket.on('server.rfidData', function(data) {
         addMessage("rfid #" + data.tag + " on reader #" + data.reader);
         console.log(data);
 
         // Respond with a message including this clients' id sent from the server
-        socket.emit('clientAcknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
+        socket.emit('client.acknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
     });
-    socket.on('time', function(data) {
+    socket.on('server.time', function(data) {
         addMessage(data.time);
     });
-    socket.on('error', console.error.bind(console));
-    socket.on('message', console.log.bind(console));
+    socket.on('server.error', console.error.bind(console));
+    socket.on('server.message', console.log.bind(console));
 
     function addMessage(message) {
         var text = document.createTextNode(message),
