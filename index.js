@@ -1,15 +1,16 @@
 var app 			= require('express')();
 var express			= require('express');
+var router          = express.Router();
 var server 			= require('http').createServer(app);
 const httpPort		= 3000;
 var io = require('socket.io').listen(server);
 var ip 				= require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
-var index			= require('./routes/index');
 var path			= require('path');
 
-//var serialData = { tag: "", reader: "" };
+var httpRequests    = {};
+var dataForTemplate = {};
 
 // RFID Data
 var lastRfidData = { tag: "", reader: "" };
@@ -62,6 +63,7 @@ parser.on('data', function(msg){
 	 	console.log("extracted rfid code : ", rfidData.code);
 	 	rfidData.reader = msg.split("<READER:")[1].split(">")[0]
 	 	console.log("extracted reader : ", rfidData.reader);
+
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
@@ -103,7 +105,30 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
-app.use('/', index);
+//-----------------------------------------------------------------------------
+// Routing Middleware functions
+// application logic is here
+//-----------------------------------------------------------------------------
+router.all('/*', function (req, res, next) {
+  // mettre toutes les requests dans un seul objet.
+  httpRequests = req.body;
+  next(); // pass control to the next handler
+})
+
+/* POST home page. */
+.post('/', function(req, res, next) {
+  res.render('index', { data: dataForTemplate });
+})
+
+/* GET home page. */
+.get('/', function(req, res, next) {
+  res.render('index', { data: dataForTemplate });
+});
+
+//-----------------------------------------------------------------------------
+// Application express
+//-----------------------------------------------------------------------------
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -112,7 +137,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handler
+// all error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
