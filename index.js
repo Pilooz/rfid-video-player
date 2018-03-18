@@ -1,43 +1,43 @@
-var app 			= require('express')();
-var express			= require('express');
-var router          = express.Router();
-var server 			= require('http').createServer(app);
+var app 			    = require('express')();
+var express			  = require('express');
+var router        = express.Router();
+var server 			  = require('http').createServer(app);
 const httpPort		= 3000;
-var io = require('socket.io').listen(server);
-var ip 				= require('ip');
+var io            = require('socket.io').listen(server);
+var ip 				    = require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
-var path			= require('path');
+var path			    = require('path');
 
 var httpRequests    = {};
 var dataForTemplate = {};
 
-// RFID Data
+// RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
 var rfidData = {
 	tag: "1234567890",
 	reader: "1"
 };
 
-// Video data
-var videoFile = {
+// Video data sctructure
+var mediaFile = {
   uri: "",
   loop: "",
   autoplay: "",
   controls: ""
 }
 
-const waitingVideo = { uri: "/videos/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
-const mediaNotFoundVideo = { uri: "/videos/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
-const noTagAssocVideo = { uri: "/videos/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
-const searchingVideo = { uri: "/videos/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
+const waitingMedia = { uri: "/videos/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
+const mediaNotFoundMedia = { uri: "/videos/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
+const noTagAssocMedia = { uri: "/videos/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
+const searchingMedia = { uri: "/videos/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
     // Emit the service message to client
-    socket.emit('server.message', waitingVideo);
+    socket.emit('server.message', waitingMedia);
     //socket.emit('server.rfidData', rfidData);
     socket.on('client.acknowledgment', console.log);
 });
@@ -45,9 +45,13 @@ io.on('connection', function(socket) {
 // just for POC
 // Send current time to all connected clients
 function sendEachTime() {
-    rfidData.tag++;
     io.emit('server.time', { time: new Date().toJSON() });
-    io.emit('server.rfidData', rfidData);
+    // Emit Socket only if rfid is different of the last reading
+    if (lastRfidData.tag != rfidData.tag ) {  
+      io.emit('server.rfidData', rfidData);
+      lastRfidData.tag = rfidData.tag;    
+      rfidData.tag++;
+    }
 }
 
 // Send current time every 10 secs
@@ -70,6 +74,7 @@ const port = new SerialPort(portName, {
 // Parser definiton
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
+// Parsing RFID Tag
 parser.on('data', function(msg){
  	console.log('Received:', msg);
 	// If data is a tag
@@ -82,11 +87,12 @@ parser.on('data', function(msg){
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
-      lastRfidData = rfidData;
+      lastRfidData.tag = rfidData.tag;
     }
 	}	
 });
 
+// Opening serial port, checking for errors
 port.open(function (err) {
   if (err) {
     return console.log('Error opening port: ', err.message);
@@ -122,7 +128,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 //-----------------------------------------------------------------------------
 // Routing Middleware functions
-// application logic is here
+// application logic is here / GET and POST on Index
 //-----------------------------------------------------------------------------
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
