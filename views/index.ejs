@@ -30,7 +30,13 @@
     <!-- Begin page content -->
     <div class="container-fluid">
       <div class="page-header">
-      <br/>
+
+      <div class="row">
+        <div class="col-md-12">
+        <video src="" id="embeded-video" width="100%" height="100%"></video>
+        </div>
+      </div>
+
       </div>  
     </div>
 
@@ -38,12 +44,10 @@
        <div class="container-fluid"> 
       </div>
 	</footer>
-	<div id="progress">
-   <ul id="messages"></ul> 
-  </div>
-
 
 	<script type='text/javascript'> 
+$(document).ready(function(){
+    var vid = $('#embeded-video');
     var socket = io();
 
     socket.on('server.rfidData', function(data) {
@@ -57,16 +61,24 @@
         addMessage(data.time);
     });
     socket.on('server.error', console.error.bind(console));
-    socket.on('server.message', console.log.bind(console));
+    socket.on('server.message', setServiceMessage);
 
     function addMessage(message) {
-        var text = document.createTextNode(message),
-            el = document.createElement('li'),
-            messages = document.getElementById('messages');
-
-        el.appendChild(text);
-        messages.appendChild(el);
+        console.log(message);
     }
+
+    function setServiceMessage(message) {
+      console.log(message);
+      vid.attr("src", message.uri);
+      if (message.loop == "on") vid.attr("loop", message.loop);
+      if (message.autoplay == "on") vid.attr("autoplay", message.autoplay);
+      if (message.controls == "on") vid.attr("controls", message.controls);
+    }
+
+    // Video.
+    // Par défaut, la vidéo est celle qui incite à poser un tag.
+}); // $(document).ready()
+
 	</script>
   </body>
 </html>

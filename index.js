@@ -19,11 +19,26 @@ var rfidData = {
 	reader: "1"
 };
 
+// Video data
+var videoFile = {
+  uri: "",
+  loop: "",
+  autoplay: "",
+  controls: ""
+}
+
+const waitingVideo = { uri: "/videos/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
+const mediaNotFoundVideo = { uri: "/videos/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
+const noTagAssocVideo = { uri: "/videos/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
+const searchingVideo = { uri: "/videos/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
+
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
-    socket.emit('server.rfidData', rfidData);
+    // Emit the service message to client
+    socket.emit('server.message', waitingVideo);
+    //socket.emit('server.rfidData', rfidData);
     socket.on('client.acknowledgment', console.log);
 });
 
@@ -99,7 +114,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/videos', express.static(__dirname + '/media')); // redirect bootstrap JS
+app.use('/videos', express.static(__dirname + '/videos')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io
