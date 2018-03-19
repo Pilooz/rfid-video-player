@@ -1,3 +1,6 @@
+// TODO var CONFIG          = require('./config/config.js');
+var db_keywords   = require('./data/keywords.js');
+var db_media      = require('./data/media.js');
 var app 			    = require('express')();
 var express			  = require('express');
 var router        = express.Router();
@@ -31,6 +34,14 @@ const waitingMedia = { uri: "/videos/messages/waitingForTag.mp4", loop: "on", au
 const mediaNotFoundMedia = { uri: "/videos/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
 const noTagAssocMedia = { uri: "/videos/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
 const searchingMedia = { uri: "/videos/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
+
+console.log(db_keywords.keywordslist.length + " keywords in database.");
+console.log(db_media.medialist.length + " medias in database.");
+
+// db_keywords.keywordslist.forEach(function(k, index){
+//   console.log(k.keyword);
+//   console.log(k.codes);
+// });
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client

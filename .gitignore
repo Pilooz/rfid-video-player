@@ -3,5 +3,5 @@
 
 # directories
 videos/*.*
-data/*.json
+data/*.js
 log/*
