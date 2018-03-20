@@ -18,11 +18,11 @@ var dataForTemplate = {};
 // RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
 var rfidData = {
-	tag: "1234567890",
+	tag: "0110FB663BB7",
 	reader: "1"
 };
 
-// Video data sctructure
+// Video data sctructure for the choosen media
 var mediaFile = {
   uri: "",
   loop: "",
@@ -38,10 +38,33 @@ const searchingMedia = { uri: "/videos/messages/searching.mp4", loop: "off", aut
 console.log(db_keywords.keywordslist.length + " keywords in database.");
 console.log(db_media.medialist.length + " medias in database.");
 
-// db_keywords.keywordslist.forEach(function(k, index){
-//   console.log(k.keyword);
-//   console.log(k.codes);
-// });
+// Builded media list from keywordList
+var buildedMediaList = [];
+
+// Building a keyword list with rfid Tag
+function buildKeywordList(rfidTag){
+  // Builded keyword list from RFID tag
+  var buildedKeywordList = [];
+  var index = 0;
+  // Parcours tous les mots clés
+  db_keywords.keywordslist.forEach(function(k){
+    // Pour chaque mot clé, parcours tous les codes associés
+    k.codes.forEach(function(c){
+      if (c == rfidTag) {
+        // Ajout du mot clé à la liste
+        buildedKeywordList[index] = k.keyword;
+        index++;
+        return false; // Easy way to break loop !
+      }
+    });
+  });
+  console.log(buildedKeywordList);  
+}
+
+// Building media list
+function buildMediaList(ListTag){
+  
+}
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
@@ -53,21 +76,27 @@ io.on('connection', function(socket) {
     socket.on('client.acknowledgment', console.log);
 });
 
-// just for POC
+// just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
+
+var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
+var i = 0;
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
+      buildKeywordList(rfidData.tag);
       lastRfidData.tag = rfidData.tag;    
-      rfidData.tag++;
+      rfidData.tag = testList[i];
+      i++;
+      if (i == testList.length ) i=0;
     }
 }
 
 // Send current time every 10 secs
 setInterval(sendEachTime, 5000);
-// End of POC.
+// End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
 //------------------------------------------------------------------------
 // Reading Serial Port
