@@ -1,4 +1,5 @@
 // TODO var CONFIG          = require('./config/config.js');
+var in_array      = require('in_array');
 var db_keywords   = require('./data/keywords.js');
 var db_media      = require('./data/media.js');
 var app 			    = require('express')();
@@ -38,13 +39,25 @@ const searchingMedia = { uri: "/videos/messages/searching.mp4", loop: "off", aut
 console.log(db_keywords.keywordslist.length + " keywords in database.");
 console.log(db_media.medialist.length + " medias in database.");
 
-// Builded media list from keywordList
-var buildedMediaList = [];
+//
+// Sorting unique in an array
+//
+function sort_unique(arr) {
+  if (arr.length === 0) return arr;
+  arr = arr.sort(function (a, b) { return a*1 - b*1; });
+  var ret = [arr[0]];
+  for (var i = 1; i < arr.length; i++) { //Start loop at 1: arr[0] can never be a duplicate
+    if (arr[i-1] !== arr[i]) {
+      ret.push(arr[i]);
+    }
+  }
+  return ret;
+}
 
 // Building a keyword list with rfid Tag
 function buildKeywordList(rfidTag){
   // Builded keyword list from RFID tag
-  var buildedKeywordList = [];
+  var keyList = [];
   var index = 0;
   // Parcours tous les mots clés
   db_keywords.keywordslist.forEach(function(k){
@@ -52,18 +65,39 @@ function buildKeywordList(rfidTag){
     k.codes.forEach(function(c){
       if (c == rfidTag) {
         // Ajout du mot clé à la liste
-        buildedKeywordList[index] = k.keyword;
+        keyList[index] = k.keyword;
         index++;
         return false; // Easy way to break loop !
       }
     });
   });
-  console.log(buildedKeywordList);  
+  return sort_unique(keyList);
 }
 
 // Building media list
-function buildMediaList(ListTag){
-  
+function buildMediaList(rfidTag){
+  // Builded media list from keywordList
+  var mediaCollection = [];
+  var index = 0;
+  // First Building keyword List 
+  var keys = buildKeywordList(rfidTag);
+  console.log(keys);  
+
+  // Parcours des medias
+  //key.forEach(function(k){
+  db_media.medialist.forEach(function(m){
+    // Pour chaque mots-clé
+    m.keywords.forEach(function(k){
+      // Si les mots clé associés au media sont dans la listes de mots clé générée
+      // On ajoute le média
+      if ( in_array(k, keys) ) {
+        mediaCollection[index] = m.media;
+        index++;
+        return false;
+      }
+    });
+  });
+  console.log(sort_unique(mediaCollection)); 
 }
 
 //------------------------------------------------------------------------
@@ -86,7 +120,7 @@ function sendEachTime() {
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
-      buildKeywordList(rfidData.tag);
+      buildMediaList(rfidData.tag);
       lastRfidData.tag = rfidData.tag;    
       rfidData.tag = testList[i];
       i++;
