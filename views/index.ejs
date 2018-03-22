@@ -61,18 +61,20 @@ $(document).ready(function(){
         addMessage(data.time);
     });
     socket.on('server.error', console.error.bind(console));
-    socket.on('server.message', setServiceMessage);
+    socket.on('server.message', playMedia);
+    socket.on('server.play-media', playMedia);
 
     function addMessage(message) {
         console.log(message);
     }
 
-    function setServiceMessage(message) {
-      console.log(message);
-      vid.attr("src", message.uri);
-      if (message.loop == "on") vid.attr("loop", message.loop);
-      if (message.autoplay == "on") vid.attr("autoplay", message.autoplay);
-      if (message.controls == "on") vid.attr("controls", message.controls);
+    function playMedia(v) {
+      console.log(v);
+      vid.stop();
+      vid.attr("src", v.uri);
+      if (v.loop == "on") vid.attr("loop", v.loop);
+      if (v.autoplay == "on") vid.attr("autoplay", v.autoplay);
+      if (v.controls == "on") vid.attr("controls", v.controls);
     }
 
     // Video.

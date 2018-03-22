@@ -84,29 +84,38 @@ function buildMediaList(rfidTag){
   console.log(keys);  
 
   // Parcours des medias
-  //key.forEach(function(k){
   db_media.medialist.forEach(function(m){
     // Pour chaque mots-clé
     m.keywords.forEach(function(k){
       // Si les mots clé associés au media sont dans la listes de mots clé générée
       // On ajoute le média
       if ( in_array(k, keys) ) {
-        mediaCollection[index] = m.media;
+        mediaCollection[index] = "/videos/" + m.media;
         index++;
         return false;
       }
     });
   });
-  console.log(sort_unique(mediaCollection)); 
+  var sort_unique(mediaCollection);
+  console.log(col); 
+  return col;
+  // return sort_unique(mediaCollection);
 }
 
+// Choosing a media randomly in the list
+function chooseMedia(arr) {
+  var i = Math.floor(Math.random()*arr.length);
+  var m = arr[i];
+  console.log(i, m);
+  return m;
+  // return arr[Math.floor(Math.random()*arr.length)];
+}
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
     // Emit the service message to client
     socket.emit('server.message', waitingMedia);
-    //socket.emit('server.rfidData', rfidData);
     socket.on('client.acknowledgment', console.log);
 });
 
@@ -115,12 +124,16 @@ io.on('connection', function(socket) {
 
 var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
 var i = 0;
+var medias = [];
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
-      buildMediaList(rfidData.tag);
+      medias = buildMediaList(rfidData.tag);
+      mediaFile = { url: chooseMedia(medias), loop: "off", autoplay: "off", controls: "on"};
+      io.emit('server.play-media', mediaFile);
+      // Storing that this tag was the last one read on port.
       lastRfidData.tag = rfidData.tag;    
       rfidData.tag = testList[i];
       i++;
@@ -129,7 +142,7 @@ function sendEachTime() {
 }
 
 // Send current time every 10 secs
-setInterval(sendEachTime, 5000);
+setInterval(sendEachTime, 10000);
 // End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
 //------------------------------------------------------------------------

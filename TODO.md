@@ -2,8 +2,6 @@
 - documentation usage
 
 ### Branche *NodeJS*
-- Rendu écran : 
-	Faire une page web noire qui affiche les vidéos et les messages de services dans un player encapsulé
 
 - Interface de contribution des sons ou vidéos
 	- Contribution sur une URL particulière comme localhost:3000/contrib/

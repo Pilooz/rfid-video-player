@@ -29,6 +29,7 @@
     "in_array": "^1.1.0",
     "ip": "^1.1.5",
     "jquery": "^3.3.1",
+    "node-math": "0.0.3",
     "pipe": "^1.1.0",
     "serialport": "^6.1.1",
     "socket.io": "^2.0.4"
