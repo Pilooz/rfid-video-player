@@ -31,10 +31,22 @@ var mediaFile = {
   controls: ""
 }
 
-const waitingMedia = { uri: "/videos/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
-const mediaNotFoundMedia = { uri: "/videos/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
-const noTagAssocMedia = { uri: "/videos/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
-const searchingMedia = { uri: "/videos/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
+// TODO put these in a config file ----
+
+// Path to the medias
+const mediaPath = "/videos";
+const messagesPath = mediaPath + "/messages";
+
+// Serial Port configuration
+const portName = '/dev/cu.usbserial-A603XVZO';
+const baudRate = 115200;
+
+// /TODO ------------------------------
+
+const waitingMedia = { uri: mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
+const mediaNotFoundMedia = { uri: mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
+const noTagAssocMedia = { uri: mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
+const searchingMedia = { uri: mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
 
 console.log(db_keywords.keywordslist.length + " keywords in database.");
 console.log(db_media.medialist.length + " medias in database.");
@@ -90,13 +102,13 @@ function buildMediaList(rfidTag){
       // Si les mots clé associés au media sont dans la listes de mots clé générée
       // On ajoute le média
       if ( in_array(k, keys) ) {
-        mediaCollection[index] = "/videos/" + m.media;
+        mediaCollection[index] = mediaPath + "/" + m.media;
         index++;
         return false;
       }
     });
   });
-  var sort_unique(mediaCollection);
+  var col = sort_unique(mediaCollection);
   console.log(col); 
   return col;
   // return sort_unique(mediaCollection);
@@ -106,7 +118,7 @@ function buildMediaList(rfidTag){
 function chooseMedia(arr) {
   var i = Math.floor(Math.random()*arr.length);
   var m = arr[i];
-  console.log(i, m);
+  console.log("Choosen #" + i + " : " + m);
   return m;
   // return arr[Math.floor(Math.random()*arr.length)];
 }
@@ -150,10 +162,6 @@ setInterval(sendEachTime, 10000);
 //------------------------------------------------------------------------
 const SerialPort = require('serialport');
 const Readline = SerialPort.parsers.Readline;
-// TODO : Put it in a config file
-const portName = '/dev/cu.usbserial-A603XVZO';
-const baudRate = 115200;
-//
 const port = new SerialPort(portName, { 
 		autoOpen: true,
 		baudRate: baudRate
