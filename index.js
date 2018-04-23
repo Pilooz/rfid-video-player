@@ -143,22 +143,29 @@ io.on('connection', function(socket) {
 
 });
 
-
+function sendingMedia(tag) {
+  var medias = [];
+}
 
 // just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
+var sleep = require('sleep');
 
 var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
 var i = 0;
-var medias = [];
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
+      // Simulating a search time in the extra super big media database !
+      io.emit('server.play-media', searchingMedia);
+      sleep.sleep(5);
+
       medias = buildMediaList(rfidData.tag);
       mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on"};
       io.emit('server.play-media', mediaFile);
+
       // Storing that this tag was the last one read on port.
       lastRfidData.tag = rfidData.tag;    
       rfidData.tag = testList[i];
