@@ -93,7 +93,7 @@ $(document).ready(function(){
 
     // Adding a listener on video ending
     media.on('ended',function(){
-      var msg = media.attr("src") + " has ended !";
+      var msg = media.attr("src") + " has ended ! ";
       console.log(msg + "let the server know this...");
       socket.emit('client.endMedia', { message: msg });
     });

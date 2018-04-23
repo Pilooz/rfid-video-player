@@ -16,3 +16,5 @@
 		- button_pin pour GPIO
 		- port et vitesse Liasion serie
 		- Type de sortie : Ecran ou Son, utile dans le cas où le dispositif ne sort que du son 
+
+- Refactoring index.js (séparer en fichiers par fonctions )

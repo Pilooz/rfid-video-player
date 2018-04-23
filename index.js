@@ -12,6 +12,7 @@ var ip 				    = require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
 var path			    = require('path');
+var fs            = require('fs');
 
 var httpRequests    = {};
 var dataForTemplate = {};
@@ -40,6 +41,10 @@ const messagesPath = mediaPath + "/messages";
 // Serial Port configuration
 const portName = '/dev/cu.usbserial-A603XVZO';
 const baudRate = 115200;
+
+// Other Configuration constants
+const simulateSearchTime = true; // If we need to simulate search time (a video "searching..." is play by the client)
+const searchTimeout = 5000; // Timeout before sending media, if search time is simulated
 
 // /TODO ------------------------------
 
@@ -143,28 +148,40 @@ io.on('connection', function(socket) {
 
 });
 
-function sendingMedia(tag) {
-  var medias = [];
-}
-
 // just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
-var sleep = require('sleep');
 
-var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
+var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047", "1234567890"];
 var i = 0;
+var timeBeforeSendingMedia = (simulateSearchTime) ? searchTimeout : 0;
+
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
-      // Simulating a search time in the extra super big media database !
-      io.emit('server.play-media', searchingMedia);
-      sleep.sleep(5);
 
-      medias = buildMediaList(rfidData.tag);
-      mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on"};
-      io.emit('server.play-media', mediaFile);
+      // Simulating a search time in the extra super big media database !
+      if (simulateSearchTime) {
+        io.emit('server.play-media', searchingMedia);
+      }
+      setTimeout(function() {
+        var medias = [];
+        medias = buildMediaList(rfidData.tag);
+        // If media array if empty, the RFID tag was not associated
+        if ( medias.length == 0 ) {
+          io.emit('server.play-media', noTagAssocMedia);
+        } else {
+          mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on"};
+          // Verifying that file exists
+          if (fs.existsSync(path.join(__dirname, mediaFile.uri))) { 
+            io.emit('server.play-media', mediaFile);
+          } else {
+            // File doesn't exists
+            io.emit('server.play-media', mediaNotFoundMedia);
+          }
+        }
+      }, timeBeforeSendingMedia);
 
       // Storing that this tag was the last one read on port.
       lastRfidData.tag = rfidData.tag;    
