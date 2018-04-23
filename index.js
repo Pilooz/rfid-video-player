@@ -126,10 +126,24 @@ function chooseMedia(arr) {
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
-    // Emit the service message to client
+
+    // Emit the service message to client : by defaut, playing "waiting video"
     socket.emit('server.message', waitingMedia);
-    socket.on('client.acknowledgment', console.log);
+    
+    // Client acknowledgment when it has received a media element
+    socket.on('client.acknowledgment', function(data){
+      console.log(data.message);
+    });
+
+    // When receiving endMedia, send waitingMedia
+    socket.on('client.endMedia', function(data){
+      console.log(data.message);
+      socket.emit('server.message', waitingMedia);
+    });
+
 });
+
+
 
 // just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
@@ -143,7 +157,7 @@ function sendEachTime() {
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
       medias = buildMediaList(rfidData.tag);
-      mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "off", controls: "on"};
+      mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on"};
       io.emit('server.play-media', mediaFile);
       // Storing that this tag was the last one read on port.
       lastRfidData.tag = rfidData.tag;    
@@ -154,7 +168,7 @@ function sendEachTime() {
 }
 
 // Send current time every 10 secs
-setInterval(sendEachTime, 10000);
+setInterval(sendEachTime, 40000);
 // End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
 //------------------------------------------------------------------------

@@ -41,9 +41,11 @@
 
 	<script type='text/javascript'> 
 $(document).ready(function(){
-    var vid = $('#embeded-video');
+    var media = $('#embeded-video');
     var socket = io();
+    var waitingStatus = false;
 
+    // Receiving new media attributes by socket.
     socket.on('server.rfidData', function(data) {
         addMessage("rfid #" + data.tag + " on reader #" + data.reader);
         console.log(data);
@@ -62,14 +64,39 @@ $(document).ready(function(){
         console.log(message);
     }
 
+    // Playing Media callback 
     function playMedia(v) {
       console.log(v);
-      vid.stop();
-      vid.attr("src", v.uri);
-      if (v.loop == "on") vid.attr("loop", v.loop);
-      if (v.autoplay == "on") vid.attr("autoplay", v.autoplay);
-      if (v.controls == "on") vid.attr("controls", v.controls);
+      media.stop();
+      media.attr("src", v.uri);
+
+      // Looping attribute
+      if (v.loop == "on") {
+        media.attr("loop", v.loop);
+      } else { 
+        media.removeAttr("loop"); 
+      }
+      // Autoplay Attribute
+      if (v.autoplay == "on")  {
+        media.attr("autoplay", v.autoplay); 
+      } else { 
+        media.removeAttr("autoplay"); 
+      }
+
+      // Controls attribute
+      if (v.controls == "on") {
+        media.attr("controls", v.controls);
+      } else { 
+        media.removeAttr("controls"); 
+      }
     }
+
+    // Adding a listener on video ending
+    media.on('ended',function(){
+      var msg = media.attr("src") + " has ended !";
+      console.log(msg + "let the server know this...");
+      socket.emit('client.endMedia', { message: msg });
+    });
 
     // Video.
     // Par défaut, la vidéo est celle qui incite à poser un tag.
