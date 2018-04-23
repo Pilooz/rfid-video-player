@@ -143,7 +143,7 @@ function sendEachTime() {
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
       medias = buildMediaList(rfidData.tag);
-      mediaFile = { url: chooseMedia(medias), loop: "off", autoplay: "off", controls: "on"};
+      mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "off", controls: "on"};
       io.emit('server.play-media', mediaFile);
       // Storing that this tag was the last one read on port.
       lastRfidData.tag = rfidData.tag;    
