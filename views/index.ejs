@@ -28,6 +28,7 @@
       <div class="row">
         <div class="col-md-12">
         <video src="#" id="embeded-video" width="100%" height="100%"></video>
+        <div id="serviceMessage"></div>
         </div>
       </div>
 
@@ -53,11 +54,15 @@ $(document).ready(function(){
         // Respond with a message including this clients' id sent from the server
         socket.emit('client.acknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
     });
+    // debug function
     socket.on('server.time', function(data) {
         addMessage(data.time);
     });
+    // Dealing with errors
     socket.on('server.error', console.error.bind(console));
+    // Service messages (media)
     socket.on('server.message', playMedia);
+    // Media service
     socket.on('server.play-media', playMedia);
 
     function addMessage(message) {
@@ -76,6 +81,7 @@ $(document).ready(function(){
       } else { 
         media.removeAttr("loop"); 
       }
+
       // Autoplay Attribute
       if (v.autoplay == "on")  {
         media.attr("autoplay", v.autoplay); 
@@ -89,13 +95,23 @@ $(document).ready(function(){
       } else { 
         media.removeAttr("controls"); 
       }
+      // Put status too
+      media.attr("status", v.status);
+      media.attr("tag", v.tag);
+
     }
 
     // Adding a listener on video ending
     media.on('ended',function(){
       var msg = media.attr("src") + " has ended ! ";
-      console.log(msg + "let the server know this...");
-      socket.emit('client.endMedia', { message: msg });
+      // If the video was a service message "noTagAssociation" let's print rfid tag
+      if (media.attr("status") ==  "noTagAssociation") {
+        messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé.";
+        $('#serviceMessage').html(messageTag);
+        $('#serviceMessage').show();
+      } else {
+        socket.emit('client.endMedia', { message: msg });
+      }
     });
 
     // Video.

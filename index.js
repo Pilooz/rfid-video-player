@@ -29,7 +29,9 @@ var mediaFile = {
   uri: "",
   loop: "",
   autoplay: "",
-  controls: ""
+  controls: "",
+  status: "",
+  tag: ""
 }
 
 // TODO put these in a config file ----
@@ -48,10 +50,10 @@ const searchTimeout = 5000; // Timeout before sending media, if search time is s
 
 // /TODO ------------------------------
 
-const waitingMedia = { uri: mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off" }
-const mediaNotFoundMedia = { uri: mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off" }
-const noTagAssocMedia = { uri: mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off" }
-const searchingMedia = { uri: mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off" }
+const waitingMedia = { uri: mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off", status: "waiting", tag: "" };
+const mediaNotFoundMedia = { uri: mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off", status: "mediaNotFound", tag: "" };
+const noTagAssocMedia = { uri: mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off", status: "noTagAssociation", tag: "" };
+const searchingMedia = { uri: mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off", status: "searching", tag: "" };
 
 console.log(db_keywords.keywordslist.length + " keywords in database.");
 console.log(db_media.medialist.length + " medias in database.");
@@ -151,7 +153,7 @@ io.on('connection', function(socket) {
 // just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
 
-var testList = ["0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047", "1234567890"];
+var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
 var i = 0;
 var timeBeforeSendingMedia = (simulateSearchTime) ? searchTimeout : 0;
 
@@ -170,14 +172,16 @@ function sendEachTime() {
         medias = buildMediaList(rfidData.tag);
         // If media array if empty, the RFID tag was not associated
         if ( medias.length == 0 ) {
+          noTagAssocMedia.tag = rfidData.tag;
           io.emit('server.play-media', noTagAssocMedia);
         } else {
-          mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on"};
+          mediaFile = { uri: chooseMedia(medias), loop: "off", autoplay: "on", controls: "on", status: "content", tag: rfidData.tag };
           // Verifying that file exists
           if (fs.existsSync(path.join(__dirname, mediaFile.uri))) { 
             io.emit('server.play-media', mediaFile);
           } else {
             // File doesn't exists
+            mediaNotFoundMedia.tag = rfidData.tag;
             io.emit('server.play-media', mediaNotFoundMedia);
           }
         }
