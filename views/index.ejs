@@ -104,25 +104,42 @@ $(document).ready(function(){
       // Put status and tag as attributes too
       media.attr("status", v.status);
       media.attr("tag", v.tag);
+      media.attr("filename", v.filename);
 
     }
 
     // Adding a listener on video ending
     media.on('ended',function(){
-      var msg = media.attr("src") + " has ended ! ";
-      // If the video was a service message "noTagAssociation" let's print rfid tag
-      if (media.attr("status") ==  "noTagAssociation") {
-        messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé.";
+      var messageTag = "";
+      var tempo = 5000;
+      // If the video was a service message "noTagAssociation" or "mediaNotFound" let's print rfid tag or filename
+      switch (media.attr("status")) {
+        case "noTagAssociation":
+          messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé.";
+          break;
+        case "mediaNotFound":
+          messageTag = "Le fichier : " + media.attr("filename") + "\" est introuvable.";
+          break;
+        case "content":
+        // this is the normal way to play media
+        tempo = 0;
+      }
+
+      // display mesage
+      if (messageTag != "") {
         $('#serviceMessage').html(messageTag);
         $('#serviceMessage').fadeIn('slow');
-      } else {
-        socket.emit('client.endMedia', { message: msg });
+      } 
+
+      // Emitting endMedia out server. 
+      // At least the service message if any, stays for 5 seconds.
+      setTimeout(function() {
         $('#serviceMessage').hide();
-      }
+        socket.emit('client.endMedia', { message: messageTag });
+      }, tempo);
+      
     });
 
-    // Video.
-    // Par défaut, la vidéo est celle qui incite à poser un tag.
 }); // $(document).ready()
 
 	</script>

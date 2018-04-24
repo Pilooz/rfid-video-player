@@ -182,7 +182,10 @@ function sendEachTime() {
           } else {
             // File doesn't exists
             mediaNotFoundMedia.tag = rfidData.tag;
+            // Putting the name of the file that doesn't exists to say it to the client
+            mediaNotFoundMedia.filename = "." + mediaFile.uri;
             io.emit('server.play-media', mediaNotFoundMedia);
+            mediaNotFoundMedia.filename = "";
           }
         }
       }, timeBeforeSendingMedia);
