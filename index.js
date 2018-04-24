@@ -45,7 +45,7 @@ const portName = '/dev/cu.usbserial-A603XVZO';
 const baudRate = 115200;
 
 // Other Configuration constants
-const simulateSearchTime = true; // If we need to simulate search time (a video "searching..." is play by the client)
+const simulateSearchTime = false; // If we need to simulate search time (a video "searching..." is play by the client)
 const searchTimeout = 5000; // Timeout before sending media, if search time is simulated
 
 // /TODO ------------------------------
@@ -196,7 +196,7 @@ function sendEachTime() {
 }
 
 // Send current time every 10 secs
-setInterval(sendEachTime, 40000);
+setInterval(sendEachTime, 10000);
 // End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
 //------------------------------------------------------------------------

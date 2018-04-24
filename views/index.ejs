@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/style/style.css' />
 
 	<script src="/js/jquery.min.js"></script>
  	<script src="/js/bootstrap.min.js"></script>
@@ -72,7 +72,13 @@ $(document).ready(function(){
     // Playing Media callback 
     function playMedia(v) {
       console.log(v);
+      // Hide service message
+      $('#serviceMessage').hide();
+
+      // Stopping previous media
       media.stop();
+
+      // chaging media source
       media.attr("src", v.uri);
 
       // Looping attribute
@@ -95,7 +101,7 @@ $(document).ready(function(){
       } else { 
         media.removeAttr("controls"); 
       }
-      // Put status too
+      // Put status and tag as attributes too
       media.attr("status", v.status);
       media.attr("tag", v.tag);
 
@@ -108,9 +114,10 @@ $(document).ready(function(){
       if (media.attr("status") ==  "noTagAssociation") {
         messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé.";
         $('#serviceMessage').html(messageTag);
-        $('#serviceMessage').show();
+        $('#serviceMessage').fadeIn('slow');
       } else {
         socket.emit('client.endMedia', { message: msg });
+        $('#serviceMessage').hide();
       }
     });
 
