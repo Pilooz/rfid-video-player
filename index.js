@@ -1,7 +1,5 @@
 var CONFIG        = require('./config/config.js');
 var in_array      = require('in_array');
-var db_keywords   = require('./data/keywords.js');
-var db_media      = require('./data/media.js');
 var app 			    = require('express')();
 var express			  = require('express');
 var router        = express.Router();
@@ -14,8 +12,13 @@ var bodyParser		= require('body-parser');
 var path			    = require('path');
 var fs            = require('fs');
 
-var httpRequests    = {};
-var dataForTemplate = {};
+// Rfid parsing functions
+var rfid          = require('./lib/rfid.js');
+
+// Databases
+var db_keywords   = require('./data/keywords.js');
+var db_media      = require('./data/media.js');
+
 
 // RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
@@ -200,20 +203,18 @@ const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // Parsing RFID Tag
 parser.on('data', function(msg){
- 	console.log('Received:', msg);
 	// If data is a tag
-	if(msg.indexOf("<TAG:") > -1) {
-	 	rfidData.code = msg.split("<TAG:").join("").split(">")[0]
-	 	console.log("extracted rfid code : ", rfidData.code);
-	 	rfidData.reader = msg.split("<READER:")[1].split(">")[0]
-	 	console.log("extracted reader : ", rfidData.reader);
+  rfidData.code = rfid.extractTag(msg); 
+  if (rfidData.code != "") {
+    rfidData.reader = rfid.extractReader(msg);  
+    console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
 
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
       lastRfidData.tag = rfidData.tag;
     }
-	}	
+  }
 });
 
 // Opening serial port, checking for errors
@@ -254,9 +255,11 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 // Routing Middleware functions
 // application logic is here / GET and POST on Index
 //-----------------------------------------------------------------------------
+var dataForTemplate = {};
+
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
-  httpRequests = req.body;
+  var httpRequests = req.body;
   next(); // pass control to the next handler
 })
 

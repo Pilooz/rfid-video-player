@@ -1,13 +1,13 @@
 {
   "name": "rfid-video-player",
   "version": "1.0.0",
-  "description": "- Fichier keywords.json se trouvant dans le répertoire `data/` - Saisir un seul mot clé par champ \"keyword\", le champ \"codes\" peut contenir une liste de plusieurs codes issus des étiquettes RFID.",
+  "description": "Jukebox Video Player - Rfid detection driven",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,9 @@
     "pipe": "^1.1.0",
     "serialport": "^6.1.1",
     "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
   }
 }
