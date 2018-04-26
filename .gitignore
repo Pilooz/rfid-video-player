@@ -5,3 +5,4 @@
 videos/*.*
 data/*.js
 log/*
+config/*.js

@@ -11,10 +11,4 @@
 		- une ressource sonore ou vidéo
 		- une liste de mots-clé provenant de la liste des mots-clé déjà présents dans la base.
 
-	- Ajouter un fichier de conf YAML pour initialiser des variables comme 
-		- media_path
-		- button_pin pour GPIO
-		- port et vitesse Liasion serie
-		- Type de sortie : Ecran ou Son, utile dans le cas où le dispositif ne sort que du son 
-
 - Refactoring index.js (séparer en fichiers par fonctions )

@@ -1,4 +1,4 @@
-// TODO var CONFIG          = require('./config/config.js');
+var CONFIG        = require('./config/config.js');
 var in_array      = require('in_array');
 var db_keywords   = require('./data/keywords.js');
 var db_media      = require('./data/media.js');
@@ -6,7 +6,7 @@ var app 			    = require('express')();
 var express			  = require('express');
 var router        = express.Router();
 var server 			  = require('http').createServer(app);
-const httpPort		= 3000;
+const httpPort		= CONFIG.server.port;
 var io            = require('socket.io').listen(server);
 var ip 				    = require('ip');
 var cookieParser	= require('cookie-parser');
@@ -34,26 +34,10 @@ var mediaFile = {
   tag: ""
 }
 
-// TODO put these in a config file ----
-
-// Path to the medias
-const mediaPath = "/videos";
-const messagesPath = mediaPath + "/messages";
-
-// Serial Port configuration
-const portName = '/dev/cu.usbserial-A603XVZO';
-const baudRate = 115200;
-
-// Other Configuration constants
-const simulateSearchTime = false; // If we need to simulate search time (a video "searching..." is play by the client)
-const searchTimeout = 5000; // Timeout before sending media, if search time is simulated
-
-// /TODO ------------------------------
-
-const waitingMedia = { uri: mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off", status: "waiting", tag: "" };
-const mediaNotFoundMedia = { uri: mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off", status: "mediaNotFound", tag: "" };
-const noTagAssocMedia = { uri: mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off", status: "noTagAssociation", tag: "" };
-const searchingMedia = { uri: mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off", status: "searching", tag: "" };
+const waitingMedia = { uri: CONFIG.app.mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off", status: "waiting", tag: "" };
+const mediaNotFoundMedia = { uri: CONFIG.app.mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off", status: "mediaNotFound", tag: "" };
+const noTagAssocMedia = { uri: CONFIG.app.mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off", status: "noTagAssociation", tag: "" };
+const searchingMedia = { uri: CONFIG.app.mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off", status: "searching", tag: "" };
 
 console.log(db_keywords.keywordslist.length + " keywords in database.");
 console.log(db_media.medialist.length + " medias in database.");
@@ -109,7 +93,7 @@ function buildMediaList(rfidTag){
       // Si les mots clé associés au media sont dans la listes de mots clé générée
       // On ajoute le média
       if ( in_array(k, keys) ) {
-        mediaCollection[index] = mediaPath + "/" + m.media;
+        mediaCollection[index] = CONFIG.app.mediaPath + "/" + m.media;
         index++;
         return false;
       }
@@ -155,7 +139,7 @@ io.on('connection', function(socket) {
 
 var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
 var i = 0;
-var timeBeforeSendingMedia = (simulateSearchTime) ? searchTimeout : 0;
+var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
 
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
@@ -164,7 +148,7 @@ function sendEachTime() {
       io.emit('server.rfidData', rfidData);
 
       // Simulating a search time in the extra super big media database !
-      if (simulateSearchTime) {
+      if (CONFIG.app.simulateSearchTime) {
         io.emit('server.play-media', searchingMedia);
       }
       setTimeout(function() {
@@ -207,9 +191,9 @@ setInterval(sendEachTime, 10000);
 //------------------------------------------------------------------------
 const SerialPort = require('serialport');
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort(portName, { 
+const port = new SerialPort(CONFIG.rfid.portName, { 
 		autoOpen: true,
-		baudRate: baudRate
+		baudRate: CONFIG.rfid.baudRate
 	});
 // Parser definiton
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
@@ -237,7 +221,7 @@ port.open(function (err) {
   if (err) {
     return console.log('Error opening port: ', err.message);
   } else {
-  	console.log('Reading on ', portName);
+  	console.log('Reading on ', CONFIG.rfid.portName);
   }
 });
 
