@@ -1,3 +1,8 @@
+/*
+  Unit tests for lib/rfid.js
+
+  Run with 'npm test' or 'npm run autotest'
+*/
 var should = require('chai').should(),
     rfid = require('../lib/rfid'),
     tag = rfid.extractTag,
