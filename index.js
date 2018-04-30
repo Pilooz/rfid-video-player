@@ -11,6 +11,10 @@ var bodyParser		= require('body-parser');
 var path			    = require('path');
 var fs            = require('fs');
 
+// Databases
+var db_keywords   = require('../data/keywords.js');
+var db_media      = require('../data/media.js');
+
 // Rfid parsing functions
 var rfid          = require('./lib/rfid.js');
 
@@ -38,6 +42,12 @@ const waitingMedia = { uri: CONFIG.app.mediaPath + "/messages/waitingForTag.mp4"
 const mediaNotFoundMedia = { uri: CONFIG.app.mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off", status: "mediaNotFound", tag: "" };
 const noTagAssocMedia = { uri: CONFIG.app.mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off", status: "noTagAssociation", tag: "" };
 const searchingMedia = { uri: CONFIG.app.mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off", status: "searching", tag: "" };
+
+//------------------------------------------------------------------------
+// Displaying some debug info in console
+//------------------------------------------------------------------------
+console.log(db_keywords.keywordslist.length + " keywords in database.");
+console.log(db_media.medialist.length + " medias in database.");
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
@@ -79,7 +89,7 @@ function sendEachTime() {
       }
       setTimeout(function() {
         var medias = [];
-        medias = mediaDB.buildMediaList(rfidData.tag, CONFIG.app.mediaPath);
+        medias = mediaDB.buildMediaList(rfidData.tag, db_keywords, db_media, CONFIG.app.mediaPath);
         // If media array if empty, the RFID tag was not associated
         if ( medias.length == 0 ) {
           noTagAssocMedia.tag = rfidData.tag;
