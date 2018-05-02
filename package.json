@@ -26,6 +26,7 @@
     "bootstrap": "^4.0.0",
     "cookie-parser": "^1.4.3",
     "cookieparser": "^0.1.0",
+    "ejs": "^2.5.9",
     "express": "^4.16.2",
     "in_array": "^1.1.0",
     "ip": "^1.1.5",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.1.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "supervisor": "~0.12.0"
   }
 }

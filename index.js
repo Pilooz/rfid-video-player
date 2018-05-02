@@ -12,14 +12,17 @@ var path			    = require('path');
 var fs            = require('fs');
 
 // Databases
-var db_keywords   = require('../data/keywords.js');
-var db_media      = require('../data/media.js');
+var db_keywords   = require('./data/keywords.js');
+var db_media      = require('./data/media.js');
 
 // Rfid parsing functions
 var rfid          = require('./lib/rfid.js');
 
 // Media DB functions
 var mediaDB       = require('./lib/mediaDB.js');
+
+// Messages between server and client
+//var msg           = require('./lib/messages.js')(io);
 
 // RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
@@ -80,7 +83,7 @@ var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.search
 function sendEachTime() {
     io.emit('server.time', { time: new Date().toJSON() });
     // Emit Socket only if rfid is different of the last reading
-    if (lastRfidData.tag != rfidData.tag ) {  
+    if (lastRfidData.tag != rfidData.tag ) {
       io.emit('server.rfidData', rfidData);
 
       // Simulating a search time in the extra super big media database !
@@ -95,7 +98,7 @@ function sendEachTime() {
           noTagAssocMedia.tag = rfidData.tag;
           io.emit('server.play-media', noTagAssocMedia);
         } else {
-          mediaFile = { uri: mediaDB.chooseMedia(medias), loop: "off", autoplay: "on", controls: "on", status: "content", tag: rfidData.tag };
+          mediaFile = { uri: mediaDB.chooseRandomly(medias), loop: "off", autoplay: "on", controls: "on", status: "content", tag: rfidData.tag };
           // Verifying that file exists
           if (fs.existsSync(path.join(__dirname, mediaFile.uri))) { 
             io.emit('server.play-media', mediaFile);

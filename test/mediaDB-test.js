@@ -12,16 +12,16 @@ var should = require('chai').should(),
     mediaDB = require('../lib/mediaDB'),
     buildKeywordList = mediaDB.buildKeywordList,
     buildMediaList = mediaDB.buildMediaList,
-    coderfid1 = "coderfid1",
-    coderfid2 = "coderfid2",
-    coderfid3 = "coderfid3",
-    coderfid4 = "coderfid4";
+    cod1 = "coderfid1",
+    cod2 = "coderfid2",
+    cod3 = "coderfid3",
+    cod4 = "coderfid4";
 
 describe('#buildKeywordList', function() {
-  var a1 = buildKeywordList(coderfid1, db_keywords),
-  	  a2 = buildKeywordList(coderfid2, db_keywords),
-  	  a3 = buildKeywordList(coderfid3, db_keywords),
-  	  a4 = buildKeywordList(coderfid4, db_keywords);
+  var a1 = buildKeywordList(cod1, db_keywords),
+  	  a2 = buildKeywordList(cod2, db_keywords),
+  	  a3 = buildKeywordList(cod3, db_keywords),
+  	  a4 = buildKeywordList(cod4, db_keywords);
 
   it('returned type of keywordList', function() {
     a1.should.be.an('array');
@@ -51,10 +51,10 @@ describe('#buildKeywordList', function() {
 });
 
 describe('#buildMediaList', function() {
-	var arr1 = buildMediaList(coderfid1, db_keywords, db_media, '.'),
-		arr2 = buildMediaList(coderfid2, db_keywords, db_media, '.'),
-		arr3 = buildMediaList(coderfid3, db_keywords, db_media, '.'),
-		arr4 = buildMediaList(coderfid4, db_keywords, db_media, '.');
+	var arr1 = buildMediaList(cod1, db_keywords, db_media, '.'),
+		arr2 = buildMediaList(cod2, db_keywords, db_media, '.'),
+		arr3 = buildMediaList(cod3, db_keywords, db_media, '.'),
+		arr4 = buildMediaList(cod4, db_keywords, db_media, '.');
 
 	it('builds the media list, with rfid tag', function() {
 		arr1.should.have.lengthOf(3);
@@ -83,4 +83,3 @@ describe('#buildMediaList', function() {
 
 });
 
-// TODO : tester les messages d'erreur statndard
