@@ -8,21 +8,13 @@ var io            = require('socket.io').listen(server);
 var ip 				    = require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
-var path			    = require('path');
-var fs            = require('fs');
-
-// Databases
-var db_keywords   = require('./data/keywords.js');
-var db_media      = require('./data/media.js');
+var path          = require('path');
 
 // Rfid parsing functions
 var rfid          = require('./lib/rfid.js');
 
 // Media DB functions
 var mediaDB       = require('./lib/mediaDB.js');
-
-// Messages between server and client
-//var msg           = require('./lib/messages.js')(io, CONFIG);
 
 // RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
@@ -31,21 +23,8 @@ var rfidData = {
 	reader: "1"
 };
 
-// Video data sctructure for the choosen media
-var mediaFile = {
-  uri: "",
-  loop: "",
-  autoplay: "",
-  controls: "",
-  status: "",
-  tag: ""
-}
-
-//------------------------------------------------------------------------
-// Displaying some debug info in console
-//------------------------------------------------------------------------
-console.log(db_keywords.keywordslist.length + " keywords in database.");
-console.log(db_media.medialist.length + " medias in database.");
+// Timout to simulate searching, if needed by config.
+var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
@@ -73,35 +52,21 @@ io.on('connection', function(socket) {
 
 var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
 var i = 0;
-var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
 
 function sendEachTime() {
-    io.emit('server.time', { time: new Date().toJSON() });
-    // Emit Socket only if rfid is different of the last reading
+    // io.emit('server.time', { time: new Date().toJSON() });
+    // // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {
       io.emit('server.rfidData', rfidData);
 
       // Simulating a search time in the extra super big media database !
       if (CONFIG.app.simulateSearchTime) {
-        io.emit('server.play-media', mediaDB.searchingMedia());
+        io.emit('server.play-media', module.exports.searchingMedia());
       }
+
+      // if CONFIG.app.simulateSearchTime then timeout this code
       setTimeout(function() {
-        var medias = [];
-        medias = mediaDB.buildMediaList(rfidData.tag, db_keywords, db_media, CONFIG.app.mediaPath);
-        // If media array if empty, the RFID tag was not associated
-        if ( medias.length == 0 ) {
-          io.emit('server.play-media', mediaDB.noTagAssocMedia(rfidData.tag));
-        } else {
-          mediaFile = { uri: mediaDB.chooseRandomly(medias), loop: "off", autoplay: "on", controls: "on", status: "content", tag: rfidData.tag };
-          // Verifying that file exists
-          if (fs.existsSync(path.join(__dirname, mediaFile.uri))) { 
-            io.emit('server.play-media', mediaFile);
-          } else {
-            // File doesn't exists
-            // Putting the name of the file that doesn't exists to say it to the client
-            io.emit('server.play-media', mediaDB.mediaNotFoundMedia(rfidData.tag, mediaFile.uri));
-          }
-        }
+        io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
       }, timeBeforeSendingMedia);
 
       // Storing that this tag was the last one read on port.
@@ -130,6 +95,7 @@ const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // Parsing RFID Tag
 parser.on('data', function(msg){
+  var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
 	// If data is a tag
   rfidData.code = rfid.extractTag(msg); 
   if (rfidData.code != "") {
@@ -139,6 +105,17 @@ parser.on('data', function(msg){
     // Emit Socket only if rfid is different of the last reading
     if (lastRfidData.tag != rfidData.tag ) {  
       io.emit('server.rfidData', rfidData);
+      
+      // Simulating a search time in the extra super big media database !
+      if (CONFIG.app.simulateSearchTime) {
+        io.emit('server.play-media', module.exports.searchingMedia());
+      }
+
+      // if CONFIG.app.simulateSearchTime then timeout this code
+      setTimeout(function() {
+        io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
+      }, timeBeforeSendingMedia);
+
       lastRfidData.tag = rfidData.tag;
     }
   }

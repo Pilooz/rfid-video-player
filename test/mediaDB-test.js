@@ -12,6 +12,7 @@ var should = require('chai').should(),
     mediaDB = require('../lib/mediaDB'),
     buildKeywordList = mediaDB.buildKeywordList,
     buildMediaList = mediaDB.buildMediaList,
+    chooseMedia = mediaDB.chooseMedia,
     cod1 = "coderfid1",
     cod2 = "coderfid2",
     cod3 = "coderfid3",
@@ -87,6 +88,50 @@ describe('#buildMediaList', function() {
 
 });
 
+describe('#chooseMedia', function() {
+  	it('Type of chooseMedia', function() {
+		chooseMedia.should.be.an('function');
+	});
+
+  	it('Type returned by chooseMedia', function() {
+		chooseMedia().should.be.an('object');
+	});
+
+  	var o = chooseMedia(cod1);
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('object1 returned by "chooseMedia" should have property "'+p+'"', function() {
+			o.should.have.property(p);
+		});
+	});
+
+  	o = chooseMedia(cod2);
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('object2 returned by "chooseMedia" should have property "'+p+'"', function() {
+			o.should.have.property(p);
+		});
+	});
+
+  	o = chooseMedia(cod3);
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('object3 returned by "chooseMedia" should have property "'+p+'"', function() {
+			o.should.have.property(p);
+		});
+	});
+
+  	o = chooseMedia();
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('Null object returned by "chooseMedia" should have property "'+p+'"', function() {
+			o.should.have.property(p);
+		});
+	});
+	it('Null object returned by "chooseMedia" should give "msgNoTag" object', function() {
+		o.should.be.equal(msgNoTag());
+	});
+});
+
+// 
+// Test service messages
+//
 describe('#Service Message msgWait', function() {
 	it('returned type of service messages', function() {
 		msgWait.should.be.an('function');
