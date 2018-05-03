@@ -22,7 +22,7 @@ var rfid          = require('./lib/rfid.js');
 var mediaDB       = require('./lib/mediaDB.js');
 
 // Messages between server and client
-//var msg           = require('./lib/messages.js')(io);
+//var msg           = require('./lib/messages.js')(io, CONFIG);
 
 // RFID Data structure
 var lastRfidData = { tag: "", reader: "" };
@@ -41,11 +41,6 @@ var mediaFile = {
   tag: ""
 }
 
-const waitingMedia = { uri: CONFIG.app.mediaPath + "/messages/waitingForTag.mp4", loop: "on", autoplay: "on", controls: "off", status: "waiting", tag: "" };
-const mediaNotFoundMedia = { uri: CONFIG.app.mediaPath + "/messages/mediaNotFound.mp4", loop: "off", autoplay: "on", controls: "off", status: "mediaNotFound", tag: "" };
-const noTagAssocMedia = { uri: CONFIG.app.mediaPath + "/messages/noTagAssociation.mp4", loop: "off", autoplay: "on", controls: "off", status: "noTagAssociation", tag: "" };
-const searchingMedia = { uri: CONFIG.app.mediaPath + "/messages/searching.mp4", loop: "off", autoplay: "on", controls: "off", status: "searching", tag: "" };
-
 //------------------------------------------------------------------------
 // Displaying some debug info in console
 //------------------------------------------------------------------------
@@ -58,17 +53,17 @@ console.log(db_media.medialist.length + " medias in database.");
 io.on('connection', function(socket) {
 
     // Emit the service message to client : by defaut, playing "waiting video"
-    socket.emit('server.message', waitingMedia);
+    socket.emit('server.message', mediaDB.waitingMedia());
     
     // Client acknowledgment when it has received a media element
     socket.on('client.acknowledgment', function(data){
       console.log(data.message);
     });
 
-    // When receiving endMedia, send waitingMedia
+    // When receiving endMedia, send mediaDB.waitingMedia()
     socket.on('client.endMedia', function(data){
       console.log(data.message);
-      socket.emit('server.message', waitingMedia);
+      socket.emit('server.message', mediaDB.waitingMedia());
     });
 
 });
@@ -88,15 +83,14 @@ function sendEachTime() {
 
       // Simulating a search time in the extra super big media database !
       if (CONFIG.app.simulateSearchTime) {
-        io.emit('server.play-media', searchingMedia);
+        io.emit('server.play-media', mediaDB.searchingMedia());
       }
       setTimeout(function() {
         var medias = [];
         medias = mediaDB.buildMediaList(rfidData.tag, db_keywords, db_media, CONFIG.app.mediaPath);
         // If media array if empty, the RFID tag was not associated
         if ( medias.length == 0 ) {
-          noTagAssocMedia.tag = rfidData.tag;
-          io.emit('server.play-media', noTagAssocMedia);
+          io.emit('server.play-media', mediaDB.noTagAssocMedia(rfidData.tag));
         } else {
           mediaFile = { uri: mediaDB.chooseRandomly(medias), loop: "off", autoplay: "on", controls: "on", status: "content", tag: rfidData.tag };
           // Verifying that file exists
@@ -104,11 +98,8 @@ function sendEachTime() {
             io.emit('server.play-media', mediaFile);
           } else {
             // File doesn't exists
-            mediaNotFoundMedia.tag = rfidData.tag;
             // Putting the name of the file that doesn't exists to say it to the client
-            mediaNotFoundMedia.filename = "." + mediaFile.uri;
-            io.emit('server.play-media', mediaNotFoundMedia);
-            mediaNotFoundMedia.filename = "";
+            io.emit('server.play-media', mediaDB.mediaNotFoundMedia(rfidData.tag, mediaFile.uri));
           }
         }
       }, timeBeforeSendingMedia);

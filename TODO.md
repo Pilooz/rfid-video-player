@@ -14,5 +14,4 @@
 - Refactoring index.js (séparer en fichiers par fonctions )
 
 - Tests unitaaires :
-	- tester les messages d'erreur statndard
 	- tester le front-end 

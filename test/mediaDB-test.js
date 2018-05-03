@@ -15,7 +15,11 @@ var should = require('chai').should(),
     cod1 = "coderfid1",
     cod2 = "coderfid2",
     cod3 = "coderfid3",
-    cod4 = "coderfid4";
+    cod4 = "coderfid4",
+    msgWait = mediaDB.waitingMedia,
+    msgNotFound = mediaDB.mediaNotFoundMedia,
+    msgNoTag = mediaDB.noTagAssocMedia,
+    msgSearch = mediaDB.searchingMedia;
 
 describe('#buildKeywordList', function() {
   var a1 = buildKeywordList(cod1, db_keywords),
@@ -81,5 +85,85 @@ describe('#buildMediaList', function() {
 		buildMediaList("ThisTagDoesntExist", db_keywords, db_media, '.').should.have.lengthOf(0);
 	});
 
+});
+
+describe('#Service Message msgWait', function() {
+	it('returned type of service messages', function() {
+		msgWait.should.be.an('function');
+	});
+
+	it('returned type of service messages', function() {
+		msgWait().should.be.an('object');
+	});
+
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('obbject should have property "'+p+'"', function() {
+			msgWait().should.have.property(p);
+		});
+	});
+
+	it('video link of service messages', function() {
+		msgWait().uri.should.be.equal('/videos/messages/waitingForTag.mp4');
+	});
+});
+
+describe('#Service Message msgNotFound', function() {
+	it('returned type of service messages', function() {
+		msgNotFound.should.be.an('function');
+	});
+
+	it('returned type of service messages', function() {
+		msgNotFound().should.be.an('object');
+	});
+
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('obbject should have property "'+p+'"', function() {
+			msgNotFound().should.have.property(p);
+		});
+	});
+
+	it('video link of service messages', function() {
+		msgNotFound().uri.should.be.equal('/videos/messages/mediaNotFound.mp4');
+	});
+});
+
+describe('#Service Message msgNoTag', function() {
+	it('returned type of service messages', function() {
+		msgNoTag.should.be.an('function');
+	});
+
+	it('returned type of service messages', function() {
+		msgNoTag().should.be.an('object');
+	});
+
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('obbject should have property "'+p+'"', function() {
+			msgNoTag().should.have.property(p);
+		});
+	});
+
+	it('video link of service messages', function() {
+		msgNoTag().uri.should.be.equal('/videos/messages/noTagAssociation.mp4');
+	});
+});
+
+describe('#Service Message msgSearch', function() {
+	it('returned type of service messages', function() {
+		msgSearch.should.be.an('function');
+	});
+
+	it('returned type of service messages', function() {
+		msgSearch().should.be.an('object');
+	});
+
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+		it('obbject should have property "'+p+'"', function() {
+			msgSearch().should.have.property(p);
+		});
+	});
+
+	it('video link of service messages', function() {
+		msgSearch().uri.should.be.equal('/videos/messages/searching.mp4');
+	});
 });
 
