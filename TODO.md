@@ -11,7 +11,5 @@
 		- une ressource sonore ou vidéo
 		- une liste de mots-clé provenant de la liste des mots-clé déjà présents dans la base.
 
-- Refactoring index.js (séparer en fichiers par fonctions )
-
 - Tests unitaaires :
 	- tester le front-end 

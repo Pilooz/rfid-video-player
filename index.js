@@ -47,6 +47,30 @@ io.on('connection', function(socket) {
 
 });
 
+
+//------------------------------------------------------------------------
+// Emit sockets to send media to the client
+//------------------------------------------------------------------------
+function sendingMedia() {
+  // Emit Socket only if rfid is different of the last reading
+  if (lastRfidData.tag != rfidData.tag ) {  
+    //io.emit('server.rfidData', rfidData);
+    
+    // Simulating a search time in the extra super big media database !
+    if (CONFIG.app.simulateSearchTime) {
+      io.emit('server.play-media', module.exports.searchingMedia());
+    }
+
+    // if CONFIG.app.simulateSearchTime then timeout this code
+    setTimeout(function() {
+      console.log("Tag : #" + rfidData.tag);
+      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
+    }, timeBeforeSendingMedia);
+
+    lastRfidData.tag = rfidData.tag;
+  }
+}
+
 // just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 // Send current time to all connected clients
 
@@ -54,31 +78,16 @@ var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C",
 var i = 0;
 
 function sendEachTime() {
-    // io.emit('server.time', { time: new Date().toJSON() });
     // // Emit Socket only if rfid is different of the last reading
-    if (lastRfidData.tag != rfidData.tag ) {
-      io.emit('server.rfidData', rfidData);
-
-      // Simulating a search time in the extra super big media database !
-      if (CONFIG.app.simulateSearchTime) {
-        io.emit('server.play-media', module.exports.searchingMedia());
-      }
-
-      // if CONFIG.app.simulateSearchTime then timeout this code
-      setTimeout(function() {
-        io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
-      }, timeBeforeSendingMedia);
-
-      // Storing that this tag was the last one read on port.
-      lastRfidData.tag = rfidData.tag;    
-      rfidData.tag = testList[i];
-      i++;
-      if (i == testList.length ) i=0;
-    }
+    sendingMedia();
+    rfidData.tag = testList[i];
+    i++;
+    if (i == testList.length ) i=0;
 }
 
 // Send current time every 10 secs
 setInterval(sendEachTime, 10000);
+
 // End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
 
 //------------------------------------------------------------------------
@@ -95,29 +104,12 @@ const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // Parsing RFID Tag
 parser.on('data', function(msg){
-  var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
 	// If data is a tag
   rfidData.code = rfid.extractTag(msg); 
   if (rfidData.code != "") {
     rfidData.reader = rfid.extractReader(msg);  
     console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
-
-    // Emit Socket only if rfid is different of the last reading
-    if (lastRfidData.tag != rfidData.tag ) {  
-      io.emit('server.rfidData', rfidData);
-      
-      // Simulating a search time in the extra super big media database !
-      if (CONFIG.app.simulateSearchTime) {
-        io.emit('server.play-media', module.exports.searchingMedia());
-      }
-
-      // if CONFIG.app.simulateSearchTime then timeout this code
-      setTimeout(function() {
-        io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
-      }, timeBeforeSendingMedia);
-
-      lastRfidData.tag = rfidData.tag;
-    }
+    sendingMedia();
   }
 });
 
