@@ -111,11 +111,12 @@ $(document).ready(function(){
     // Adding a listener on video ending
     media.on('ended',function(){
       var messageTag = "";
+      var urlContrib = "<br/><a class='btn btn-xs btn-default' title='Ajouter un contenu lié à ce tag RFID' href='/contrib?tag=" + media.attr("tag") + "'>Ajouter un contenu</a>";
       var tempo = 5000;
       // If the video was a service message "noTagAssociation" or "mediaNotFound" let's print rfid tag or filename
       switch (media.attr("status")) {
         case "noTagAssociation":
-          messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé.";
+          messageTag = "Le tag RFID comportant le code : \"" + media.attr("tag") + "\" n'est associé à aucun mot-clé." + urlContrib;
           break;
         case "mediaNotFound":
           messageTag = "Le fichier : " + media.attr("filename") + "\" est introuvable.";

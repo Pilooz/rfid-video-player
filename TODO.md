@@ -31,7 +31,8 @@
 
 => Tester la lecture des formats de fichiers issus des smartphones iOS et Android
 => idée de backoffice /contrib :
-    - intégrer une url "ajouter un contenu" dans le message d'erreur "pas de contenu", qui pointe sur /contrib.
+    +(10 min) intégrer une url "ajouter un contenu" dans le message d'erreur "pas de contenu", qui pointe sur /contrib.
+    - Déclarer une page de contribution qui répond sur /contrib avec le paramètre du code RFID en get.
     - gérer un id unique de session pour chaque de vice connecté par socket.
     - côté serveur on vérifie que la session de la socket est la même que celle du player = Ca veut dire que pour intégrer un nouveau tag il faut être sur son smartphone ou sa tablette. 
     -  sur /contrib,  un bouton pour enregistrer du son  (champ de type file avec un mime pris en charge par l'os du device)
