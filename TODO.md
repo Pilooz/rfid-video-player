@@ -3,7 +3,7 @@
 
 - Interface de contribution des sons ou vidéos
 	- Contribution sur une URL particulière comme localhost:3000/contrib/
-	- lorsqu'un tag est inconnu dans la base, le server broadcaste son id sur ../contrib/
+	- lorsqu'un tag est inconnu dans la base, le server broadcaste son id sur ../contrib/ 
 	qui ouvre un formulaire permattant de saisir 
 		- une photo de l'objet taggué 
 		- une ressource sonore ou vidéo
@@ -13,6 +13,8 @@
 
 - Scripts de démarrage et arrêt sur Raspberry Pi
 - Logging du serveur dans un fichier
+- Changer le répertoire "videos" en "medias"
 
-- Tests unitaaires :
+- Tests unitaires :
 	- tester le front-end 
+
