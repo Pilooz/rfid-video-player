@@ -167,6 +167,12 @@ router.all('/*', function (req, res, next) {
 /* GET home page. */
 .get('/', function(req, res, next) {
   res.render('index', { data: dataForTemplate });
+})
+
+/* GET home page. */
+.get('/contrib', function(req, res, next) {
+  dataForTemplate = req.body;
+  res.render('contrib', { data: dataForTemplate });
 });
 
 //-----------------------------------------------------------------------------
