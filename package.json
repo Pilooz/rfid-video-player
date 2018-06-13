@@ -23,7 +23,7 @@
   "homepage": "https://github.com/Pilooz/rfid-video-player#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.1",
     "cookie-parser": "^1.4.3",
     "cookieparser": "^0.1.0",
     "ejs": "^2.5.9",
@@ -31,6 +31,7 @@
     "in_array": "^1.1.0",
     "ip": "^1.1.5",
     "jquery": "^3.3.1",
+    "json-editor": "^0.7.28",
     "node-math": "0.0.3",
     "pipe": "^1.1.0",
     "serialport": "^6.1.1",
