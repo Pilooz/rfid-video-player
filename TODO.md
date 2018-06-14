@@ -25,9 +25,7 @@
 => idée de backoffice /contrib :
     +(10 min) intégrer une url "ajouter un contenu" dans le message d'erreur "pas de contenu", qui pointe sur /contrib.
     + (5 min) Déclarer une page de contribution qui répond sur /contrib avec le paramètre du code RFID en get.
-    + (5 min) factoriser le header et footer HTML pour ré-emploi.
-    - gérer un id unique de session pour chaque de vice connecté par socket.
-    - côté serveur on vérifie que la session de la socket est la même que celle du player = Ca veut dire que pour intégrer un nouveau tag il faut être sur son smartphone ou sa tablette. 
+    + (7 min) factoriser le header et footer HTML pour ré-emploi.
     -  sur /contrib,  un bouton pour enregistrer du son/ de la vidéo (champ de type file avec un mime pris en charge par l'os du device)
     - sur /contrib ajout de la liste de mots clé pour le lier au contenu sonore/video
      - voir json_editor ou faire un mini framework CRUD json ?
@@ -37,4 +35,5 @@
     Puis recharger la database des contenus
  
 	- modifier les structures json pour ajouter la notion de "reader"
+    - gérer un id unique de session pour chaque de vice connecté par socket.
 

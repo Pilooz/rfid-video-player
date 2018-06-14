@@ -12,6 +12,8 @@ body {
     background-color: black;
 }
 
+body > * {color:#afafaf;}
+
 #serviceMessage {
   position: absolute;
   z-index: 10;
