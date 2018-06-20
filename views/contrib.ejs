@@ -1,6 +1,35 @@
 <%- include('header', {data: data}) %>
 
-<h1>Ajouter un média</h1>
-<pre><%= data %></pre>
+<div class="row">
+  <div class="col-xs-6 col-sm-4"></div>
+  <div class="col-xs-6 col-sm-4">
+    <h1>Ajouter un média</h1>
+
+    <form action="/contribUpload" method="post">
+      <div class="form-group">
+        <label for="tag">Code RFID&nbsp;: </label>
+        <span name="tag" class="form-control-static"><b><%= data.tag %></b></span>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Mots-clé</label>
+        <input type="text" class="form-control" id="keywords" name="keywords">
+      </div>
+
+       <div class="form-group">
+        <label for="mediafile">Média</label>
+        <input type="file" id="mediafile" name="mediafile" accept="audio/*">
+        <!-- <p class="help-block">Enregistrer votre media en appuyant sur []</p> -->
+      </div>
+
+      <button type="submit" class="btn btn-info">Ok&nbsp;</button>
+
+    </form> 
+    
+  </div>
+  <!-- Optional: clear the XS cols if their content doesn't match in height -->
+  <div class="clearfix visible-xs-block"></div>
+  <div class="col-xs-6 col-sm-4"></div>
+</div>
 
 <%- include('footer', {data: data}) %>
