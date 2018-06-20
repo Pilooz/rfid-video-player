@@ -175,9 +175,15 @@ router.all('/*', function (req, res, next) {
   res.render('index', { data: dataForTemplate });
 })
 
-/* GET home page. */
+/* GET contrib page. */
 .get('/contrib', function(req, res, next) {
   res.render('contrib', { data: httpRequests });
+})
+
+/* POST media page. */
+.post('/media-upload', function(req, res, next) {
+  console.log(req.body);
+  res.render('index', { data: httpRequests });
 });
 
 //-----------------------------------------------------------------------------
