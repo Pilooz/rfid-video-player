@@ -125,7 +125,7 @@ port.open(function (err) {
 //------------------------------------------------------------------------
 // HTTP Server configuration
 //------------------------------------------------------------------------
-server.listen( httpPort, function( ) {
+server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( 'server Ip Address is %s', ip.address() );	 		
   console.log( 'it is listening at port %d', httpPort );
 });
@@ -145,6 +145,7 @@ app.use('/videos', express.static(__dirname + '/videos')); // redirect bootstrap
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io
+app.use('/js', express.static(__dirname + '/node_modules/json-editor/dist')); // Json-editor
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 //-----------------------------------------------------------------------------
@@ -152,10 +153,15 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 // application logic is here / GET and POST on Index
 //-----------------------------------------------------------------------------
 var dataForTemplate = {};
+var httpRequests = {};
 
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
-  var httpRequests = req.body;
+  httpRequests = req.query; // according to the use of express
+  console.log("---------------------------------");
+  console.log(httpRequests);
+  console.log("---------------------------------");
+  
   next(); // pass control to the next handler
 })
 
@@ -171,8 +177,7 @@ router.all('/*', function (req, res, next) {
 
 /* GET home page. */
 .get('/contrib', function(req, res, next) {
-  dataForTemplate = req.body;
-  res.render('contrib', { data: dataForTemplate });
+  res.render('contrib', { data: httpRequests });
 });
 
 //-----------------------------------------------------------------------------
