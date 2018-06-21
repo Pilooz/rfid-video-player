@@ -30,10 +30,10 @@
     + (1h) sur /contrib,  un bouton pour enregistrer du son/ de la vidéo (champ de type file avec un mime pris en charge par l'os du device)
     + (1h) sur /contrib ajout de la liste de mots clé pour le lier au contenu sonore/video
     N (2h) voir json_editor ou faire un mini framework CRUD json ?
-    - puis enregistrement dans les fichiers json.
+    + (1h) puis enregistrement dans les fichiers json.
          -> un tag - un/des mot(s) clé
          -> Un contenu - Un /des mot(s)
-    Puis recharger la database des contenus
+    - Puis recharger la database des contenus
  
 	? modifier les structures json pour ajouter la notion de "reader" 
     ? gérer un id unique de session pour chaque de vice connecté par socket.
