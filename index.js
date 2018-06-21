@@ -1,3 +1,4 @@
+global.__basedir  = __dirname;
 var CONFIG        = require('./config/config.js');
 var app 			    = require('express')();
 var express			  = require('express');
@@ -9,6 +10,7 @@ var ip 				    = require('ip');
 var cookieParser	= require('cookie-parser');
 var bodyParser		= require('body-parser');
 var path          = require('path');
+var formidable    = require('formidable'); // File upload
 
 // Rfid parsing functions
 var rfid          = require('./lib/rfid.js');
@@ -141,7 +143,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/videos', express.static(__dirname + '/videos')); // redirect bootstrap JS
+app.use('/videos', express.static(__dirname + CONFIG.app.mediaPath)); // redirect media directory
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io
@@ -158,9 +160,6 @@ var httpRequests = {};
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
-  console.log("---------------------------------");
-  console.log(httpRequests);
-  console.log("---------------------------------");
   
   next(); // pass control to the next handler
 })
@@ -182,8 +181,18 @@ router.all('/*', function (req, res, next) {
 
 /* POST media page. */
 .post('/media-upload', function(req, res, next) {
-  console.log(req.body);
-  res.render('index', { data: httpRequests });
+    var form = new formidable.IncomingForm();
+    form.uploadDir = path.join(__dirname, CONFIG.app.mediaPath);
+    form.keepExtensions = true; // keep original extension
+
+    form.parse(req, function (err, fields, files) {
+       // Let the media library do the rest of the job !
+      mediaDB.newMedia(fields, files);
+      res.write('File uploaded ! ');
+      res.end();
+    });
+
+  //res.render('index', { data: httpRequests });
 });
 
 //-----------------------------------------------------------------------------

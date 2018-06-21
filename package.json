@@ -28,6 +28,7 @@
     "cookieparser": "^0.1.0",
     "ejs": "^2.5.9",
     "express": "^4.16.2",
+    "formidable": "^1.2.1",
     "in_array": "^1.1.0",
     "ip": "^1.1.5",
     "jquery": "^3.3.1",
