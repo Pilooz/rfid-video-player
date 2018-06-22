@@ -8,13 +8,13 @@
   Cablage des lecteurs RFID pour le teensy 3.2 :
   ----------------------------------------------
   Cablage du module RFID GROVE (SeedStudio) N°1 sur Serial1
-  Rouge=>5V
+  Rouge=>PIN 2
   Noir=>GND
   Blanc=>1
   Jaune=>0
 
   Cablage du module RFID GROVE (SeedStudio) N°2 sur Serial2
-  Rouge=>5V
+  Rouge=>PIN 3
   Noir=>GND
   Blanc=>9
   Jaune=>10
@@ -22,16 +22,22 @@
   Cablage des lecteurs RFID pour le Seeeduino 2560 ou Arduino Mega :
   ------------------------------------------------------------------
   Cablage du module RFID GROVE (SeedStudio) N°1 sur Serial1
-  Rouge=>5V
+  Rouge=>PIN 2
   Noir=>GND
   Blanc=>RX1
   Jaune=>TX1
 
   Cablage du module RFID GROVE (SeedStudio) N°2 sur Serial2
-  Rouge=>5V
+  Rouge=>PIN 3
   Noir=>GND
   Blanc=>RX2
   Jaune=>TX2
+
+  Cablage du module RFID GROVE (SeedStudio) N°2 sur Serial2
+  Rouge=>PIN 4
+  Noir=>GND
+  Blanc=>RX3
+  Jaune=>TX3
 
   Ajout d'un lecteur RFID (Pour le Teensy 3.2 et le Seeeduino 2560).
   ------------------------------------------------------------------
@@ -56,6 +62,12 @@
 #define RFID2 "2"
 #define RFID3 "3"
 
+// Pins to enable / disable Rfid Readers
+// Set HIGH to enable
+#define ENABLE_RFID1 2
+#define ENABLE_RFID2 3
+#define ENABLE_RFID3 4
+
 String ReceivedCode1 = "";
 String ReceivedCode2 = "";
 String ReceivedCode3 = "";
@@ -72,23 +84,30 @@ void setup()
   // USB Serial
   Serial.begin(SERIAL_SPEED);
   delay(50);
-  Serial.println("<MESSAGE:'Début du setup...'>");
+
+  // Enabling RFID Readers
+  pinMode(ENABLE_RFID1, OUTPUT);
+  digitalWrite(ENABLE_RFID1, HIGH);
+  pinMode(ENABLE_RFID2, OUTPUT);
+  digitalWrite(ENABLE_RFID2, HIGH);
+  pinMode(ENABLE_RFID3, OUTPUT);
+  digitalWrite(ENABLE_RFID3, HIGH);
+  
+  // Switch on BUILD_LED
+  pinMode(BUILD_LED, OUTPUT);
+  
+  // HardWare Serials
   // rfid_reader_1
   Serial1.begin(RFID_SPEED);
   delay(50);
-  Serial.println("<MESSAGE:'Lecteur #1 OK'>");
   //rfid_reader_2
   Serial2.begin(RFID_SPEED);
   delay(50);
-  Serial.println("<MESSAGE:'Lecteur #2 OK'>");
   //rfid_reader_3
   Serial3.begin(RFID_SPEED);
   delay(50);
-  Serial.println("<MESSAGE:'Lecteur #3 OK'>");
   // Flushing all serials now
   Serial.println("<MESSAGE:SETUP_OK>");
-  // Switch on BUILD_LED
-  pinMode(BUILD_LED, OUTPUT);
 }
 
 /***************************************************
@@ -96,9 +115,6 @@ void setup()
  ***************************************************/
 void loop()
 {
-  read_rfid1();
-  read_rfid2();
-  read_rfid3();
   blink_led();
 }
 
@@ -117,40 +133,31 @@ void blink_led() {
 /***************************************************
    reading first RFID reader
  ***************************************************/
-void read_rfid1() {
+void serialEvent1() {
   char c;
-  if (Serial1.available())
-  {
-    readerName = RFID1;
-    c = Serial1.read();
-    decode_tag1(c);
-  }
+  readerName = RFID1;
+  c = Serial1.read();
+  decode_tag1(c);
 }
 
 /***************************************************
    reading second RFID reader
  ***************************************************/
-void read_rfid2() {
+void serialEvent2() {
   char c;
-  if (Serial2.available())
-  {
-    readerName = RFID2;
-    c = Serial2.read();
-    decode_tag2(c);
-  }
+  readerName = RFID2;
+  c = Serial2.read();
+  decode_tag2(c);
 }
 
 /***************************************************
    reading Third RFID reader
  ***************************************************/
-void read_rfid3() {
+void serialEvent3() {
   char c;
-  if (Serial3.available())
-  {
-    readerName = RFID3;
-    c = Serial3.read();
-    decode_tag3(c);
-  }
+  readerName = RFID3;
+  c = Serial3.read();
+  decode_tag3(c);
 }
 
 /***************************************************
