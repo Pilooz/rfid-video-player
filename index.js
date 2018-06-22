@@ -19,9 +19,9 @@ var rfid          = require('./lib/rfid.js');
 var mediaDB       = require('./lib/mediaDB.js');
 
 // RFID Data structure
-var lastRfidData = { tag: "", reader: "" };
+var lastReadData = { code: "", reader: "" };
 var rfidData = {
-	tag: "0110FB663BB7",
+	code: "x",
 	reader: "1"
 };
 
@@ -55,7 +55,7 @@ io.on('connection', function(socket) {
 //------------------------------------------------------------------------
 function sendingMedia() {
   // Emit Socket only if rfid is different of the last reading
-  if (lastRfidData.tag != rfidData.tag ) {  
+  if (lastReadData.code != rfidData.code ) {  
     //io.emit('server.rfidData', rfidData);
     
     // Simulating a search time in the extra super big media database !
@@ -65,32 +65,37 @@ function sendingMedia() {
 
     // if CONFIG.app.simulateSearchTime then timeout this code
     setTimeout(function() {
-      console.log("Tag : #" + rfidData.tag);
-      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.tag, __dirname));
+      console.log("Tag : #" + rfidData.code);
+      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, __dirname));
     }, timeBeforeSendingMedia);
 
-    lastRfidData.tag = rfidData.tag;
+    lastReadData.code = rfidData.code;
   }
 }
 
-// just for POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
-// Send current time to all connected clients
+// 
+// START of Emulation of tag reading .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+// This is just for dev purposes
+//
+if (CONFIG.rfid.behavior == "emulated") {
+  var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
+  var i = 0;
 
-var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
-var i = 0;
+  function sendEachTime() {
+      // // Emit Socket only if rfid is different of the last reading
+      sendingMedia();
+      rfidData.code = testList[i];
+      i++;
+      if (i == testList.length ) i=0;
+  }
 
-function sendEachTime() {
-    // // Emit Socket only if rfid is different of the last reading
-    sendingMedia();
-    rfidData.tag = testList[i];
-    i++;
-    if (i == testList.length ) i=0;
+  // Send current time every 10 secs
+  setInterval(sendEachTime, 10000);
 }
 
-// Send current time every 10 secs
-setInterval(sendEachTime, 10000);
-
-// End of POC .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+//
+// END of Emulation of tag reading .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+//
 
 //------------------------------------------------------------------------
 // Reading Serial Port
