@@ -1,0 +1,21 @@
+module.exports = {
+  // Node Server configuration
+  server : {
+    port : 3000,
+    host : 'localhost'
+  },
+
+  // Serial Port configuration for rfid reads
+  rfid : {
+  	portName : '/dev/cu.usbserial-A603XVZO',
+  	baudRate : 115200,
+    behavior : 'emulated' // 'real' => means that tags come form USB-Serial port, 'emulated' is just for dev (no usb port reading)
+  },
+
+  // Application spcific conf
+  app : {
+    mediaPath : '/videos',
+    simulateSearchTime : false,
+    searchTimeout : 5000
+  }
+}
