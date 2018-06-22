@@ -78,6 +78,7 @@ function sendingMedia() {
 // This is just for dev purposes
 //
 if (CONFIG.rfid.behavior == "emulated") {
+  console.log("The Serial communication with RFID readers is in '" + CONFIG.rfid.behavior + "' mode.");
   var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
   var i = 0;
 
@@ -98,36 +99,38 @@ if (CONFIG.rfid.behavior == "emulated") {
 //
 
 //------------------------------------------------------------------------
-// Reading Serial Port
+// Reading Serial Port (App have to be configure un 'real' mode, see below)
 //------------------------------------------------------------------------
-const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort(CONFIG.rfid.portName, { 
-		autoOpen: true,
-		baudRate: CONFIG.rfid.baudRate
-	});
-// Parser definiton
-const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
+if (CONFIG.rfid.behavior == "real") {
+  const SerialPort = require('serialport');
+  const Readline = SerialPort.parsers.Readline;
+  const port = new SerialPort(CONFIG.rfid.portName, { 
+  		autoOpen: true,
+  		baudRate: CONFIG.rfid.baudRate
+  	});
+  // Parser definiton
+  const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
-// Parsing RFID Tag
-parser.on('data', function(msg){
-	// If data is a tag
-  rfidData.code = rfid.extractTag(msg); 
-  if (rfidData.code != "") {
-    rfidData.reader = rfid.extractReader(msg);  
-    console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
-    sendingMedia();
-  }
-});
+  // Parsing RFID Tag
+  parser.on('data', function(msg){
+  	// If data is a tag
+    rfidData.code = rfid.extractTag(msg); 
+    if (rfidData.code != "") {
+      rfidData.reader = rfid.extractReader(msg);  
+      console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
+      sendingMedia();
+    }
+  });
 
-// Opening serial port, checking for errors
-port.open(function (err) {
-  if (err) {
-    return console.log('Error opening port: ', err.message);
-  } else {
-  	console.log('Reading on ', CONFIG.rfid.portName);
-  }
-});
+  // Opening serial port, checking for errors
+  port.open(function (err) {
+    if (err) {
+      return console.log('Error opening port: ', err.message);
+    } else {
+    	console.log('Reading on ', CONFIG.rfid.portName);
+    }
+  });
+}
 
 //------------------------------------------------------------------------
 // HTTP Server configuration
