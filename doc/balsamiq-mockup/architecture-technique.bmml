@@ -1,0 +1,179 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1183" measuredH="403" mockupW="1133" mockupH="331">
+  <controls>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="343" y="170" w="168" h="128" measuredW="700" measuredH="525" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rotation>180</rotation>
+        <src>https%3A//statics3.seeedstudio.com/product/Seeeduino%2520Mega_01.jpg</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Image" x="638" y="152" w="191" h="146" measuredW="1920" measuredH="1280" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rotation>180</rotation>
+        <src>https%3A//img.audiofanzine.com/images/u/product/normal/raspberry-pi-raspberry-pi-3-model-b-254504.jpg</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Arrow" x="504" y="261" w="141" h="10" measuredW="150" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>2848996</color>
+        <leftArrow>false</leftArrow>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Paragraph" x="504" y="294" w="186" h="103" measuredW="275" measuredH="80" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Envoi%20des%20tags%20lus%20avec%20le%20formalisme%20suivant%20%3A%0A%20%3CTAG%3A%7Bcolor%3Ared%7Dxxx%7Bcolor%7D%3E%3CREADER%3A%7Bcolor%3Agreen%7Dnnn%7Bcolor%7D%3E%0A%20%0A%7Bcolor%3Ared%7Dxxx%7Bcolor%7D%3A%20identifiant%20unique%20du%20tag%0A%7Bcolor%3Agreen%7Dnnn%7Bcolor%7D%3A%20Num%E9ro%20du%20lecteur</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Arrow" x="244" y="274" w="115" h="49" measuredW="150" measuredH="100" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>2848996</color>
+        <direction>bottom</direction>
+        <leftArrow>false</leftArrow>
+        <stroke>solid</stroke>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="__group__" x="90" y="313" w="182" h="90" measuredW="182" measuredH="90" zOrder="4" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="59" y="0" w="123" h="90" measuredW="1144" measuredH="827" zOrder="0" locked="false" isInGroup="13">
+          <controlProperties>
+            <src>https%3A//raw.githubusercontent.com/SeeedDocument/Grove-125KHz_RFID_Reader/master/img/Grove-125KHz_RFID_Reader.jpg</src>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="35" w="-1" h="-1" measuredW="59" measuredH="21" zOrder="1" locked="false" isInGroup="13">
+          <controlProperties>
+            <text>Lecteur%203</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="14" controlTypeID="__group__" x="50" y="189" w="179" h="90" measuredW="179" measuredH="90" zOrder="3" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="56" y="0" w="123" h="90" measuredW="1144" measuredH="827" zOrder="0" locked="false" isInGroup="14">
+          <controlProperties>
+            <src>https%3A//raw.githubusercontent.com/SeeedDocument/Grove-125KHz_RFID_Reader/master/img/Grove-125KHz_RFID_Reader.jpg</src>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="35" w="-1" h="-1" measuredW="59" measuredH="21" zOrder="1" locked="false" isInGroup="14">
+          <controlProperties>
+            <text>Lecteur%202</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="15" controlTypeID="__group__" x="96" y="94" w="182" h="90" measuredW="182" measuredH="90" zOrder="2" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="59" y="0" w="123" h="90" measuredW="1144" measuredH="827" zOrder="0" locked="false" isInGroup="15">
+          <controlProperties>
+            <src>https%3A//raw.githubusercontent.com/SeeedDocument/Grove-125KHz_RFID_Reader/master/img/Grove-125KHz_RFID_Reader.jpg</src>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="35" w="-1" h="-1" measuredW="56" measuredH="21" zOrder="1" locked="false" isInGroup="15">
+          <controlProperties>
+            <text>Lecteur%201</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Arrow" x="215" y="231" w="147" h="10" measuredW="150" measuredH="100" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>2848996</color>
+        <curvature>-1</curvature>
+        <direction>top</direction>
+        <leftArrow>false</leftArrow>
+        <stroke>solid</stroke>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Arrow" x="255" y="124" w="106" h="74" measuredW="150" measuredH="100" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>1</backgroundAlpha>
+        <color>2848996</color>
+        <curvature>-1</curvature>
+        <direction>top</direction>
+        <leftArrow>false</leftArrow>
+        <rightArrow>true</rightArrow>
+        <stroke>solid</stroke>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::RoundButton" x="272" y="160" w="56" h="19" measuredW="32" measuredH="32" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>2848996</borderColor>
+        <color>16777215</color>
+        <shape>roundRect</shape>
+        <size>11</size>
+        <text>Serial%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::RoundButton" x="257" y="226" w="56" h="19" measuredW="32" measuredH="32" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>2848996</borderColor>
+        <color>16777215</color>
+        <shape>roundRect</shape>
+        <size>11</size>
+        <text>Serial%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::RoundButton" x="266" y="280" w="56" h="19" measuredW="32" measuredH="32" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>2848996</borderColor>
+        <color>16777215</color>
+        <shape>roundRect</shape>
+        <size>11</size>
+        <text>Serial%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::RoundButton" x="540" y="257" w="56" h="19" measuredW="32" measuredH="32" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>2848996</borderColor>
+        <color>16777215</color>
+        <shape>roundRect</shape>
+        <size>11</size>
+        <text>Serial%200</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Image" x="950" y="135" w="233" h="181" measuredW="488" measuredH="417" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/bkgTablettes.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Arrow" x="823" y="220" w="127" h="10" measuredW="150" measuredH="100" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <leftArrow>false</leftArrow>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Paragraph" x="823" y="238" w="112" h="85" measuredW="275" measuredH="80" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Affichage%20et/ou%0Adiffusion%20sonore.%0A%20%0AEcran%20ou%20tablette</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Paragraph" x="687" y="96" w="112" h="64" measuredW="275" measuredH="80" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>*Raspberry%20PI*%0AServeur%20NodeJS%0AFron-office%20+%20Back-office%20de%20contribution</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Paragraph" x="359" y="94" w="139" h="74" measuredW="275" measuredH="80" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>*Arduino/Seeeduino%20MEGA*%0ALecture%20et%20d%E9codage%20des%20tags%20RFID</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Paragraph" x="60" y="72" w="218" h="24" measuredW="275" measuredH="80" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>*Lecteurs%20RFID%20Grove%20125KHz*</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Paragraph" x="961" y="96" w="213" h="24" measuredW="275" measuredH="80" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>*Tablette%20ou%20smartphone*</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
