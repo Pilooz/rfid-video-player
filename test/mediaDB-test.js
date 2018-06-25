@@ -3,12 +3,15 @@
 
 	Run with 'npm test' or 'npm run autotest'
 */
+var fs = require('fs');
 
 // Mocking up data in keywords, and media
 var db_keywords   = require('../data/keywords.js.sample'),
 	db_media      = require('../data/media.js.sample');
 
 var should = require('chai').should(),
+	expect = require('chai').expect,
+
     mediaDB = require('../lib/mediaDB'),
     buildKeywordList = mediaDB.buildKeywordList,
     buildMediaList = mediaDB.buildMediaList,
@@ -20,7 +23,8 @@ var should = require('chai').should(),
     msgWait = mediaDB.waitingMedia,
     msgNotFound = mediaDB.mediaNotFoundMedia,
     msgNoTag = mediaDB.noTagAssocMedia,
-    msgSearch = mediaDB.searchingMedia;
+    msgSearch = mediaDB.searchingMedia,
+    saveDB = mediaDB.saveDB;
 
 describe('#buildKeywordList', function() {
   var a1 = buildKeywordList(cod1, db_keywords),
@@ -211,4 +215,29 @@ describe('#Service Message msgSearch', function() {
 		msgSearch().uri.should.be.equal('/videos/messages/searching.mp4');
 	});
 });
+
+describe('#saveDB testing', function() {
+	it('creates a .sav file in "datatmp" directory', function() {
+		// var f = "./datatmp/keywords.test.js";
+		// fs.exists(f,function(exists){
+		// 	if(!exists) {
+		// 		fs.open(f, 'w', function(err, fd) {
+		// 		    if (err) {
+		// 		        throw 'error opening file: ' + err;
+		// 		    }
+		// 			fs.writeFile(f, 'test content!', function (err) {
+		// 			  if (err) throw err;
+		// 			  console.log('Saved!');
+		// 			});
+		// 		}); 
+		// 		// fs.unlink(f, function (err) {
+		// 		//   if (err) throw err;
+		// 		//   console.log('File deleted!');
+		// 		// }); 
+		// 	}
+		// });
+		//expect(saveDB(f, db_keywords)).to.Throw();
+	});
+});
+
 

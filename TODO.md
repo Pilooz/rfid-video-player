@@ -29,15 +29,31 @@
     + (7min) factoriser le header et footer HTML pour ré-emploi.
     + (1h) sur /contrib,  un bouton pour enregistrer du son/ de la vidéo (champ de type file avec un mime pris en charge par l'os du device)
     + (1h) sur /contrib ajout de la liste de mots clé pour le lier au contenu sonore/video
-    N (2h) voir json_editor ou faire un mini framework CRUD json ?
+    x (2h) voir json_editor ou faire un mini framework CRUD json ?
     + (1h) puis enregistrement dans les fichiers json.
          -> un tag - un/des mot(s) clé
          -> Un contenu - Un /des mot(s)
-    - Puis recharger la database des contenus
+    + Puis recharger la database des contenus
+    + Renommer les fichiers uploadés correctement
+    + Règler le problème de droits d'écriture de mediaDB dans le repertoire 'data/'
+    - Sécuriser les données du formualaires (client et serveur )
  
-	? modifier les structures json pour ajouter la notion de "reader" 
-    ? gérer un id unique de session pour chaque de vice connecté par socket.
+	x modifier les structures json pour ajouter la notion de "reader" 
+    x gérer un id unique de session pour chaque de vice connecté par socket.
 
     - Faire une autre index-cadavre-exquis.ejs qui gère ce cas de figure et le router correctement côté serveur sur / en fonction d'un paramétrage global de l'aaplication : 
         CADAVRE_EXQUIS=true; 
         NUM_READER=3;
+    + (5 min) Paramétrage dans fichier de config OK
+
+=> test unitaires sur mediaDB.js à compléter
+
+=>  Raspberry PI
+    - Installer une distro (Noob ? Raspbian ?)
+    - redescendre l'application
+    - monter un point d'accès réseau wifi sur le raspberry
+    - connecter une tablette et tester 
+    - alimenter tout ça correctement
+    - prévoir une paire d'enceinte pour sortir le son de la tablette (éventuellement bluetooth mais attention au compatibilités avec le raspberry)
+
+

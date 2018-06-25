@@ -2,7 +2,8 @@
 *.pyc
 
 # directories
-videos/*.*
+videos/*
 data/*.js
+data/sav/*.sav
 log/*
 config/*.js
