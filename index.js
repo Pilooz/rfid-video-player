@@ -12,11 +12,11 @@ var bodyParser		= require('body-parser');
 var path          = require('path');
 var formidable    = require('formidable'); // File upload
 
+// Timout to simulate searching, if needed by config.
+var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
+
 // Rfid parsing functions
 var rfid          = require('./lib/rfid.js');
-
-// Media DB functions
-var mediaDB       = require('./lib/mediaDB.js');
 
 // RFID Data structure
 var lastReadData = { code: "", reader: "" };
@@ -25,8 +25,15 @@ var rfidData = {
 	reader: "1"
 };
 
-// Timout to simulate searching, if needed by config.
-var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
+// Databases
+var db_keys   = require('./data/keywords.js');
+var db_m      = require('./data/media.js');
+
+// Media DB functions
+var mediaDB       = require('./lib/mediaDB.js');
+
+// Init media functions with databases
+mediaDB.init(db_keys, db_m);
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
