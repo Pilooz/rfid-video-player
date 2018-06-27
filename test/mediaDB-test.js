@@ -22,7 +22,8 @@ var should = require('chai').should(),
     msgNoTag = mediaDB.noTagAssocMedia,
     msgSearch = mediaDB.searchingMedia,
     saveDB = mediaDB.saveDB,
-    addRfidCode = mediaDB.addRfidCode;
+    addRfidCode = mediaDB.addRfidCode,
+    getKeyword = mediaDB.getKeyword;
 
 // Mocking up data in keywords, and media
 var db_keywords = require('../data/keywords.js.sample'),
@@ -244,6 +245,34 @@ describe('#saveDB testing', function() {
 	});
 });
 
+describe('#getKeyword function', function(){
+	var myKey = getKeyword("key1");
+	['keyword', 'codes'].forEach(function(p){
+		it('retrieves first keyword with "'+p+'" property', function() {
+			myKey.should.have.property(p);
+		});
+	});
+	it('retrieves key1 properties', function() {
+		myKey.keyword.should.be.equal("key1");
+		myKey.codes.should.have.lengthOf(3);
+
+	});
+
+	it('retrieves one of all keyword', function() {
+		myKey = getKeyword("key2");
+		myKey.keyword.should.be.equal("key2");
+		myKey.codes.should.have.lengthOf(2);
+	});
+	
+	it('retrieves last keyword', function() {
+		myKey = getKeyword("key4");
+		myKey.keyword.should.be.equal("key4");
+		myKey.codes.should.have.lengthOf(1);
+
+	});
+	
+});
+
 describe('#DB adding Rfid Code without dupplicates the couple {keyw, code} when key exists', function() {
 	it('adds an existing code and key', function() {
 		// Unique entry by keywords
@@ -256,22 +285,53 @@ describe('#DB adding Rfid Code without dupplicates the couple {keyw, code} when 
 		// Unique entry by keywords
 		db_keywords = addRfidCode("coderfid4", "key1");
 		db_keywords.keywordslist.should.have.lengthOf(4);
-		var myKey = "";
-		 db_keywords.keywordslist.forEach(function(k){
-		 	if(k.keyword == "key1") {
-		 		myKey = k;
-		 		return false;
-		 	}
-		});
+		var myKey = getKeyword("key1");
 		myKey.codes.should.have.lengthOf(4);
 	});
 
 	it('adds an existing code and a new key', function() {
 		// Unique entry by keywords
-		db_keywords.keywordslist.should.have.lengthOf(4);
 		db_keywords = addRfidCode("coderfid4", "key5");
 		db_keywords.keywordslist.should.have.lengthOf(5);
-		console.log(JSON.stringify(db_keywords, null, 4));
+	});
+
+	it('adds an new code and a existing key', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode("coderfid5", "key1");
+		db_keywords.keywordslist.should.have.lengthOf(5);
+	});
+
+	it('adds an new code and a new key', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode("coderfid6", "key6");
+		db_keywords.keywordslist.should.have.lengthOf(6);
+		//console.log(JSON.stringify(db_keywords, null, 4))
+	});
+
+	it('Trying to add a zero length key (no modifications)', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode("coderfid6", "");
+		db_keywords.keywordslist.should.have.lengthOf(6);
+	});
+
+	it('Trying to add an undefined key (no modifications)', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode("coderfid6", undefined);
+		db_keywords.keywordslist.should.have.lengthOf(6);
+	});
+
+	it('Trying to add an undefined code (no modifications)', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode(undefined, "key1");
+		var myKey = getKeyword("key1");
+		myKey.codes.should.have.lengthOf(5);
+	});
+
+	it('Trying to add an zero length code (no modifications)', function() {
+		// Unique entry by keywords
+		db_keywords = addRfidCode("", "key1");
+		var myKey = getKeyword("key1");
+		myKey.codes.should.have.lengthOf(5);
 	});
 
 });
