@@ -40,7 +40,7 @@ mediaDB.init(db_keys, db_m);
 // Init Socket to transmit Serial data to HTTP client
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
-
+    console.log("New client is connected : " + socket.id );
     // Emit the service message to client : by defaut, playing "waiting video"
     socket.emit('server.message', mediaDB.waitingMedia());
     
@@ -204,11 +204,9 @@ router.all('/*', function (req, res, next) {
     form.parse(req, function (err, fields, files) {
        // Let the media library do the rest of the job !
       mediaDB.newMedia(fields, files);
-      res.write('File uploaded ! ');
-      res.end();
     });
-
-  //res.render('index', { data: httpRequests });
+  // Routing to index
+  res.render('index', { data: httpRequests });
 });
 
 //-----------------------------------------------------------------------------
