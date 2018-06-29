@@ -1,5 +1,6 @@
 global.__basedir  = __dirname;
 var CONFIG        = require('./config/config.js');
+
 var app 			    = require('express')();
 var express			  = require('express');
 var router        = express.Router();
@@ -26,8 +27,8 @@ var rfidData = {
 };
 
 // Databases
-var db_keys   = require('./data/keywords.js');
-var db_m      = require('./data/media.js');
+var db_keys   = require(CONFIG.app.dbPath + '/keywords.js');
+var db_m      = require(CONFIG.app.dbPath + '/media.js');
 
 // Media DB functions
 var mediaDB       = require('./lib/mediaDB.js');
