@@ -4,11 +4,11 @@
   "description": "Jukebox Video Player - Rfid detection driven",
   "main": "index.js",
   "directories": {
-    "test": "tests"
+    "test": "test"
   },
   "scripts": {
     "test": "mocha",
-    "autotest": "./node_modules/.bin/supervisor -q -n exit -x ./node_modules/.bin/mocha -- -b"
+    "autotest": "./node_modules/.bin/supervisor -q -n exit -x ./node_modules/.bin/mocha -- -b --watch ./test/**/*test.js ./lib/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Pilooz/rfid-video-player#readme",
   "dependencies": {
+    "autotest": "^0.2.6",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.1",
     "cookie-parser": "^1.4.3",
