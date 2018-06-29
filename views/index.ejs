@@ -17,6 +17,7 @@ $(document).ready(function(){
     var media = $('#embeded-video');
     var socket = io();
     var waitingStatus = false;
+    var app_mode = "<%=data.app.mode%>";
 
     // ------------------------------------------------------------------
     // Socket listening
@@ -48,8 +49,8 @@ $(document).ready(function(){
     }
 
     // Playing Media callback 
-    function playMedia(v) {
-      console.log(v);
+    function playMedia(m) {
+      console.log(m);
       // Hide service message
       $('#serviceMessage').hide();
 
@@ -57,32 +58,32 @@ $(document).ready(function(){
       media.stop();
 
       // chaging media source
-      media.attr("src", v.uri);
+      media.attr("src", m.uri);
 
       // Looping attribute
-      if (v.loop == "on") {
-        media.attr("loop", v.loop);
+      if (m.loop == "on") {
+        media.attr("loop", m.loop);
       } else { 
         media.removeAttr("loop"); 
       }
 
       // Autoplay Attribute
-      if (v.autoplay == "on")  {
-        media.attr("autoplay", v.autoplay); 
+      if (m.autoplay == "on")  {
+        media.attr("autoplay", m.autoplay); 
       } else { 
         media.removeAttr("autoplay"); 
       }
 
       // Controls attribute
-      if (v.controls == "on") {
-        media.attr("controls", v.controls);
+      if (m.controls == "on") {
+        media.attr("controls", m.controls);
       } else { 
         media.removeAttr("controls"); 
       }
       // Put status and tag as attributes too
-      media.attr("status", v.status);
-      media.attr("tag", v.tag);
-      media.attr("filename", v.filename);
+      media.attr("status", m.status);
+      media.attr("tag", m.tag);
+      media.attr("filename", m.filename);
 
     }
 
