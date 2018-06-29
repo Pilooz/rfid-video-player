@@ -144,8 +144,12 @@ if (CONFIG.rfid.behavior == "real") {
 // HTTP Server configuration
 //------------------------------------------------------------------------
 server.listen( httpPort, '0.0.0.0', function( ) {
+  console.log( '------------------------------------------------------------' );
   console.log( 'server Ip Address is %s', ip.address() );	 		
   console.log( 'it is listening at port %d', httpPort );
+  console.log( '------------------------------------------------------------' );
+  console.log( 'Working mode : ' + CONFIG.app.mode);
+  console.log( '------------------------------------------------------------' );
 });
 
 // view engine setup
@@ -176,6 +180,7 @@ var httpRequests = {};
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
+  dataForTemplate.mode = CONFIG.app.mode;
   
   next(); // pass control to the next handler
 })

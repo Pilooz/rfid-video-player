@@ -18,6 +18,9 @@ $(document).ready(function(){
     var socket = io();
     var waitingStatus = false;
 
+    // ------------------------------------------------------------------
+    // Socket listening
+    // ------------------------------------------------------------------
     // Receiving new media attributes by socket.
     socket.on('server.rfidData', function(data) {
         addMessage("rfid #" + data.tag + " on reader #" + data.reader);
@@ -37,6 +40,9 @@ $(document).ready(function(){
     // Media service
     socket.on('server.play-media', playMedia);
 
+    // ------------------------------------------------------------------
+    // Media handling
+    // ------------------------------------------------------------------
     function addMessage(message) {
         console.log(message);
     }
@@ -80,6 +86,9 @@ $(document).ready(function(){
 
     }
 
+    // ------------------------------------------------------------------
+    // End media event handling
+    // ------------------------------------------------------------------
     // Adding a listener on video ending
     media.on('ended',function(){
       var messageTag = "";
