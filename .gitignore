@@ -1,5 +1,5 @@
 # Compiled classes
-*.pyc
+node_modules/
 
 # directories
 videos/*
