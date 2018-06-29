@@ -7,3 +7,4 @@ data/*.js
 data/sav/*.sav
 log/*
 config/*.js
+test/datatmp/*
