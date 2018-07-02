@@ -49,11 +49,13 @@
 => test unitaires sur mediaDB.js à compléter
 
 =>  Raspberry PI
-    - Installer une distro (Noob ? Raspbian ?)
-    - redescendre l'application
-    - monter un point d'accès réseau wifi sur le raspberry
+    + (3 h) Installer une distro (Noob ? Raspbian ?)
+    + (2 min) redescendre l'application
+    + (1 h) monter un point d'accès réseau wifi sur le raspberry
+    + (2 min) Démarrer automatiquement le service node (dans /etc/rc.local)
     - connecter une tablette et tester 
     - alimenter tout ça correctement
     - prévoir une paire d'enceinte pour sortir le son de la tablette (éventuellement bluetooth mais attention au compatibilités avec le raspberry)
+    - booter le raspberry pi en mode command line.
 
 
