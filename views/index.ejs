@@ -17,7 +17,12 @@ $(document).ready(function(){
     var media = $('#embeded-video');
     var socket = io();
     var waitingStatus = false;
-    var app_mode = "<%=data.app.mode%>";
+    var app_mode = "<%=data.mode%>";
+    var numReaders = eval(<%=data.numReaders%>);
+    var mediaList = {};
+    // Init tag/reader/media list
+    for(var i=0; i < numReaders; i++) mediaList[i] = {media:{}};
+    var playingIndex = 0; // Index in mediaList of the media currently playing
 
     // ------------------------------------------------------------------
     // Socket listening
@@ -25,8 +30,6 @@ $(document).ready(function(){
     // Receiving new media attributes by socket.
     socket.on('server.rfidData', function(data) {
         addMessage("rfid #" + data.tag + " on reader #" + data.reader);
-        console.log(data);
-
         // Respond with a message including this clients' id sent from the server
         socket.emit('client.acknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
     });
@@ -39,7 +42,38 @@ $(document).ready(function(){
     // Service messages (media)
     socket.on('server.message', playMedia);
     // Media service
-    socket.on('server.play-media', playMedia);
+    socket.on('server.play-media', function(m) {
+      //
+      // If the mode is 'synchrone', we have to wait that all readers have read a tag 
+      // before chining media.
+      //
+      if (app_mode == "synchrone") {
+        mediaList[m.reader-1].media = m;
+
+        var canPlay = 0;
+        for(var i=0; i < numReaders; i++) {
+          if (mediaList[i].media.tag) {
+            // If the media is defined, increment canPlay
+            canPlay++;
+          }
+          console.log(mediaList[i]);
+        }     
+
+        // Playing all media now if all media are defined
+        if (canPlay == numReaders) {
+          // Starting to play first media
+          playMedia(mediaList[playingIndex].media);
+          // the second one is driven by media.on 'ended' function below
+          // Because we need to start when previous is finished
+          playingIndex++;
+        }
+      } else {
+        //
+        // Asynchrone mode : playing media without waiting all the readers have decoded something.
+        //
+        playMedia(m);
+      }
+    });
 
     // ------------------------------------------------------------------
     // Media handling
@@ -84,6 +118,7 @@ $(document).ready(function(){
       media.attr("status", m.status);
       media.attr("tag", m.tag);
       media.attr("filename", m.filename);
+      media.attr("reader", m.reader);
 
     }
 
@@ -114,12 +149,16 @@ $(document).ready(function(){
         $('#serviceMessage').fadeIn('slow');
       } 
 
-      // Emitting endMedia out server. 
-      // At least the service message if any, stays for 5 seconds.
-      setTimeout(function() {
-        $('#serviceMessage').hide();
-        socket.emit('client.endMedia', { message: messageTag });
-      }, tempo);
+      if (app_mode == "synchrone") {
+
+      } else {
+        // Emitting endMedia to the server. 
+        // At least the service message if any, stays for 5 seconds.
+        setTimeout(function() {
+          $('#serviceMessage').hide();
+          socket.emit('client.endMedia', { message: messageTag });
+        }, tempo);
+      }
       
     });
 

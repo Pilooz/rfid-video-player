@@ -74,7 +74,7 @@ function sendingMedia() {
     // if CONFIG.app.simulateSearchTime then timeout this code
     setTimeout(function() {
       console.log("Tag : #" + rfidData.code);
-      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, __dirname));
+      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));
     }, timeBeforeSendingMedia);
 
     lastReadData.code = rfidData.code;
@@ -126,6 +126,7 @@ if (CONFIG.rfid.behavior == "real") {
     if (rfidData.code != "") {
       rfidData.reader = rfid.extractReader(msg);  
       console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
+      io.emit('server.rfidData', {tag: rfidData.code, reader: rfidData.reader});
       sendingMedia();
     }
   });
@@ -181,7 +182,8 @@ router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
   dataForTemplate.mode = CONFIG.app.mode;
-  
+  dataForTemplate.numReaders = CONFIG.rfid.numReaders;
+
   next(); // pass control to the next handler
 })
 
