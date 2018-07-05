@@ -129,28 +129,28 @@ describe('#chooseMedia', function() {
 	});
 
   	var o = chooseMedia(cod1);
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('object1 returned by "chooseMedia" should have property "'+p+'"', function() {
 			o.should.have.property(p);
 		});
 	});
 
   	o = chooseMedia(cod2);
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('object2 returned by "chooseMedia" should have property "'+p+'"', function() {
 			o.should.have.property(p);
 		});
 	});
 
   	o = chooseMedia(cod3);
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('object3 returned by "chooseMedia" should have property "'+p+'"', function() {
 			o.should.have.property(p);
 		});
 	});
 
   	o = chooseMedia();
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('Null object returned by "chooseMedia" should have property "'+p+'"', function() {
 			o.should.have.property(p);
 		});
@@ -158,6 +158,17 @@ describe('#chooseMedia', function() {
 	it('Null object returned by "chooseMedia" should give "msgNoTag" object', function() {
 		o.should.be.equal(msgNoTag());
 	});
+
+	it('returns a reader number', function(){
+		o = chooseMedia(cod4, "1234", "");
+		o.reader.should.be.equal("1234");
+	});
+
+	it('returns a filname path by default', function(){
+		o = chooseMedia(cod4, "", "");
+		o.filename.should.be.equal("/videos/video4.mp4");
+	});
+
 });
 
 // 
@@ -172,7 +183,7 @@ describe('#Service Message msgWait', function() {
 		msgWait().should.be.an('object');
 	});
 
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('obbject should have property "'+p+'"', function() {
 			msgWait().should.have.property(p);
 		});
@@ -192,7 +203,7 @@ describe('#Service Message msgNotFound', function() {
 		msgNotFound().should.be.an('object');
 	});
 
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('obbject should have property "'+p+'"', function() {
 			msgNotFound().should.have.property(p);
 		});
@@ -212,7 +223,7 @@ describe('#Service Message msgNoTag', function() {
 		msgNoTag().should.be.an('object');
 	});
 
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('obbject should have property "'+p+'"', function() {
 			msgNoTag().should.have.property(p);
 		});
@@ -232,7 +243,7 @@ describe('#Service Message msgSearch', function() {
 		msgSearch().should.be.an('object');
 	});
 
-	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag'].forEach(function(p){
+	['uri', 'loop', 'autoplay', 'controls', 'status', 'tag', 'reader'].forEach(function(p){
 		it('obbject should have property "'+p+'"', function() {
 			msgSearch().should.have.property(p);
 		});
