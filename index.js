@@ -73,7 +73,7 @@ function sendingMedia() {
 
     // if CONFIG.app.simulateSearchTime then timeout this code
     setTimeout(function() {
-      console.log("Tag : #" + rfidData.code);
+      console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
       io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));
     }, timeBeforeSendingMedia);
 
@@ -87,13 +87,15 @@ function sendingMedia() {
 //
 if (CONFIG.rfid.behavior == "emulated") {
   console.log("The Serial communication with RFID readers is in '" + CONFIG.rfid.behavior + "' mode.");
-  var testList = ["1234567890ABC", "0110FB661A96", "0110FB65F976", "0110FB5DEB5C", "0110FB5DF047"];
+  //var testList = [ {tag:"1234567890ABC", reader:1}, {tag: "0110FB661A96", reader:2}, {tag: "0110FB65F976", reader:3}, {tag: "0110FB5DEB5C", reader:1}, {tag: "0110FB5DF047", reader:2}];
+  var testList = [ {tag:"coderfid1", reader:1}, {tag: "coderfid2", reader:2}, {tag: "coderfid3", reader:3}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
   var i = 0;
 
   function sendEachTime() {
       // // Emit Socket only if rfid is different of the last reading
+      rfidData.code = testList[i].tag;
+      rfidData.reader = testList[i].reader;
       sendingMedia();
-      rfidData.code = testList[i];
       i++;
       if (i == testList.length ) i=0;
   }
@@ -150,6 +152,7 @@ server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( 'it is listening at port %d', httpPort );
   console.log( '------------------------------------------------------------' );
   console.log( 'Working mode : ' + CONFIG.app.mode);
+  console.log( 'RFID reading is ' + CONFIG.rfid.behavior);
   console.log( '------------------------------------------------------------' );
 });
 
