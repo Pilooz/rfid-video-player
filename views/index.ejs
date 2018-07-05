@@ -19,7 +19,7 @@ $(document).ready(function(){
     var waitingStatus = false;
     var app_mode = "<%=data.mode%>";
     var numReaders = eval(<%=data.numReaders%>);
-    var mediaList = {};
+    var mediaList = Array();
     // Init tag/reader/media list
     for(var i=0; i < numReaders; i++) mediaList[i] = {media:{}};
     var playingIndex = 0; // Index in mediaList of the media currently playing
@@ -48,7 +48,9 @@ $(document).ready(function(){
       // before chining media.
       //
       if (app_mode == "synchrone") {
-        mediaList[m.reader-1].media = m;
+        var index = m.reader-1;
+        console.log("index = " + index);
+        mediaList[index].media = m;
 
         var canPlay = 0;
         for(var i=0; i < numReaders; i++) {
@@ -65,7 +67,7 @@ $(document).ready(function(){
           playMedia(mediaList[playingIndex].media);
           // the second one is driven by media.on 'ended' function below
           // Because we need to start when previous is finished
-          playingIndex++;
+          //playingIndex++;
         }
       } else {
         //
@@ -84,7 +86,7 @@ $(document).ready(function(){
 
     // Playing Media callback 
     function playMedia(m) {
-      console.log(m);
+      console.log("playing " + JSON.stringify(m));
       // Hide service message
       $('#serviceMessage').hide();
 
@@ -141,6 +143,15 @@ $(document).ready(function(){
         case "content":
         // this is the normal way to play media
         tempo = 0;
+        // If synchrone mode, we have to playing next media !
+        if ( app_mode == "synchrone") {
+          if (playingIndex < numReaders) { // Playing next media
+            playingIndex++;
+            playMedia(mediaList[playingIndex].media);
+            // So exit while the playList is not finished !
+            return false;
+          }
+        }
       }
 
       // display mesage
@@ -149,16 +160,12 @@ $(document).ready(function(){
         $('#serviceMessage').fadeIn('slow');
       } 
 
-      if (app_mode == "synchrone") {
-
-      } else {
-        // Emitting endMedia to the server. 
-        // At least the service message if any, stays for 5 seconds.
-        setTimeout(function() {
-          $('#serviceMessage').hide();
-          socket.emit('client.endMedia', { message: messageTag });
-        }, tempo);
-      }
+      // Emitting endMedia to the server. 
+      // At least the service message if any, stays for 5 seconds.
+      setTimeout(function() {
+        $('#serviceMessage').hide();
+        socket.emit('client.endMedia', { message: messageTag });
+      }, tempo);
       
     });
 
