@@ -41,9 +41,7 @@
 	x modifier les structures json pour ajouter la notion de "reader" 
     x gérer un id unique de session pour chaque de vice connecté par socket.
 
-    - Faire une autre index-cadavre-exquis.ejs qui gère ce cas de figure et le router correctement côté serveur sur / en fonction d'un paramétrage global de l'aaplication : 
-        CADAVRE_EXQUIS=true; 
-        NUM_READER=3;
+    + (4 h) Développer un mode synchrone qui attend que tous les lecteurs soient pleins pour enclencher une playlist.
     + (5 min) Paramétrage dans fichier de config OK
 
 => test unitaires sur mediaDB.js à compléter
