@@ -5,14 +5,15 @@
 
       <div class="row">
         <div class="col-md-12">
-        <video src="#" id="embeded-video" width="100%" height="100%"></video>
-        <div id="serviceMessage"></div>
+          <a href="#" id="resetButton" style="border:red 1px solid;position:absolute;top:0;right:0;width:50px;height:50px;z-index:10000"></a>
+          <video src="#" id="embeded-video" width="100%" height="100%"></video>
+          <div id="serviceMessage"></div>
         </div>
       </div>
 
       </div>  
 
-	<script type='text/javascript'> 
+  <script type='text/javascript'> 
 $(document).ready(function(){
     var media = $('#embeded-video');
     var socket = io();
@@ -20,27 +21,59 @@ $(document).ready(function(){
     var app_mode = "<%=data.mode%>";
     var numReaders = eval(<%=data.numReaders%>);
     var mediaList = Array();
-    // Init tag/reader/media list
-    for(var i=0; i < numReaders; i++) mediaList[i] = {media:{}};
-    var playingIndex = 0; // Index in mediaList of the media currently playing
+    var playingIndex; // Index in mediaList of the media currently playing
+
+    function getPlayListLength() {
+      // Counting how many media we have in playlist
+      var nb = 0;
+      for(var i=0; i < numReaders; i++) {
+        if (mediaList[i].media.tag) {
+          // If the media is defined, increment canPlay
+          nb++;
+        }
+        console.log(mediaList[i]);
+      }
+      return nb;
+    }
+
+    function setPlaylistItem(i, m) {
+      mediaList[i].media = m;
+    }
+
+    //
+    // Re-init the playlist : useful in synchrone mode
+    //
+    function initPlaylist() {
+      // Init tag/reader/media list
+      console.log("Playlist is getting empty...");
+      for(var i=0; i < numReaders; i++) mediaList[i] = {media:{}};
+      playingIndex = 0;
+      console.log("done !");
+      // Saying to server we re-inited the client.
+      socket.emit('client.endMedia', { message: "empty playlist from user action !" });
+    }
+
+    // Hidden reset button
+    $('#resetButton').on('click', function(){
+      initPlaylist();
+    });
 
     // ------------------------------------------------------------------
     // Socket listening
     // ------------------------------------------------------------------
     // Receiving new media attributes by socket.
     socket.on('server.rfidData', function(data) {
-        addMessage("rfid #" + data.tag + " on reader #" + data.reader);
+        addMessage("<server.rfidData> rfid #" + data.tag + " on reader #" + data.reader);
         // Respond with a message including this clients' id sent from the server
         socket.emit('client.acknowledgment', {message: "Ok! Client is dealing with : #" + data.tag});
     });
-    // debug function
-    socket.on('server.time', function(data) {
-        addMessage(data.time);
-    });
+
     // Dealing with errors
     socket.on('server.error', console.error.bind(console));
+
     // Service messages (media)
     socket.on('server.message', playMedia);
+
     // Media service
     socket.on('server.play-media', function(m) {
       //
@@ -49,26 +82,22 @@ $(document).ready(function(){
       //
       if (app_mode == "synchrone") {
         var index = m.reader-1;
-        console.log("index = " + index);
-        mediaList[index].media = m;
+        var countMedia = 0;
 
-        var canPlay = 0;
-        for(var i=0; i < numReaders; i++) {
-          if (mediaList[i].media.tag) {
-            // If the media is defined, increment canPlay
-            canPlay++;
-          }
-          console.log(mediaList[i]);
-        }     
-
-        // Playing all media now if all media are defined
-        if (canPlay == numReaders) {
+        setPlaylistItem(index, m);
+        // Counting after adding last media
+        countMedia = getPlayListLength();
+        if (countMedia < numReaders) {
+          // TODO : when media are video, we need to display this comment above to the user.     
+          console.log("waiting for " + (numReaders - countMedia) + " more...");
+         } else {
           // Starting to play first media
           playMedia(mediaList[playingIndex].media);
+          playingIndex++;
           // the second one is driven by media.on 'ended' function below
-          // Because we need to start when previous is finished
-          //playingIndex++;
+          // Because we need to start when previous is finished          
         }
+
       } else {
         //
         // Asynchrone mode : playing media without waiting all the readers have decoded something.
@@ -146,10 +175,14 @@ $(document).ready(function(){
         // If synchrone mode, we have to playing next media !
         if ( app_mode == "synchrone") {
           if (playingIndex < numReaders) { // Playing next media
-            playingIndex++;
             playMedia(mediaList[playingIndex].media);
+            playingIndex++;
             // So exit while the playList is not finished !
             return false;
+          } else  {
+            // The playlist is finished ! 
+            console.log("--------The Playlist has finished ! --------");
+            initPlaylist();
           }
         }
       }
@@ -169,7 +202,12 @@ $(document).ready(function(){
       
     });
 
+    // ------------------------------------------------------------------
+    // Inti the client at begining, when loading is done.
+    // ------------------------------------------------------------------
+    initPlaylist();
+
 }); // $(document).ready()
 
-	</script>
+  </script>
 <%- include('footer', {data: data}) %>

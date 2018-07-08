@@ -1,15 +1,15 @@
 global.__basedir  = __dirname;
 var CONFIG        = require('./config/config.js');
 
-var app 			    = require('express')();
-var express			  = require('express');
+var app           = require('express')();
+var express       = require('express');
 var router        = express.Router();
-var server 			  = require('http').createServer(app);
-const httpPort		= CONFIG.server.port;
+var server        = require('http').createServer(app);
+const httpPort    = CONFIG.server.port;
 var io            = require('socket.io').listen(server);
-var ip 				    = require('ip');
-var cookieParser	= require('cookie-parser');
-var bodyParser		= require('body-parser');
+var ip            = require('ip');
+var cookieParser  = require('cookie-parser');
+var bodyParser    = require('body-parser');
 var path          = require('path');
 var formidable    = require('formidable'); // File upload
 
@@ -21,10 +21,7 @@ var rfid          = require('./lib/rfid.js');
 
 // RFID Data structure
 var lastReadData = { code: "", reader: "" };
-var rfidData = {
-	code: "x",
-	reader: "1"
-};
+var rfidData     = { code: "x", reader: "1"};
 
 // Databases
 var db_keys   = require(CONFIG.app.dbPath + '/keywords.js');
@@ -52,6 +49,9 @@ io.on('connection', function(socket) {
     // When receiving endMedia, send mediaDB.waitingMedia()
     socket.on('client.endMedia', function(data){
       console.log(data.message);
+      // reset lastReadData and rfidData, because we may reuse the same tag
+      lastReadData = { code: "", reader: "" };
+      rfidData     = { code: "x", reader: "1"};
       socket.emit('server.message', mediaDB.waitingMedia());
     });
 
@@ -63,9 +63,12 @@ io.on('connection', function(socket) {
 //------------------------------------------------------------------------
 function sendingMedia() {
   // Emit Socket only if rfid is different of the last reading
-  if (lastReadData.code != rfidData.code ) {  
-    //io.emit('server.rfidData', rfidData);
+  console.log("lastReadData.code = " + lastReadData.code);
+  console.log("rfidData.code = " + rfidData.code);
     
+  if (lastReadData.code != rfidData.code ) {  
+    io.emit('server.rfidData', {tag: rfidData.code, reader: rfidData.reader});
+
     // Simulating a search time in the extra super big media database !
     if (CONFIG.app.simulateSearchTime) {
       io.emit('server.play-media', module.exports.searchingMedia());
@@ -115,20 +118,19 @@ if (CONFIG.rfid.behavior == "real") {
   const SerialPort = require('serialport');
   const Readline = SerialPort.parsers.Readline;
   const port = new SerialPort(CONFIG.rfid.portName, { 
-  		autoOpen: true,
-  		baudRate: CONFIG.rfid.baudRate
-  	});
+      autoOpen: true,
+      baudRate: CONFIG.rfid.baudRate
+    });
   // Parser definiton
   const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
   // Parsing RFID Tag
   parser.on('data', function(msg){
-  	// If data is a tag
+    // If data is a tag
     rfidData.code = rfid.extractTag(msg); 
     if (rfidData.code != "") {
       rfidData.reader = rfid.extractReader(msg);  
       console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
-      io.emit('server.rfidData', {tag: rfidData.code, reader: rfidData.reader});
       sendingMedia();
     }
   });
@@ -138,7 +140,7 @@ if (CONFIG.rfid.behavior == "real") {
     if (err) {
       return console.log('Error opening port: ', err.message);
     } else {
-    	console.log('Reading on ', CONFIG.rfid.portName);
+      console.log('Reading on ', CONFIG.rfid.portName);
     }
   });
 }
@@ -148,7 +150,7 @@ if (CONFIG.rfid.behavior == "real") {
 //------------------------------------------------------------------------
 server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( '------------------------------------------------------------' );
-  console.log( 'server Ip Address is %s', ip.address() );	 		
+  console.log( 'server Ip Address is %s', ip.address() );     
   console.log( 'it is listening at port %d', httpPort );
   console.log( '------------------------------------------------------------' );
   console.log( 'Working mode : ' + CONFIG.app.mode);
