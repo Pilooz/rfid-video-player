@@ -43,8 +43,11 @@
 
     + (4 h) Développer un mode synchrone qui attend que tous les lecteurs soient pleins pour enclencher une playlist.
     + (5 min) Paramétrage dans fichier de config OK
+    + (4h) Ré-initialiser la playlist quand elle est finie de jouer (après les x média, vider la structure, et remettre l'index à 0). Debugger et mettre au point
+    - Gérer les messages correctement en mode synchrone
 
 => test unitaires sur mediaDB.js à compléter
+    + Done 
 
 =>  Raspberry PI
     + (3 h) Installer une distro (Noob ? Raspbian ?)
@@ -52,8 +55,8 @@
     + (1 h) monter un point d'accès réseau wifi sur le raspberry
     + (2 min) Démarrer automatiquement le service node (dans /etc/rc.local)
     - connecter une tablette et tester 
-    - alimenter tout ça correctement
-    - prévoir une paire d'enceinte pour sortir le son de la tablette (éventuellement bluetooth mais attention au compatibilités avec le raspberry)
-    - booter le raspberry pi en mode command line.
+    + alimenter tout ça correctement
+    + prévoir une paire d'enceinte pour sortir le son de la tablette ( x éventuellement bluetooth mais attention au compatibilités avec le raspberry) => Bluetooth + Raspberry = Calvaire !
+    x booter le raspberry pi en mode command line. (pb d'AP et de connectivité Wifi ?)
 
 
