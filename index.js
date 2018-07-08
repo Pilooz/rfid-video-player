@@ -218,7 +218,8 @@ router.all('/*', function (req, res, next) {
       mediaDB.newMedia(fields, files);
     });
   // Routing to index
-  res.render('index', { data: httpRequests });
+  res.redirect('/');
+  //res.render('index', { data: dataForTemplate });
 });
 
 //-----------------------------------------------------------------------------

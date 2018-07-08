@@ -23,6 +23,9 @@ $(document).ready(function(){
     var mediaList = Array();
     var playingIndex; // Index in mediaList of the media currently playing
 
+    //
+    // Calculates the length of palylist : media have to be defined to be take in account.
+    //
     function getPlayListLength() {
       // Counting how many media we have in playlist
       var nb = 0;
@@ -36,6 +39,10 @@ $(document).ready(function(){
       return nb;
     }
 
+    //
+    // Set a media in the playlist.
+    // The index is the reader number
+    //
     function setPlaylistItem(i, m) {
       mediaList[i].media = m;
     }
@@ -53,6 +60,9 @@ $(document).ready(function(){
       socket.emit('client.endMedia', { message: "empty playlist from user action !" });
     }
 
+    // ------------------------------------------------------------------
+    // UI elements
+    // ------------------------------------------------------------------
     // Hidden reset button
     $('#resetButton').on('click', function(){
       initPlaylist();
@@ -80,7 +90,9 @@ $(document).ready(function(){
       // If the mode is 'synchrone', we have to wait that all readers have read a tag 
       // before chining media.
       //
-      if (app_mode == "synchrone") {
+      console.log("app_mode = " + app_mode);
+      console.log("m.status = " + m.status);
+      if (app_mode == "synchrone" && m.status == "content") {
         var index = m.reader-1;
         var countMedia = 0;
 
