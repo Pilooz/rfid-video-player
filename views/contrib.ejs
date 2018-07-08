@@ -5,25 +5,29 @@
   <div class="col-xs-6 col-sm-4">
     <h1>Ajouter un média</h1>
 
-    <form action="/media-upload" method="post" enctype="multipart/form-data">
+    <form action="/media-upload" id="formUpload" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="tag">Code RFID&nbsp;: </label>
         <span name="tag" class="form-control-static"><b><%= data.tag %></b></span>
         <input type="hidden" name="code" value="<%= data.tag %>">
       </div>
 
-      <div class="form-group">
+      <div class="form-group" id="keywordsFG">
         <label for="keywords">Mots-clé</label>
         <input type="text" class="form-control" id="keywords" name="keywords">
       </div>
 
-       <div class="form-group">
+      <div id="msgKeywords" class="alert alert-danger" role="alert">Vous devez saisir un ou plusieurs mots-clé, séparés par des espaces</div>
+
+       <div class="form-group" id="mediafileFG">
         <label for="mediafile">Média</label>
         <input type="file" id="mediafile" name="mediafile" accept="audio/*">
         <!-- <p class="help-block">Enregistrer votre media en appuyant sur []</p> -->
       </div>
 
-      <button type="submit" class="btn btn-info">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+      <div id="msgMedia" class="alert alert-danger" role="alert">Vous n'avez pas ajouté de média !</div>
+
+      <button type="button" id="submitButton" class="btn btn-info">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
 
     </form> 
     
@@ -33,4 +37,39 @@
   <div class="col-xs-6 col-sm-4"></div>
 </div>
 
+<script>
+$(document).ready(function(){
+
+  $("#submitButton").on("click", function(){
+    var has_error = false;
+    $("#msgKeywords").hide();
+    $("#keywordsFG").removeClass("has-error");
+    $("#msgMedia").hide();
+
+    if($("#keywords").val() == "") {
+      $("#msgKeywords").show();
+      $("#keywordsFG").addClass("has-error");
+      has_error = true;
+    }
+    
+    if($("#mediafile").val() == "") {
+      $("#msgMedia").show();
+      $("#mediafileFG").addClass("has-error");
+      has_error = true;
+    }
+    
+    if(!has_error){
+      $("#formUpload").submit();
+    }
+    
+  });
+
+  // Init page state
+  $("#msgKeywords").hide();
+  $("#keywordsFG").removeClass("has-error");
+  $("#msgMedia").hide();
+  $("#mediafileFG").removeClass("has-error");
+}); // End document.ready
+
+</script>
 <%- include('footer', {data: data}) %>
