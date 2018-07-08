@@ -36,7 +36,7 @@
     + Puis recharger la database des contenus
     + Renommer les fichiers uploadés correctement
     + Règler le problème de droits d'écriture de mediaDB dans le repertoire 'data/'
-    - Sécuriser les données du formualaires (client et serveur )
+    + (15 min) Sécuriser les données du formualaires (client et serveur )
  
 	x modifier les structures json pour ajouter la notion de "reader" 
     x gérer un id unique de session pour chaque de vice connecté par socket.
@@ -44,7 +44,7 @@
     + (4 h) Développer un mode synchrone qui attend que tous les lecteurs soient pleins pour enclencher une playlist.
     + (5 min) Paramétrage dans fichier de config OK
     + (4h) Ré-initialiser la playlist quand elle est finie de jouer (après les x média, vider la structure, et remettre l'index à 0). Debugger et mettre au point
-    - Gérer les messages correctement en mode synchrone
+    + (15 min) Gérer les messages correctement en mode synchrone
 
 => test unitaires sur mediaDB.js à compléter
     + Done 
