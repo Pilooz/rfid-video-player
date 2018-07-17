@@ -190,7 +190,7 @@ describe('#Service Message msgWait', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgWait().uri.should.be.equal('/videos/messages/waitingForTag.mp4');
+		msgWait().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgWaitingMediaFile);
 	});
 });
 
@@ -210,7 +210,7 @@ describe('#Service Message msgNotFound', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgNotFound().uri.should.be.equal('/videos/messages/mediaNotFound.mp4');
+		msgNotFound().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgMediaNotFoundMediaFile);
 	});
 });
 
@@ -230,7 +230,7 @@ describe('#Service Message msgNoTag', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgNoTag().uri.should.be.equal('/videos/messages/noTagAssociation.mp4');
+		msgNoTag().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgNoTagAssocMediaFile);
 	});
 });
 
@@ -251,6 +251,7 @@ describe('#Service Message msgSearch', function() {
 
 	it('video link of service messages', function() {
 		msgSearch().uri.should.be.equal('/videos/messages/searching.mp4');
+		msgSearch().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgSearchingMediaFile);
 	});
 });
 

@@ -27,8 +27,13 @@ module.exports = {
     mediaPath : '/videos',
     simulateSearchTime : false,
     searchTimeout : 5000,
-    mode : 'asynchrone'          // 'asynchrone' mode : Every reading in any rfid reader is triggering some content
-                                 // 'synchrone'  mode : The content is triggered if ervery rfid reader has read a tag.
+    mode : 'asynchrone',          // 'asynchrone' mode : Every reading in any rfid reader is triggering some content
+                                  // 'synchrone'  mode : The content is triggered if ervery rfid reader has read a tag.
+    messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
+      msgWaitingMediaFile: "waitingForTag.mp4",
+      msgMediaNotFoundMediaFile: "mediaNotFound.mp4",
+      msgNoTagAssocMediaFile: "noTagAssociation.mp4",
+      msgSearchingMediaFile: "searching.mp4"
   }
 }
 
