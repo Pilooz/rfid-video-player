@@ -1,0 +1,52 @@
+# Implémentation de scénarii complexes.
+
+L'application fonctionne déjà de 2 façons :
+ ### Le mode asynchrone :
+ 	Chaque lecture d'un tag RFID envoie un média joué immédiatemment par le client
+ ### Le mode Asynchrone : 
+ 	On attend que la totalité des lecteurs aient détecté un tag RFID avant de jouer les média les uns après les autres dans l'ordre du numéro d'ordre des lecteur (et non pas dans l'ordre de détection)
+
+L'implémentation de scénarii complexes ne chagera pas ce principe de fonctionnement mais permettra de remplacer le média par un enchaînement de média et d'interactions utilisateur :
+	RFID => Mot-clé => Choix d'un média
+	RFID => enchainement de média
+
+	Le mode asynchrone, avec un seul lecteur, permet d'envisager les scénarii du dépotware
+	Le mode synchrone, permettrait de jouer plusieurs scénarios d'affilé
+
+On conserve : 
+- la meme base, avec la détection RFID.
+- Le principce de communication Socket avec le client
+- Le routage vers un client 
+- La gestion des erreurs de media côté client
+- Le back-office d'ajout d'un média
+
+### Le Trello associé au projet
+https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
+
+## Client
+- Utiliser un framework du type Bootstrap
+- Ecrire un librairie JS qui gère la navigation ainsi que des fonctions génériques de vérification d'état.
+	- Fonctions de navigation qui communiquent par socket
+- page de spash (il s'agit juste d'un message vidéo "attente" différent en fait)
+
+## Serveur
+ ? Voir comment gérer cette configuration d'application en plus des fonctionnalité de base sans les dénaturer
+ 	- Paramètre "scenario_mode" = Yes/No
+ 	- VOir tous les paramètres de la POC Depotware, et triéer sur ce qui est indispensable
+ 	
+ - Implémenter la navigation d'un écran à l'autre (Routage Express et Socket)
+ - Ajouter les fichiers JS de description de scénarii dans ./data
+ - Ajouter un Sample File de test
+ - Test unitaire des fonctions de routage et de manipulation des données de scénario
+
+ ## Back-office sur /admin 
+ - Page de liste des scénarii
+ - ecrire une page de visualisation d'un scénario (détails)
+ ? notion de chemin critique à réfléchir, 
+ ? comment réprésenter simplement une arborescence, le branching avec ses conditions ?
+ - Formulaire d'ajout d'une étape et de ses conditions de validation
+ - Formulaire d'ajout d'un média (modification de l'existant du systèem "cadavre exquis rfid")
+
+
+
+ 
