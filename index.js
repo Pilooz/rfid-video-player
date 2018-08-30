@@ -153,7 +153,7 @@ server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( 'server Ip Address is %s', ip.address() );     
   console.log( 'it is listening at port %d', httpPort );
   console.log( '------------------------------------------------------------' );
-  console.log( 'Working mode : ' + CONFIG.app.mode);
+  console.log( 'Working mode : ' + CONFIG.rfid.mode);
   console.log( 'RFID reading is ' + CONFIG.rfid.behavior);
   console.log( '------------------------------------------------------------' );
 });
@@ -186,7 +186,7 @@ var httpRequests = {};
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
-  dataForTemplate.mode = CONFIG.app.mode;
+  dataForTemplate.rfid_mode = CONFIG.rfid.mode;
   dataForTemplate.numReaders = CONFIG.rfid.numReaders;
 
   next(); // pass control to the next handler

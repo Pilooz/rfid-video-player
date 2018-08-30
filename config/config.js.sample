@@ -17,7 +17,9 @@ module.exports = {
     portName : '/dev/cu.usbserial-A603XVZO',
     baudRate : 115200,
     behavior : 'real', // 'real' => means that tags come form USB-Serial port, 'emulated' is just for dev (no usb port reading)
-    numReaders : 3
+    numReaders : 3,
+    mode : 'asynchrone' // 'asynchrone' mode : Every reading in any rfid reader is triggering some content
+                        // 'synchrone'  mode : The content is triggered if ervery rfid reader has read a tag.
   },
 
   // Application spcific conf
@@ -27,8 +29,6 @@ module.exports = {
     mediaPath : '/videos',
     simulateSearchTime : false,
     searchTimeout : 5000,
-    mode : 'asynchrone',          // 'asynchrone' mode : Every reading in any rfid reader is triggering some content
-                                  // 'synchrone'  mode : The content is triggered if ervery rfid reader has read a tag.
     messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
       msgWaitingMediaFile: "waitingForTag.mp4",
       msgMediaNotFoundMediaFile: "mediaNotFound.mp4",

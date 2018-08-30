@@ -18,7 +18,7 @@ $(document).ready(function(){
     var media = $('#embeded-video');
     var socket = io();
     var waitingStatus = false;
-    var app_mode = "<%=data.mode%>";
+    var rfid_mode = "<%=data.rfid_mode%>";
     var numReaders = eval(<%=data.numReaders%>);
     var mediaList = Array();
     var playingIndex; // Index in mediaList of the media currently playing
@@ -90,7 +90,7 @@ $(document).ready(function(){
       // If the mode is 'synchrone', we have to wait that all readers have read a tag 
       // before chining media.
       //
-      if (app_mode == "synchrone" && m.status == "content") {
+      if (rfid_mode == "synchrone" && m.status == "content") {
         var index = m.reader-1;
         var countMedia = 0;
 
@@ -183,7 +183,7 @@ $(document).ready(function(){
         // this is the normal way to play media
         tempo = 0;
         // If synchrone mode, we have to playing next media !
-        if ( app_mode == "synchrone") {
+        if ( rfid_mode == "synchrone") {
           if (playingIndex < numReaders) { // Playing next media
             playMedia(mediaList[playingIndex].media);
             playingIndex++;
