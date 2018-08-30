@@ -29,6 +29,7 @@ module.exports = {
     mediaPath : '/videos',
     simulateSearchTime : false,
     searchTimeout : 5000,
+    scenario_mode : false,
     messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
       msgWaitingMediaFile: "waitingForTag.mp4",
       msgMediaNotFoundMediaFile: "mediaNotFound.mp4",
