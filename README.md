@@ -1,3 +1,11 @@
+# Fonctionnement de l'application
+
+L'application fonctionne déjà de 2 façons :
+ ### Le mode asynchrone :
+ 	Chaque lecture d'un tag RFID envoie un média joué immédiatemment par le client
+ ### Le mode Asynchrone : 
+ 	On attend que la totalité des lecteurs aient détecté un tag RFID avant de jouer les média les uns après les autres dans l'ordre du numéro d'ordre des lecteur (et non pas dans l'ordre de détection)
+
 #### Saisie des mots clé
 - Fichier keywords.json se trouvant dans le répertoire `data/`
 - Saisir un seul mot clé par champ "keyword", le champ "codes" peut contenir une liste de plusieurs codes issus des étiquettes RFID.

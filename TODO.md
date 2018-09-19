@@ -6,7 +6,7 @@ L'application fonctionne déjà de 2 façons :
  ### Le mode Asynchrone : 
  	On attend que la totalité des lecteurs aient détecté un tag RFID avant de jouer les média les uns après les autres dans l'ordre du numéro d'ordre des lecteur (et non pas dans l'ordre de détection)
 
-L'implémentation de scénarii complexes ne chagera pas ce principe de fonctionnement mais permettra de remplacer le média par un enchaînement de média et d'interactions utilisateur :
+L'implémentation de scénarii complexes ne chagera pas ce principe de fonctionnement mais permettra de remplacer le média par un enchaînement de média et d'interactions utilisateur _* le scénario *_ :
 	RFID => Mot-clé => Choix d'un média
 	RFID => enchainement de média
 
