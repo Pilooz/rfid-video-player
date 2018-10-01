@@ -26,7 +26,7 @@ module.exports = {
   app : {
     dbPath : app_root + "/data",
     dbSavePath : app_root + "/data/sav",
-    mediaPath : '/videos',
+    mediaPath : '/medias',
     simulateSearchTime : false,
     searchTimeout : 5000,
     scenario_mode : false,

@@ -24,14 +24,23 @@ var lastReadData = { code: "", reader: "" };
 var rfidData     = { code: "x", reader: "1"};
 
 // Databases
-var db_keys   = require(CONFIG.app.dbPath + '/keywords.js');
-var db_m      = require(CONFIG.app.dbPath + '/media.js');
+var db_keys       = require(CONFIG.app.dbPath + '/keywords.js');
+var db_m          = require(CONFIG.app.dbPath + '/media.js');
+var db_sc         = require(CONFIG.app.dbPath + '/scenarios.js');
 
 // Media DB functions
 var mediaDB       = require('./lib/mediaDB.js');
 
 // Init media functions with databases
 mediaDB.init(db_keys, db_m);
+
+// TODO : pre-compilation directive like #ifdef ? Does it exists in js ?
+// Scenarios DB functions
+var scenarDB = require('./lib/scenariosDB.js');
+
+// Init scenario functions with database
+scenarDB.init(db_sc);
+
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
@@ -61,11 +70,11 @@ io.on('connection', function(socket) {
 //------------------------------------------------------------------------
 // Emit sockets to send media to the client
 //------------------------------------------------------------------------
-function sendingMedia() {
-  // Emit Socket only if rfid is different of the last reading
+function sendingData() {
   console.log("lastReadData.code = " + lastReadData.code);
   console.log("rfidData.code = " + rfidData.code);
     
+  // Emit Socket only if rfid is different of the last reading
   if (lastReadData.code != rfidData.code ) {  
     io.emit('server.rfidData', {tag: rfidData.code, reader: rfidData.reader});
 
@@ -74,10 +83,15 @@ function sendingMedia() {
       io.emit('server.play-media', module.exports.searchingMedia());
     }
 
-    // if CONFIG.app.simulateSearchTime then timeout this code
+    // if CONFIG.app.simulateSearchTime > 0 then timeout this code
     setTimeout(function() {
       console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
-      io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));
+      // Media or Scenario
+      if (CONFIG.app.scenario_mode) {
+        io.emit('server.play-senario', scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname));
+      } else {
+        io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));        
+      }
     }, timeBeforeSendingMedia);
 
     lastReadData.code = rfidData.code;
@@ -93,18 +107,20 @@ if (CONFIG.rfid.behavior == "emulated") {
   //var testList = [ {tag:"1234567890ABC", reader:1}, {tag: "0110FB661A96", reader:2}, {tag: "0110FB65F976", reader:3}, {tag: "0110FB5DEB5C", reader:1}, {tag: "0110FB5DF047", reader:2}];
   var testList = [ {tag:"coderfid1", reader:1}, {tag: "coderfid2", reader:2}, {tag: "coderfid3", reader:3}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
   var i = 0;
+  var timeout = CONFIG.app.scenario_mode ? 100000 : 10000;
 
   function sendEachTime() {
       // // Emit Socket only if rfid is different of the last reading
       rfidData.code = testList[i].tag;
       rfidData.reader = testList[i].reader;
-      sendingMedia();
+      sendingData();
       i++;
       if (i == testList.length ) i=0;
   }
-
-  // Send current time every 10 secs
-  setInterval(sendEachTime, 10000);
+  // First launch
+  setTimeout(sendEachTime, 1000);
+  // Send current time every 10 secs for testing media mode and every 100 sec for sceenario mode
+  setInterval(sendEachTime, timeout);
 }
 
 //
@@ -131,7 +147,8 @@ if (CONFIG.rfid.behavior == "real") {
     if (rfidData.code != "") {
       rfidData.reader = rfid.extractReader(msg);  
       console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
-      sendingMedia();
+      // Choosing between scenario or simple media, by config
+      sendingData();
     }
   });
 
@@ -156,6 +173,8 @@ server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( 'Working mode : ' + CONFIG.rfid.mode);
   console.log( 'RFID reading is ' + CONFIG.rfid.behavior);
   console.log( '------------------------------------------------------------' );
+  console.log( 'Scenario mode : ' + CONFIG.app.scenario_mode);
+  console.log( '------------------------------------------------------------' );
 });
 
 // view engine setup
@@ -169,7 +188,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/videos', express.static(__dirname + CONFIG.app.mediaPath)); // redirect media directory
+app.use('/medias', express.static(__dirname + CONFIG.app.mediaPath)); // redirect media directory
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io

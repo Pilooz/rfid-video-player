@@ -166,7 +166,7 @@ describe('#chooseMedia', function() {
 
 	it('returns a filname path by default', function(){
 		o = chooseMedia(cod4, "", "");
-		o.filename.should.be.equal("/videos/video4.mp4");
+		o.filename.should.be.equal("/medias/video4.mp4");
 	});
 
 });
@@ -190,7 +190,7 @@ describe('#Service Message msgWait', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgWait().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgWaitingMediaFile);
+		msgWait().uri.should.be.equal('/medias/messages/' + CONFIG.app.messages.msgWaitingMediaFile);
 	});
 });
 
@@ -210,7 +210,7 @@ describe('#Service Message msgNotFound', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgNotFound().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgMediaNotFoundMediaFile);
+		msgNotFound().uri.should.be.equal('/medias/messages/' + CONFIG.app.messages.msgMediaNotFoundMediaFile);
 	});
 });
 
@@ -230,7 +230,7 @@ describe('#Service Message msgNoTag', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgNoTag().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgNoTagAssocMediaFile);
+		msgNoTag().uri.should.be.equal('/medias/messages/' + CONFIG.app.messages.msgNoTagAssocMediaFile);
 	});
 });
 
@@ -250,8 +250,8 @@ describe('#Service Message msgSearch', function() {
 	});
 
 	it('video link of service messages', function() {
-		msgSearch().uri.should.be.equal('/videos/messages/searching.mp4');
-		msgSearch().uri.should.be.equal('/videos/messages/' + CONFIG.app.messages.msgSearchingMediaFile);
+		msgSearch().uri.should.be.equal('/medias/messages/searching.mp4');
+		msgSearch().uri.should.be.equal('/medias/messages/' + CONFIG.app.messages.msgSearchingMediaFile);
 	});
 });
 

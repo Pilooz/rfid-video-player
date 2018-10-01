@@ -30,6 +30,7 @@ https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
 - page de spash (il s'agit juste d'un message vidéo "attente" différent en fait)
 
 ## Serveur
+ - renommer ./video/ en ./media/
  ? Voir comment gérer cette configuration d'application en plus des fonctionnalité de base sans les dénaturer
  	- Paramètre "scenario_mode" = Yes/No
  	- VOir tous les paramètres de la POC Depotware, et triéer sur ce qui est indispensable
@@ -38,6 +39,8 @@ https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
  - Ajouter les fichiers JS de description de scénarii dans ./data
  - Ajouter un Sample File de test
  - Test unitaire des fonctions de routage et de manipulation des données de scénario
+ - faire en sorte que le ".ejs" des templates du fichier JSON de scénario soit ajouté par défaut
+ - Prendre les médias dans le bon répertoire. ./media/[nom rep media sécnario]/
 
  ## Back-office sur /admin 
  - Page de liste des scénarii
@@ -46,6 +49,7 @@ https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
  ? comment réprésenter simplement une arborescence, le branching avec ses conditions ?
  - Formulaire d'ajout d'une étape et de ses conditions de validation
  - Formulaire d'ajout d'un média (modification de l'existant du systèem "cadavre exquis rfid")
+
 
 
 
