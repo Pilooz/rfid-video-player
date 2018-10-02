@@ -167,13 +167,19 @@ if (CONFIG.rfid.behavior == "real") {
 //------------------------------------------------------------------------
 server.listen( httpPort, '0.0.0.0', function( ) {
   console.log( '------------------------------------------------------------' );
-  console.log( 'server Ip Address is %s', ip.address() );     
-  console.log( 'it is listening at port %d', httpPort );
-  console.log( '------------------------------------------------------------' );
   console.log( 'Working mode : ' + CONFIG.rfid.mode);
   console.log( 'RFID reading is ' + CONFIG.rfid.behavior);
   console.log( '------------------------------------------------------------' );
   console.log( 'Scenario mode : ' + CONFIG.app.scenario_mode);
+  console.log( '------------------------------------------------------------' );
+  console.log( 'server Ip Address is %s', ip.address() );     
+  console.log( 'it is listening at port %d', httpPort );
+  if (CONFIG.app.scenario_mode) {
+    console.log( 'App entry point is http://' + ip.address() + ':' + httpPort + '/scenario');
+  }
+  else {
+    console.log( 'App entry point is http://' + ip.address() + ':' + httpPort + '/');
+  }
   console.log( '------------------------------------------------------------' );
 });
 
@@ -239,6 +245,11 @@ router.all('/*', function (req, res, next) {
   // Routing to index
   res.redirect('/');
   //res.render('index', { data: dataForTemplate });
+})
+
+/* GET Home page for Scenario mode */
+.get('/scenario', function(req, res, next) {
+  res.render('index_scenario', { data: dataForTemplate });
 });
 
 //-----------------------------------------------------------------------------
