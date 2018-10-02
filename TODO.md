@@ -27,17 +27,20 @@ https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
 - Utiliser un framework du type Bootstrap
 - Ecrire un librairie JS qui gère la navigation ainsi que des fonctions génériques de vérification d'état.
 	- Fonctions de navigation qui communiquent par socket
-- page de spash (il s'agit juste d'un message vidéo "attente" différent en fait)
++ page de spash (il s'agit juste d'un message vidéo "attente" différent en fait)
+- refactoring / mutualisation
+	- Refactoring de index.ejs => mettre les fonctions js dans une lib
+	- Réutilisation de cette lib ^ pour l'index des scénario
 
 ## Serveur
- - renommer ./video/ en ./media/
+ + renommer ./video/ en ./media/
  ? Voir comment gérer cette configuration d'application en plus des fonctionnalité de base sans les dénaturer
- 	- Paramètre "scenario_mode" = Yes/No
- 	- VOir tous les paramètres de la POC Depotware, et triéer sur ce qui est indispensable
+ 	+ Paramètre "scenario_mode" = Yes/No
+ 	- Voir tous les paramètres de la POC Depotware, et trier sur ce qui est indispensable
  	
  - Implémenter la navigation d'un écran à l'autre (Routage Express et Socket)
- - Ajouter les fichiers JS de description de scénarii dans ./data
- - Ajouter un Sample File de test
+ + Ajouter les fichiers JS de description de scénarii dans ./data
+ + Ajouter un Sample File de test
  - Test unitaire des fonctions de routage et de manipulation des données de scénario
  - faire en sorte que le ".ejs" des templates du fichier JSON de scénario soit ajouté par défaut
  - Prendre les médias dans le bon répertoire. ./media/[nom rep media sécnario]/

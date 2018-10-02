@@ -249,6 +249,8 @@ router.all('/*', function (req, res, next) {
 
 /* GET Home page for Scenario mode */
 .get('/scenario', function(req, res, next) {
+  // 1. get the current step, by default : step Zero is the waitingTagMessage
+  // 2. build all needed data for template resolution and set them in 'dataForTemplate'
   res.render('index_scenario', { data: dataForTemplate });
 });
 
