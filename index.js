@@ -47,6 +47,9 @@ scenarDB.init(db_sc);
 //------------------------------------------------------------------------
 io.on('connection', function(socket) {
     console.log("New client is connected : " + socket.id );
+    // Sending config values like numReader, rfid_mode
+    socket.emit('server.sendConfig', CONFIG);
+
     // Emit the service message to client : by defaut, playing "waiting video"
     socket.emit('server.message', mediaDB.waitingMedia());
     
@@ -63,7 +66,6 @@ io.on('connection', function(socket) {
       rfidData     = { code: "x", reader: "1"};
       socket.emit('server.message', mediaDB.waitingMedia());
     });
-
 });
 
 
@@ -244,7 +246,6 @@ router.all('/*', function (req, res, next) {
     });
   // Routing to index
   res.redirect('/');
-  //res.render('index', { data: dataForTemplate });
 })
 
 /* GET Home page for Scenario mode */
