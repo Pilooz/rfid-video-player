@@ -1,5 +1,6 @@
 <%- include('header', {data: data}) %>
 <h1 id="data-title"></h1>
+<h2 id="data-step-title"></h2>
 <link rel='stylesheet' href='/style/style.css' />
       <div class="page-header">
 
@@ -15,7 +16,7 @@
       </div>  
 <script>
 $(document).ready(function(){
-  var socket = io('http://localhost:3000');
+  var socket = io(); //'http://localhost:3000'
   var scenario = {}; // Scenario given by the rfid reading
   var step = {};     // Current step in the scenario
   var template = {}; // Template of the current step
@@ -37,15 +38,14 @@ $(document).ready(function(){
     return stepItem;
   }
 
-  // Get template by asking the server via Ajax Query ?
-  function getCurrentTemplate(stepObj) {
-    //var data = stepObj;
-    stepObj.scenarId = scenario.scenarId;
-    stepObj.scenarioMediaPath = scenario.scenarioMediaPath;
+  // Get template by asking the server via Ajax Query
+  function getCurrentTemplate(stp) {
+    stp.scenarId = scenario.scenarId;
+    stp.scenarioMediaPath = scenario.scenarioMediaPath;
 
     $.ajax({
        url: '/scenario/template',
-       data: stepObj,
+       data: stp,
        type: 'POST',
        error: function(req, textStatus) {
         // TODO something clever to show error ! 
@@ -54,11 +54,29 @@ $(document).ready(function(){
        },
        success: function(html) {
         console.log(html);
-        $("#stepTemplate").html(html);
+        // TODO : write a callback to update page
+        setStepTitle(stp.title);
+        displayTemplate(html);
        }
     });
   }
 
+  // Set Scenario title
+  function setScenarioTitle(t) {
+    $('title').html(t);
+    $('#data-title').html(t);
+  }
+
+  // Set step title
+  function setStepTitle(t){
+    $('#data-step-title').html(t);
+  }
+
+  // Display rendered template
+  function displayTemplate(content) {
+    $("#stepTemplate").html(content);
+  }
+  
   // ------------------------------------------------------------------
   // Socket listening
   // ------------------------------------------------------------------
@@ -72,7 +90,7 @@ $(document).ready(function(){
     scenario = data;
     console.log(scenario);
     // Set title
-    $('#data-title').html(scenario.title);
+    setScenarioTitle(scenario.title);
     // get step
     step = getCurrentStepDetails();
     // get template
