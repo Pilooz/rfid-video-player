@@ -66,6 +66,13 @@ io.on('connection', function(socket) {
       rfidData     = { code: "x", reader: "1"};
       socket.emit('server.message', mediaDB.waitingMedia());
     });
+
+    // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
+    if (CONFIG.app.scenario_mode) {
+      lastReadData.code = "";
+      sendingData();
+    }
+
 });
 
 
@@ -90,7 +97,7 @@ function sendingData() {
       console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
       // Media or Scenario
       if (CONFIG.app.scenario_mode) {
-        io.emit('server.play-senario', scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname));
+        io.emit('server.play-scenario', scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname));
       } else {
         io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));        
       }
@@ -106,10 +113,9 @@ function sendingData() {
 //
 if (CONFIG.rfid.behavior == "emulated") {
   console.log("The Serial communication with RFID readers is in '" + CONFIG.rfid.behavior + "' mode.");
-  //var testList = [ {tag:"1234567890ABC", reader:1}, {tag: "0110FB661A96", reader:2}, {tag: "0110FB65F976", reader:3}, {tag: "0110FB5DEB5C", reader:1}, {tag: "0110FB5DF047", reader:2}];
   var testList = [ {tag:"coderfid1", reader:1}, {tag: "coderfid2", reader:2}, {tag: "coderfid3", reader:3}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
   var i = 0;
-  var timeout = CONFIG.app.scenario_mode ? 100000 : 10000;
+  var timeout = CONFIG.app.scenario_mode ? 10000000 : 10000;
 
   function sendEachTime() {
       // // Emit Socket only if rfid is different of the last reading
