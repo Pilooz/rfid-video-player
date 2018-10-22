@@ -236,13 +236,15 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 //-----------------------------------------------------------------------------
 var dataForTemplate = {};
 var httpRequests = {};
+var step = {};
 
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
   dataForTemplate.config = CONFIG;
-  //dataForTemplate.rfid_mode = CONFIG.rfid.mode;
-  //dataForTemplate.numReaders = CONFIG.rfid.numReaders;
+  // For scenario_mode stuff
+  step = req.body; 
+  dataForTemplate.step = step;
 
   next(); // pass control to the next handler
 })
@@ -269,7 +271,7 @@ router.all('/*', function (req, res, next) {
     form.keepExtensions = true; // keep original extension
 
     form.parse(req, function (err, fields, files) {
-       // Let the media library do the rest of the job !
+      // Let the media library do the rest of the job !
       mediaDB.newMedia(fields, files);
     });
   // Routing to index
@@ -283,18 +285,15 @@ router.all('/*', function (req, res, next) {
   res.render('index_scenario', { data: dataForTemplate });
 })
 
-// Building scenario templates
-.post('/scenario/template', function(req, res, next) {
-  var step = req.body;
-  dataForTemplate.step = step;
-  console.log(dataForTemplate);
+// Building scenario step templates
+.post('/scenario/step-template', function(req, res, next) {
 
   // If the file does not exists go to error template
   if (!fs.existsSync(CONFIG.app.scenario_view_path + step.template)) { 
     console.log("The template " + CONFIG.app.scenario_view_path + step.template + " was not found.");
     next();
   } else {
-    // Rendering template
+    // Rendering template as a promise
     var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template, {
       data     : dataForTemplate,
       filename : CONFIG.app.scenario_mode + step.template
@@ -302,6 +301,17 @@ router.all('/*', function (req, res, next) {
       res.send(content);
     });
   }
+})
+
+// Building step transitions templates
+.post('/scenario/step-transitions', function(req, res, next) {
+  // Rendering template as a promise
+  var content = ejs.renderFile(CONFIG.app.scenario_view_path + 'transitions.ejs', {
+    data     : dataForTemplate,
+    filename : CONFIG.app.scenario_mode + 'transitions.ejs'
+  }).then(function(content){
+    res.send(content);
+  });
 });
 
 //-----------------------------------------------------------------------------

@@ -8,8 +8,8 @@
           <div class="col-md-12">
             <a href="#" id="resetButton"></a>
               <div id="stepTemplate"></div>
-<!--             <video src="#" id="embeded-video" width="100%" height="100%"></video>
- -->            <div id="serviceMessage"></div>
+              <div id="serviceMessage"></div>
+              <div id="transitionsTemplate"></div>
           </div>
         </div>
 
@@ -19,8 +19,7 @@ $(document).ready(function(){
   var socket = io(); //'http://localhost:3000'
   var scenario = {}; // Scenario given by the rfid reading
   var step = {};     // Current step in the scenario
-  var template = {}; // Template of the current step
-
+  var content = {}; // Rendered template of the current step
   // ------------------------------------------------------------------
   // Scenario managing functions
   // ------------------------------------------------------------------
@@ -38,29 +37,6 @@ $(document).ready(function(){
     return stepItem;
   }
 
-  // Get template by asking the server via Ajax Query
-  function getCurrentTemplate(stp) {
-    stp.scenarId = scenario.scenarId;
-    stp.scenarioMediaPath = scenario.scenarioMediaPath;
-
-    $.ajax({
-       url: '/scenario/template',
-       data: stp,
-       type: 'POST',
-       error: function(req, textStatus) {
-        // TODO something clever to show error ! 
-        $("#stepTemplate").html(req.responseText);
-        console.log(textStatus);
-       },
-       success: function(html) {
-        console.log(html);
-        // TODO : write a callback to update page
-        setStepTitle(stp.title);
-        displayTemplate(html);
-       }
-    });
-  }
-
   // Set Scenario title
   function setScenarioTitle(t) {
     $('title').html(t);
@@ -73,10 +49,43 @@ $(document).ready(function(){
   }
 
   // Display rendered template
-  function displayTemplate(content) {
-    $("#stepTemplate").html(content);
+  function displayTemplate(content, domId) {
+    $(domId).html(content);
   }
-  
+
+  // Analyses and build transition tests for next step
+  function setTransitions(trns) {
+    //transitions = "";
+    trns.forEach(function(t){
+      //transitions += "if ( endMedia() ) { setTimeout() }"
+      console.log(t.id + " / condition : '"+ t.condition +"' / duration="+ t.duration + "");
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Getting embeded templates
+  // ------------------------------------------------------------------
+  function getTemplate(url, data, resultDomId) {
+    data.scenarId = scenario.scenarId;
+    data.scenarioMediaPath = scenario.scenarioMediaPath;
+
+    $.ajax({
+       url: url,
+       data: data,
+       type: 'POST',
+       error: function(req, textStatus) {
+        // TODO something clever to show error ! 
+        //$("#stepTemplate").html(req.responseText);
+        console.log(req);
+        displayTemplate(req.responseText, resultDomId);
+       },
+       success: function(html) {
+        // TODO : write a callback to update page
+        displayTemplate(html, resultDomId);
+       }
+    });
+  }
+
   // ------------------------------------------------------------------
   // Socket listening
   // ------------------------------------------------------------------
@@ -93,33 +102,15 @@ $(document).ready(function(){
     setScenarioTitle(scenario.title);
     // get step
     step = getCurrentStepDetails();
-    // get template
-    template = getCurrentTemplate(step);
+    // step title
+    setStepTitle(step.title);
+    // transitons
+    //setTransitions(step.transitions);
+    // get step template
+    content = getTemplate('/scenario/step-template', step, "#stepTemplate");
+    // get transiton template
+    content = getTemplate('/scenario/step-transitions', step, "#transitionsTemplate");
   });
-
-  // ------------------------------------------------------------------
-  // Data Binding
-  // ------------------------------------------------------------------
-
-  //$("[id^='data-']").each(function (i, el) {
-  //  console.log(i + " : " + el.id);
-  //});
-  /*  
-    1. parcourir toutes les propriétés de l'objet et binder un élément html
-    2. faire un controle d'erreur sur les elmts inexistants
-    3. En fonction de l'étape courant, faire un binding des éléments de l'étape.
-  */
-
-  // ------------------------------------------------------------------
-  // Getting embeded templates
-  // ------------------------------------------------------------------
-  
-  /*
-    1. Aller chercher le template à l'aide d'un get ajax qui fait un render
-    2. Faire un binding des data ? Ou alors envoyer le scenarId et le currentStep
-    qui permettent de rendre directement le bon template avec ses données ? 
-
-  */
 
   // ------------------------------------------------------------------
   // Conditional display of controls

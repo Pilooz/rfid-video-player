@@ -1,0 +1,35 @@
+<!-- Transitions template -->
+<button class="btn btn-md btn-default" name="prevStep" value="prev">&lt;</button>
+<button class="btn btn-md btn-default" name="nextStep" value="next">&gt;</button>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  // ------------------------------------------------------------------
+  // Step Validation functions
+  // ------------------------------------------------------------------
+  // Analyses and build transition tests for next step
+  function setTransitions(trns) {
+    //transitions = "";
+    trns.forEach(function(t){
+      //transitions += "if ( endMedia() ) { setTimeout() }"
+      console.log(t.id + " / condition : '"+ t.condition +"' / duration="+ t.duration + "");
+    });
+  }
+
+  function endMedia() {
+
+    $('#video1').on('ended', function(e) { 
+      $('#nextStep').val('');
+      setTimeout(goToNextStep, 2000);
+    });
+  }
+
+
+  // ------------------------------------------------------------------
+  // Conditional display of controls
+  // ------------------------------------------------------------------
+  
+
+}); // End document.ready
+</script>
