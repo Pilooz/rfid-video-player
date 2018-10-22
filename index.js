@@ -4,6 +4,7 @@ var CONFIG        = require('./config/config.js');
 var app           = require('express')();
 var express       = require('express');
 var router        = express.Router();
+var ejs           = require("ejs");
 var server        = require('http').createServer(app);
 const httpPort    = CONFIG.server.port;
 var io            = require('socket.io').listen(server);
@@ -12,6 +13,7 @@ var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
 var path          = require('path');
 var formidable    = require('formidable'); // File upload
+var fs            = require('fs');
 
 // Timout to simulate searching, if needed by config.
 var timeBeforeSendingMedia = (CONFIG.app.simulateSearchTime) ? CONFIG.app.searchTimeout : 0;
@@ -67,10 +69,29 @@ io.on('connection', function(socket) {
       socket.emit('server.message', mediaDB.waitingMedia());
     });
 
-    // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
+    //
+    // Specific socket for scenario_mode
+    //
     if (CONFIG.app.scenario_mode) {
-      lastReadData.code = "";
-      sendingData();
+      //
+      // Rendering template for requested step
+      //
+      // socket.on('client.stepRequest', function(data) {
+      //   // add config 
+      //   data.config = CONFIG;
+      //   console.log(CONFIG.app.scenario_view_path + data.template);
+      //   var content = ejs.renderFile(CONFIG.app.scenario_view_path + data.template, {
+      //     data     : data,
+      //     filename : CONFIG.app.scenario_mode + data.template
+      //   });
+      //   console.log(content);
+      //   socket.emit('server.stepResponse', content);
+      // });
+
+      // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
+        lastReadData.code = "";
+        sendingData();
+      // END OF SHITY DEBUG STUFF
     }
 
 });
@@ -127,7 +148,7 @@ if (CONFIG.rfid.behavior == "emulated") {
   }
   // First launch
   setTimeout(sendEachTime, 1000);
-  // Send current time every 10 secs for testing media mode and every 100 sec for sceenario mode
+  // Send current time every 10 secs for testing media mode and every 100 sec for scenario mode
   setInterval(sendEachTime, timeout);
 }
 
@@ -219,8 +240,9 @@ var httpRequests = {};
 router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
-  dataForTemplate.rfid_mode = CONFIG.rfid.mode;
-  dataForTemplate.numReaders = CONFIG.rfid.numReaders;
+  dataForTemplate.config = CONFIG;
+  //dataForTemplate.rfid_mode = CONFIG.rfid.mode;
+  //dataForTemplate.numReaders = CONFIG.rfid.numReaders;
 
   next(); // pass control to the next handler
 })
@@ -259,6 +281,27 @@ router.all('/*', function (req, res, next) {
   // 1. get the current step, by default : step Zero is the waitingTagMessage
   // 2. build all needed data for template resolution and set them in 'dataForTemplate'
   res.render('index_scenario', { data: dataForTemplate });
+})
+
+// Building scenario templates
+.post('/scenario/template', function(req, res, next) {
+  var step = req.body;
+  dataForTemplate.step = step;
+  console.log(dataForTemplate);
+
+  // If the file does not exists go to error template
+  if (!fs.existsSync(CONFIG.app.scenario_view_path + step.template)) { 
+    console.log("The template " + CONFIG.app.scenario_view_path + step.template + " was not found.");
+    next();
+  } else {
+    // Rendering template
+    var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template, {
+      data     : dataForTemplate,
+      filename : CONFIG.app.scenario_mode + step.template
+    }).then(function(content){
+      res.send(content);
+    });
+  }
 });
 
 //-----------------------------------------------------------------------------

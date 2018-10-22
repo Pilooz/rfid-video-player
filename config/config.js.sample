@@ -30,6 +30,7 @@ module.exports = {
     simulateSearchTime : false,
     searchTimeout : 5000,
     scenario_mode : false,
+    scenario_view_path : app_root + '/views/scenario/', // directory where the server takes views to render a scenario
     messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
       msgWaitingMediaFile: "waitingForTag.mp4",
       msgMediaNotFoundMediaFile: "mediaNotFound.mp4",
