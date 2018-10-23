@@ -39,8 +39,10 @@
     $(domId).html(content);
   }
 
-  // Loading step
+  // Loading step into navigator
   function loadStep(scenar){
+    // Tell the server which scenario and step we manage
+    socket.emit('client.currentScenario', { currentScenario: scenar });
     // Set title
     setScenarioTitle(scenar.title);
     // get step

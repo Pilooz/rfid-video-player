@@ -1,6 +1,5 @@
 global.__basedir  = __dirname;
 var CONFIG        = require('./config/config.js');
-
 var app           = require('express')();
 var express       = require('express');
 var router        = express.Router();
@@ -43,6 +42,8 @@ var scenarDB = require('./lib/scenariosDB.js');
 // Init scenario functions with database
 scenarDB.init(db_sc);
 
+// current scenario choosen by RFID readings
+var currentScenario = {};
 
 //------------------------------------------------------------------------
 // Init Socket to transmit Serial data to HTTP client
@@ -73,21 +74,12 @@ io.on('connection', function(socket) {
     // Specific socket for scenario_mode
     //
     if (CONFIG.app.scenario_mode) {
-      //
-      // Rendering template for requested step
-      //
-      // socket.on('client.stepRequest', function(data) {
-      //   // add config 
-      //   data.config = CONFIG;
-      //   console.log(CONFIG.app.scenario_view_path + data.template);
-      //   var content = ejs.renderFile(CONFIG.app.scenario_view_path + data.template, {
-      //     data     : data,
-      //     filename : CONFIG.app.scenario_mode + data.template
-      //   });
-      //   console.log(content);
-      //   socket.emit('server.stepResponse', content);
-      // });
-
+      // Client is managing a scenario, let the server know what !
+      socket.on('client.currentScenario', function(data){
+        currentScenario = data.currentScenario;
+        console.log("The client is managing '" + currentScenario.scenarId + 
+                    "', step : " + currentScenario.currentStep);
+      });
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
         lastReadData.code = "";
         sendingData();
@@ -118,7 +110,13 @@ function sendingData() {
       console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
       // Media or Scenario
       if (CONFIG.app.scenario_mode) {
-        io.emit('server.play-scenario', scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname));
+        if(!currentScenario.currentStep) {
+          currentScenario = scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname);
+        }
+        // The scenario is already choosen and the client that has just refreshed
+        // want to keep its context (scenario and currentStep)
+       io.emit('server.play-scenario', currentScenario);
+
       } else {
         io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));        
       }
@@ -242,7 +240,7 @@ router.all('/*', function (req, res, next) {
   // mettre toutes les requests dans un seul objet.
   httpRequests = req.query; // according to the use of express
   dataForTemplate.config = CONFIG;
-  // For scenario_mode stuff
+  // For scenario_mode stuff : this arrives here by ajax request
   step = req.body; 
   dataForTemplate.step = step;
 
@@ -285,7 +283,7 @@ router.all('/*', function (req, res, next) {
   res.render('index_scenario', { data: dataForTemplate });
 })
 
-// Building scenario step templates
+/* POST Builds scenario step templates (AJAX Request) */
 .post('/scenario/step-template', function(req, res, next) {
 
   // If the file does not exists go to error template
@@ -303,7 +301,7 @@ router.all('/*', function (req, res, next) {
   }
 })
 
-// Building step transitions templates
+/* POST Builds step transitions templates (AJAX Request) */
 .post('/scenario/step-transitions', function(req, res, next) {
   // Rendering template as a promise
   var content = ejs.renderFile(CONFIG.app.scenario_view_path + 'transitions.ejs', {

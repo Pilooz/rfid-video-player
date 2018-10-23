@@ -19,17 +19,11 @@
 <script>
 $(document).ready(function(){
   // ------------------------------------------------------------------
-  // Socket listening
+  // Socket listening and emitting
   // ------------------------------------------------------------------
-  // Receiving new media attributes by socket.
-  socket.on('server.rfidData', function(data) {
-    console.log(data);
-  });
-
   // Receiving scenario from server
   socket.on('server.play-scenario', function(data) {
     scenario = data;
-    console.log(scenario);
     // Loading first step
     loadStep(scenario);
   });

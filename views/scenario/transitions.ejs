@@ -17,7 +17,6 @@ $(document).ready(function(){
 			<% if (data.step.transitions[i].condition != 'endMedia' 
 				&& data.step.transitions[i].condition != 'timeElapsed' 
 				&& data.step.transitions[i].condition != 'manualStep' ) { %>
-				// ici toutes le conditions de validation et de branching
 				<% data.validation_function += 
 					"	if (" + data.step.transitions[i].condition + ") {\n" +
 					"		nextStep = '" + data.step.transitions[i].id + "';\n" +
@@ -76,7 +75,7 @@ $(document).ready(function(){
 			<% } %>
 		<% } %>
 		<% data.validation_function += "	goToNextStep(); \n}\n" %>
-	<%_ data.validation_function _%>
+	<%- data.validation_function %>
 
 	<% } else { %>
 		console.log('Aucun transition n\'a été trouvé !');
@@ -109,7 +108,8 @@ function goToNextStep() {
 	// 1. keep history in histo object TODO !
 	// 2. set the new currentStep attribut in 'scenario' object
 	scenario.currentStep = nextStep;
-	// 3. reloading new template, and transitions template
+	// 3. Send this contextual data (scenarId and currentStep) to server (it needs to know where we are, in case of refreshing the page)
+	// 4. reloading new template, and transitions template
 	loadStep(scenario);
 }
 
