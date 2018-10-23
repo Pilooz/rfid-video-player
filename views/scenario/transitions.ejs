@@ -1,35 +1,118 @@
 <!-- Transitions template -->
-<button class="btn btn-md btn-default" name="prevStep" value="prev">&lt;</button>
-<button class="btn btn-md btn-default" name="nextStep" value="next">&gt;</button>
+<button class="btn btn-md btn-default" id="prevButton" name="prevButton" value="prev">&lt;</button>
+<button class="btn btn-md btn-default" id="nextButton" name="nextButton" value="next">&gt;</button>
 
 <script type="text/javascript">
 $(document).ready(function(){
-
   // ------------------------------------------------------------------
-  // Step Validation functions
+  // Step transitions and validation functions
   // ------------------------------------------------------------------
-  // Analyses and build transition tests for next step
-  function setTransitions(trns) {
-    //transitions = "";
-    trns.forEach(function(t){
-      //transitions += "if ( endMedia() ) { setTimeout() }"
-      console.log(t.id + " / condition : '"+ t.condition +"' / duration="+ t.duration + "");
-    });
-  }
+	<% data.needNextStepButton = false %>
+	<% if (data.step.transitions.length > 0) { %>
+				<% data.validation_function = 
+					"/* validation function to go to next step */\n" +
+					"function " + data.step.scenarId + "_validation(choix) { \n" %>
 
-  function endMedia() {
+		<% for(var i=0; i< data.step.transitions.length; i++) { %>
+			<% if (data.step.transitions[i].condition != 'endMedia' 
+				&& data.step.transitions[i].condition != 'timeElapsed' 
+				&& data.step.transitions[i].condition != 'manualStep' ) { %>
+				// ici toutes le conditions de validation et de branching
+				<% data.validation_function += 
+					"	if (" + data.step.transitions[i].condition + ") {\n" +
+					"		nextStep = '" + data.step.transitions[i].id + "';\n" +
+					"	}\n" %>
+				<% if ( data.step.template != "user-choice.ejs" && !data.needNextStepButton ) { %>
+				// on n'est pas dans un template de choix (user-choice.ejs) et on doit remonter une étape pour passer une autre branche, 
+				//il nous faut un bouton pour passer à l'étape suivante, sinon aucun moyen d'appeler la fonction de validation.
+				// On le construira après avoir bouclé sur toutes les transitions de l'étape.
+				<% data.needNextStepButton = true %>
+				<% } %>	
+			<% } %>
 
-    $('#video1').on('ended', function(e) { 
-      $('#nextStep').val('');
-      setTimeout(goToNextStep, 2000);
-    });
-  }
+			<% if ( data.step.transitions[i].condition == 'endMedia' ) { %>
+				// transition 'endMedia'
+				$('#video1').on('ended', function(e) { 
+					console.log('endMedia...'); 
+					nextStep = '<%= data.step.transitions[i].id %>';
+					setTimeout(goToNextStep, <%= data.step.transitions[i].duration  || 2000 %>);
+				});
+
+				// Un bouton pour passer la vidéo.
+				$('#nextButton').click(function() {
+				  // On prend la première transition (pour ce modèle vidéo)
+				  nextStep = '<%= data.step.transitions[0].id %>';
+				  <%= data.step.scenarId %>_validation();
+				  // should be 'goToNextStep()' instead ?
+				  // No validation function is written in the pag when we are here ????
+				});			
+			<% } %>
+
+			<% if ( data.step.transitions[i].condition == 'timeElapsed' ) { %>
+				// transition 'timeElapsed'
+				console.log('timeElapsed...'); 
+				nextStep = '<%= data.step.transitions[i].id %>';
+				setTimeout(goToNextStep, <%= data.step.transitions[i].duration  || 2000 %> );
+			<% } %>
+
+			<% if ( data.step.transitions[i].condition == 'manualStep' ) { %>
+				// transition 'manualStep'
+				$('#nextButton').click(function() {
+					console.log("manualStep...");
+				  nextStep = '<%= data.step.transitions[i].id %>';
+				  <%= data.step.scenarId %>_validation();
+				});
+			<% } %>
+
+			<% if ( data.step.transitions[i].condition == 'deselectObject' ) { %>
+				// transition 'deselectObject'
+				// Bouton pour revenir au départ manuellement
+				$('#nextButton').click(function() {
+					console.log("deselectObject...");
+				  $('#currentStep').val('');
+				  nextStep = 'init';
+				  goToNextStep();
+				});
+			<% } %>
+		<% } %>
+		<% data.validation_function += "	goToNextStep(); \n}\n" %>
+	<%_ data.validation_function _%>
+
+	<% } else { %>
+		console.log('Aucun transition n\'a été trouvé !');
+	<% } %>
 
 
-  // ------------------------------------------------------------------
-  // Conditional display of controls
-  // ------------------------------------------------------------------
-  
+<% if ( data.step.template == "user-choice.ejs" ) { %>
+	//
+	// Bouton de choix
+	//
+	$('.choiceButton').on('click', function(e) {
+		var choix = $(this).attr("name");
+		debug(choix);
+		<%= data.step.scenarId %>_validation(choix);
+	});	
+<% } else { %>
+	<% if (data.needNextStepButton) { %>
+	$('#nextButton').click(function() {
+	// La ca va fonctionner dans le cas de transition liées sur histo() car pas besoin de faire un choix
+	// Dans les autres cas de transition, ça va pas le faire : @TODO
+	  <%= data.step.scenarId %>_validation();
+	});
+	<% } %>
+<% } %>
 
+var nextStep = "";
+
+function goToNextStep() {
+	console.log("'goToNextStep' function called ! Next step is " + nextStep);
+	// 1. keep history in histo object TODO !
+	// 2. set the new currentStep attribut in 'scenario' object
+	scenario.currentStep = nextStep;
+	// 3. reloading new template, and transitions template
+	loadStep(scenario);
+}
+
+// ------------------------------------------------------------------
 }); // End document.ready
 </script>

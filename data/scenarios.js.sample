@@ -17,11 +17,11 @@
 
     
   Différentes transitions possibles : 
-    - timeElapsed() : passer à l'étape suivante après un certain temps "duration"
-    - endMedia()    : passer à l'étape suivante à la fin du média, possibilité d'ajouter un temps de latence avec "duration"
-    - manualStep()  : passer à l'étape suivante sur commande du médiateur (on clique sur le bouton "suivant")
-    - select_object()   : sélection d'un objet.
-    - deselect_object() : déselection d'un objet.
+    - timeElapsed : passer à l'étape suivante après un certain temps "duration"
+    - endMedia    : passer à l'étape suivante à la fin du média, possibilité d'ajouter un temps de latence avec "duration"
+    - manualStep  : passer à l'étape suivante sur commande du médiateur (on clique sur le bouton "suivant")
+    - selectObject   : sélection d'un objet.
+    - deselectObject : déselection d'un objet.
     - histo("step-xxx") : Vrai si on est déjà passée par l'étape "step-xxx", faux sinon
   */
 
@@ -44,7 +44,7 @@ module.exports =
         medias : ['video1.mp4'],
         transitions : 
           [
-            { id : 'step-2', condition : 'endMedia()', duration : 2000 }
+            { id : 'step-2', condition : 'endMedia', duration : 2000 }
           ]
       },
 
@@ -69,7 +69,7 @@ module.exports =
         medias : [''],
         transitions : 
         [
-          {id : 'step-4', condition : 'timeElapsed()', duration : 2000 }
+          {id : 'step-4', condition : 'timeElapsed', duration : 2000 }
         ]
       },
 
@@ -81,7 +81,7 @@ module.exports =
         medias : ['error.gif'],
         transitions : 
         [
-          {id : 'step-1.2', condition : 'timeElapsed()', duration : 2000 }
+          {id : 'step-1.2', condition : 'timeElapsed', duration : 2000 }
         ]
       },
       {
@@ -92,7 +92,7 @@ module.exports =
         medias : [''],
         transitions : 
         [
-          {id : 'step-4', condition : 'timeElapsed()', duration : 2000 }
+          {id : 'step-4', condition : 'timeElapsed', duration : 2000 }
         ]
       },
       ]

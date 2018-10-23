@@ -1,4 +1,5 @@
 <%- include('header', {data: data}) %>
+
 <h1 id="data-title"></h1>
 <h2 id="data-step-title"></h2>
 <link rel='stylesheet' href='/style/style.css' />
@@ -13,79 +14,10 @@
           </div>
         </div>
 
-      </div>  
+      </div> 
+<script type='text/javascript' src='/js/scenario.js'></script> 
 <script>
 $(document).ready(function(){
-  var socket = io(); //'http://localhost:3000'
-  var scenario = {}; // Scenario given by the rfid reading
-  var step = {};     // Current step in the scenario
-  var content = {}; // Rendered template of the current step
-  // ------------------------------------------------------------------
-  // Scenario managing functions
-  // ------------------------------------------------------------------
-
-  // Get details of a step with the current step
-  function getCurrentStepDetails(){
-    var stepItem = "";
-    for (var i=0; i<scenario.steps.length; i++) {
-      if(scenario.steps[i].stepId == scenario.currentStep) {
-        stepItem = scenario.steps[i];
-        break;
-      }
-    }
-    console.log(stepItem);
-    return stepItem;
-  }
-
-  // Set Scenario title
-  function setScenarioTitle(t) {
-    $('title').html(t);
-    $('#data-title').html(t);
-  }
-
-  // Set step title
-  function setStepTitle(t){
-    $('#data-step-title').html(t);
-  }
-
-  // Display rendered template
-  function displayTemplate(content, domId) {
-    $(domId).html(content);
-  }
-
-  // Analyses and build transition tests for next step
-  function setTransitions(trns) {
-    //transitions = "";
-    trns.forEach(function(t){
-      //transitions += "if ( endMedia() ) { setTimeout() }"
-      console.log(t.id + " / condition : '"+ t.condition +"' / duration="+ t.duration + "");
-    });
-  }
-
-  // ------------------------------------------------------------------
-  // Getting embeded templates
-  // ------------------------------------------------------------------
-  function getTemplate(url, data, resultDomId) {
-    data.scenarId = scenario.scenarId;
-    data.scenarioMediaPath = scenario.scenarioMediaPath;
-
-    $.ajax({
-       url: url,
-       data: data,
-       type: 'POST',
-       error: function(req, textStatus) {
-        // TODO something clever to show error ! 
-        //$("#stepTemplate").html(req.responseText);
-        console.log(req);
-        displayTemplate(req.responseText, resultDomId);
-       },
-       success: function(html) {
-        // TODO : write a callback to update page
-        displayTemplate(html, resultDomId);
-       }
-    });
-  }
-
   // ------------------------------------------------------------------
   // Socket listening
   // ------------------------------------------------------------------
@@ -98,24 +30,11 @@ $(document).ready(function(){
   socket.on('server.play-scenario', function(data) {
     scenario = data;
     console.log(scenario);
-    // Set title
-    setScenarioTitle(scenario.title);
-    // get step
-    step = getCurrentStepDetails();
-    // step title
-    setStepTitle(step.title);
-    // transitons
-    //setTransitions(step.transitions);
-    // get step template
-    content = getTemplate('/scenario/step-template', step, "#stepTemplate");
-    // get transiton template
-    content = getTemplate('/scenario/step-transitions', step, "#transitionsTemplate");
+    // Loading first step
+    loadStep(scenario);
   });
 
   // ------------------------------------------------------------------
-  // Conditional display of controls
-  // ------------------------------------------------------------------
-  
 
 }); // End document.ready
 </script>
