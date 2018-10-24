@@ -17,11 +17,13 @@
 
     
   Différentes transitions possibles : 
+    Ces transitions s'utilisent toutes seules
     - timeElapsed : passer à l'étape suivante après un certain temps "duration"
     - endMedia    : passer à l'étape suivante à la fin du média, possibilité d'ajouter un temps de latence avec "duration"
     - manualStep  : passer à l'étape suivante sur commande du médiateur (on clique sur le bouton "suivant")
     - selectObject   : sélection d'un objet.
     - deselectObject : déselection d'un objet.
+    Cette transistion peut être répétée pour faire du branching
     - histo("step-xxx") : Vrai si on est déjà passée par l'étape "step-xxx", faux sinon
   */
 

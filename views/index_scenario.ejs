@@ -1,20 +1,33 @@
 <%- include('header', {data: data}) %>
-
+<link rel='stylesheet' href='/style/style.css' />
+<a href="#" id="resetButton"></a>
 <h1 id="data-title"></h1>
 <h2 id="data-step-title"></h2>
-<link rel='stylesheet' href='/style/style.css' />
       <div class="page-header">
 
         <div class="row">
           <div class="col-md-12">
-            <a href="#" id="resetButton"></a>
               <div id="stepTemplate"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <button class="btn btn-md btn-default" id="prevButton" name="prevButton" value="prev">&lt;</button>
+              <button class="btn btn-md btn-default" id="nextButton" name="nextButton" value="next">&gt;</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
               <div id="serviceMessage"></div>
-              <div id="transitionsTemplate"></div>
           </div>
         </div>
 
       </div> 
+
+<p id="stepListeners"></p>
+
 <script type='text/javascript' src='/js/scenario.js'></script> 
 <script>
 $(document).ready(function(){
@@ -27,8 +40,6 @@ $(document).ready(function(){
     // Loading first step
     loadStep(scenario);
   });
-
-  // ------------------------------------------------------------------
 
 }); // End document.ready
 </script>

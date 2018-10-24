@@ -294,22 +294,11 @@ router.all('/*', function (req, res, next) {
     // Rendering template as a promise
     var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template, {
       data     : dataForTemplate,
-      filename : CONFIG.app.scenario_mode + step.template
+      filename : CONFIG.app.scenario_view_path + step.template
     }).then(function(content){
       res.send(content);
     });
   }
-})
-
-/* POST Builds step transitions templates (AJAX Request) */
-.post('/scenario/step-transitions', function(req, res, next) {
-  // Rendering template as a promise
-  var content = ejs.renderFile(CONFIG.app.scenario_view_path + 'transitions.ejs', {
-    data     : dataForTemplate,
-    filename : CONFIG.app.scenario_mode + 'transitions.ejs'
-  }).then(function(content){
-    res.send(content);
-  });
 });
 
 //-----------------------------------------------------------------------------
