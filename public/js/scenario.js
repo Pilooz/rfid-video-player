@@ -5,6 +5,7 @@ var step = {};     // Current step in the scenario
 var content = {}; // Rendered template of the current step
 var lsnr_content = {}; // Rendered event listeners template of the current step
 var nextStep = ""; // stepId for the next step of the scenario
+var nav_history = new Array(); // Navigation history in scenario
 
 // These transitions are treated as listener or setTimeout functions
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
@@ -59,16 +60,16 @@ function loadStep(scenar){
   content = getTemplate('/scenario/step-template', step, "#stepTemplate");
   // build transition conditions
   build_step_validation();
+  // keep history of visited steps
+  nav_history.push(step.stepId);
 }
 
 // change context to display next step
 function goToNextStep() {
   console.log("'goToNextStep' function called ! Next step is " + nextStep);
-  // 1. keep history in histo object TODO !
-  // 2. set the new currentStep attribut in 'scenario' object
+  // 1. set the new currentStep attribut in 'scenario' object
   scenario.currentStep = nextStep;
-  // 3. Send this contextual data (scenarId and currentStep) to server (it needs to know where we are, in case of refreshing the page)
-  // 4. reloading new template, and transitions template
+  // 2. loading new template, and transitions template
   loadStep(scenario);
 }
 
@@ -82,6 +83,7 @@ function getTemplate(url, data, resultDomId) {
 
   $.ajax({
      url: url,
+     crossDomain: true,
      data: data,
      type: 'POST',
      error: function(req, textStatus) {
@@ -139,12 +141,22 @@ function build_step_validation() {
   }
 }
 
+// returns true if the step (in param) has been visited (it is in history array)
+function histo(stp) {
+  if ( nav_history.indexOf(stp) >= 0 ) {
+    return true;
+  }
+  return false;
+}
+
 // Validation function for the current step. This allows to go to the next one
 function step_validation(choice) {
   // First, if there is no conditions to evaluate, we should have
   // a non Evaluable Conditions as 'endMedia', 'timeElapsed', 'manualStep', ...
   console.log("Need to evaluate " + evaluableConditions.length + " conditions...");
   if (evaluableConditions.length == 0) {
+    // for non evaluable conditions, this should have only 1 transition, so take the first
+    nextStep = step.transitions[0].id;
     console.log("Go to next step ('" + nextStep + "'') !");
     goToNextStep();
     return true;
@@ -170,10 +182,16 @@ function step_validation(choice) {
 // Kevin's Reset button
 $("#resetButton").on('click', function(){
   nextStep = scenario.steps[0].stepId;
-  // trash navigation historic
+  // trash navigation history
+  nav_history = new Array();
   // Go
   goToNextStep();
 });
+
+// Next button
+$('#nextButton').click(function() {
+  step_validation();
+}); 
 
 
 

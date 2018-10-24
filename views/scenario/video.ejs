@@ -11,13 +11,7 @@
         nextStep = '<%= data.step.transitions[0].id %>';
         setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
     });
-
-    // Un bouton pour passer la vidéo.
-    $('#nextButton').click(function() {
-      // On prend la première transition (pour ce modèle vidéo)
-      nextStep = '<%= data.step.transitions[0].id %>';
-      step_validation();
-    });         
+        
   <% } %>
 
 </script>
