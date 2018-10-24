@@ -101,6 +101,7 @@ function getTemplate(url, data, resultDomId) {
 // ------------------------------------------------------------------
 
 function build_step_validation() {
+  evaluableConditions = new Array();
   for (var i = 0; i < step.transitions.length; i++) {
     // Construct evaluable conditions
     if ( nonEvaluableConditions.indexOf(step.transitions[i].condition) < 0 ) {
@@ -166,8 +167,13 @@ function step_validation(choice) {
 // ------------------------------------------------------------------
 // button functions / UI functions
 // ------------------------------------------------------------------
-
-
+// Kevin's Reset button
+$("#resetButton").on('click', function(){
+  nextStep = scenario.steps[0].stepId;
+  // trash navigation historic
+  // Go
+  goToNextStep();
+});
 
 
 
