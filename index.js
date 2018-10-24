@@ -287,14 +287,14 @@ router.all('/*', function (req, res, next) {
 .post('/scenario/step-template', function(req, res, next) {
 
   // If the file does not exists go to error template
-  if (!fs.existsSync(CONFIG.app.scenario_view_path + step.template)) { 
-    console.log("The template " + CONFIG.app.scenario_view_path + step.template + " was not found.");
+  if (!fs.existsSync(CONFIG.app.scenario_view_path + step.template + ".ejs")) { 
+    console.log("The template " + CONFIG.app.scenario_view_path + step.template + ".ejs was not found.");
     next();
   } else {
     // Rendering template as a promise
-    var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template, {
+    var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template + ".ejs", {
       data     : dataForTemplate,
-      filename : CONFIG.app.scenario_view_path + step.template
+      filename : CONFIG.app.scenario_view_path + step.template + ".ejs"
     }).then(function(content){
       res.send(content);
     });

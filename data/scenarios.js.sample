@@ -1,19 +1,19 @@
   // Scenarios configuration
   /*
   différents templates possibles  : 
-    - video.ejs : player vidéo.
+    - "video" : player vidéo.
       dans cet écran un bouton suivant est automatiquement inséeer pour passer le média avnt la fin
       nécessite de renseigner la propriété "media : []"
 
-    - user-choice.ejs : faire un choix sur l'écran, branching de scénario
+    - "user-choice" : faire un choix sur l'écran, branching de scénario
       nécessite de renseigner la propriété "choices : []"
 
-    - content.ejs : Contenu statique
+    - "content" : Contenu statique
       nécessite de renseigner la propriété "text"
 
-    - wrong.ejs : Affichage d'une erreur utilisateur
+    - "wrong" : Affichage d'une erreur utilisateur
 
-    - right.ejs : Affichage d'une réussite utilisateur
+    - "right" : Affichage d'une réussite utilisateur
 
     
   Différentes transitions possibles : 
@@ -41,7 +41,7 @@ module.exports =
       {
         stepId : 'step-1',
         title : 'Title Step',
-        template : 'video.ejs',
+        template : 'video',
         choices : [],
         medias : ['video1.mp4'],
         transitions : 
@@ -53,7 +53,7 @@ module.exports =
       {
         stepId : 'step-2',
         title : 'Title Step',
-        template : 'user-choice.ejs',
+        template : 'user-choice',
         choices : ["Choice 1", "Choice 2", "Choice 3"],
         medias : [''],
         transitions :  
@@ -66,7 +66,7 @@ module.exports =
       {
         stepId : 'step-1.3',
         title : 'Title Step',
-        template : 'right.ejs',
+        template : 'right',
         choices : [],
         medias : [''],
         transitions : 
@@ -78,7 +78,7 @@ module.exports =
       {
         stepId : 'step-3-error',
         title : 'Title Step',
-        template : 'wrong.ejs',
+        template : 'wrong',
         choices : [],
         medias : ['error.gif'],
         transitions : 
@@ -89,7 +89,7 @@ module.exports =
       {
         stepId : 'step-4',
         title : 'Title Step',
-        template : 'some-custom-template.ejs',
+        template : 'some-custom-template',
         choices : [],
         medias : [''],
         transitions : 
