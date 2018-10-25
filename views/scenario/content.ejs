@@ -1,7 +1,23 @@
+<%##################### background ######################%>
+
+<% if ( data.step.background &&  data.step.background != '' ) { %>
+<style>
+   body {
+      background-image: url("<%= data.config.app.mediaPath + '/' + data.step.scenarioMediaPath +data.step.background %>");
+      background-repeat: no-repeat, repeat;
+      background-color: black;
+  }
+</style>
+<% } %>
+
 <%######################## Text ########################%>
 
-<% if ( data.step.text &&  data.step.text != '' ) { %>
-	<div id="textContent"><%= data.step.text %></div>
+<% if ( data.step.text && data.step.text != '' ) { %>
+<div class="row">
+  <div class="col-md-12">
+    <div id="textContent"><%= data.step.text %></div>
+  </div>
+</div>
 <% } %>
 
 <%######################## Media #######################%>
@@ -28,9 +44,13 @@
 <%###################### Choices #######################%>
 
 <% if ( data.step.choices && data.step.choices[0] != '' ) { %>
+<div class="row">
+  <div class="col-md-12">
 	<% for(var i=0; i< data.step.choices.length; i++) {%>
 		<button class="btn btn-md btn-info choiceButton" id="but<%=i%>" name="<%= data.step.choices[i] %>"><%= data.step.choices[i] %></button>
 	<% } %>
+  </div>
+</div>
 <script>
 $(".choiceButton").on('click', function(e) {
   var choice = $(this).attr("name");
