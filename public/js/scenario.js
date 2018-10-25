@@ -62,6 +62,8 @@ function loadStep(scenar){
   build_step_validation();
   // keep history of visited steps
   nav_history.push(step.stepId);
+  // Set UI elements
+  setPrevButton();
 }
 
 // change context to display next step
@@ -193,5 +195,31 @@ $('#nextButton').click(function() {
   step_validation();
 }); 
 
+// Prev button
+$('#prevButton').click(function() {
+  // taking last visited step before the last one which is this one.
+  nextStep = nav_history[nav_history.length-2];
+  console.log(nav_history);
+}); 
+
+// Set visibility of prev button
+function setPrevButton() {
+  // this isthe first step, hide prev button
+  if(scenario.steps[0].stepId == scenario.currentStep) {
+    $('#prevButton').hide();
+  } else {
+    $('#prevButton').show();
+  }
+}
+
+// Set visibility of next button
+function setPrevButton() {
+  // this isthe first step, hide prev button
+  if(scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
+    $('#nextButton').hide();
+  } else {
+    $('#nextButton').show();
+  }
+}
 
 
