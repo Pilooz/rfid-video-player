@@ -1,0 +1,100 @@
+<style>
+	/*  Template matching capsule */
+	.critere {
+	    color : black;
+	    margin-bottom: 10%;
+	 }
+
+	.matching-img {
+	    height: 100px;
+	    margin: 20px;
+	}
+
+	.card {
+	    display:inline;
+	}
+
+	.matching-on {
+	    background-color: green;
+	}
+</style>
+<div class="row txt">
+	<div class="col-lg-5">
+	  <img src="/medias/capsule/capsule-biere-bouteille.jpg" />
+	</div>
+	<div class="col-lg-2">
+	  <div class="row">
+	  	<button id="Forme" class="critere btn btn-block">Forme</button>
+	  </div>
+	  <div class="row">
+	  	<button id="Matiere" class="critere btn btn-block">Matériau métal</button>
+	  </div>
+	  <div class="row">
+	  	<button id="Dimensions" class="critere btn btn-block">Dimensions petites</button>
+	  </div>
+	  <div class="row">
+	  	<button id="Decor" class="critere btn btn-block">Décor crénelé</button>
+	  </div>
+	</div>
+	<div class="col-lg-5">
+
+	    <div class="cardcontainer list">
+	      <ul class="cardlist">
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/plat-a-tarte.jpg" id="plat-a-tarte" />
+			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/plat-a-tarte-verre.jpg" id="plat-a-tarte-verre" />
+			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/coquillage.jpg" id="coquillage" />
+			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/moule-charlotte.jpg" id="moule-charlotte" />
+			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/roulette.jpg" id="roulette" />
+			</li>
+	      </ul>
+	    </div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.matching-img').on('click', function(){
+			$('.critere').removeClass("matching-on");
+
+			switch ($(this).attr("id")) {
+				
+				case "plat-a-tarte" :
+					$('#Forme').addClass("matching-on");
+					$('#Matiere').addClass("matching-on");
+					$('#Decor').addClass("matching-on");
+					break;
+				
+				case "plat-a-tarte-verre" :
+					$('#Forme').addClass("matching-on");
+					break;
+				
+				case "coquillage" :
+					$('#Forme').addClass("matching-on");
+					$('#Decor').addClass("matching-on");
+					break;
+				
+				case "moule-charlotte" :
+					$('#Forme').addClass("matching-on");
+					$('#Matiere').addClass("matching-on");
+					break;
+
+				case "roulette" :
+					$('#Forme').addClass("matching-on");
+					$('#Decor').addClass("matching-on");
+					break;
+			}
+		});
+
+	});
+
+</script>
