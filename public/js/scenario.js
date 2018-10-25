@@ -16,6 +16,10 @@ var evaluableConditions = new Array(); // Array of evaluable conditions ( ie var
 // ------------------------------------------------------------------
 // Scenario managing functions
 // ------------------------------------------------------------------
+// Returns first step of the choosen scenario
+function getFirstStep(scenar) {
+  return scenar.steps[0].stepId;
+}
 
 // Get details of a step with the current step
 function getCurrentStepDetails(){
@@ -184,7 +188,7 @@ function step_validation(choice) {
 // ------------------------------------------------------------------
 // Kevin's Reset button
 $("#resetButton").on('click', function(){
-  nextStep = scenario.steps[0].stepId;
+  nextStep = getFirstStep(scenario);
   // trash navigation history
   nav_history = new Array();
   // Go
@@ -199,8 +203,8 @@ $('#nextButton').click(function() {
 // Prev button
 $('#prevButton').click(function() {
   // taking last visited step before the last one which is this one.
-  nextStep = nav_history[nav_history.length-2];
-  console.log(nav_history);
+  nextStep = nav_history[nav_history.length-2] || getFirstStep(scenario);
+  goToNextStep();
 }); 
 
 // Set visibility of prev button
@@ -209,16 +213,18 @@ function setPrevButton() {
   if(scenario.steps[0].stepId == scenario.currentStep) {
     $('#prevButton').hide();
   } else {
+    $('#nextButton').html("&lt;");
     $('#prevButton').show();
   }
 }
 
 // Set visibility of next button
 function setNextButton() {
-  // this is the first step, hide prev button
+  // this is the last step, hide next button
   if(scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
     $('#nextButton').hide();
   } else {
+    $('#nextButton').html("&gt;");
     $('#nextButton').show();
   }
 }
