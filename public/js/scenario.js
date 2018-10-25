@@ -64,6 +64,7 @@ function loadStep(scenar){
   nav_history.push(step.stepId);
   // Set UI elements
   setPrevButton();
+  setNextButton();
 }
 
 // change context to display next step
@@ -213,8 +214,8 @@ function setPrevButton() {
 }
 
 // Set visibility of next button
-function setPrevButton() {
-  // this isthe first step, hide prev button
+function setNextButton() {
+  // this is the first step, hide prev button
   if(scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
     $('#nextButton').hide();
   } else {
