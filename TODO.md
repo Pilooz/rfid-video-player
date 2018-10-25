@@ -42,10 +42,12 @@ https://trello.com/b/EI2hRapk/production-mus%C3%A9e-darles-depotware
  + Ajouter les fichiers JS de description de scénarii dans ./data
  + Ajouter un Sample File de test
  - Test unitaire des fonctions de routage et de manipulation des données de scénario
- - faire en sorte que le ".ejs" des templates du fichier JSON de scénario soit ajouté par défaut
+ + faire en sorte que le ".ejs" des templates du fichier JSON de scénario soit ajouté par défaut
  + Prendre les médias dans le bon répertoire. ./media/[nom rep media sécnario]/
- - fusionner content.js avec video.js : les servent des contenus
+ + fusionner content.js avec video.js : ils servent tous des contenus
  - Ajouter une jauge temporelle sur les transitions automatiques
+ - Bouton prev sur les user-choice : faut-il le conserver ? 
+ - Refactoring serveur ?
 
  ## Back-office sur /admin 
  o Page de liste des scénarii
