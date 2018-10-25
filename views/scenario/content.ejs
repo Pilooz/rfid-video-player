@@ -1,0 +1,43 @@
+<%######################## Text ########################%>
+
+<% if ( data.step.text &&  data.step.text != '' ) { %>
+	<div id="textContent"><%= data.step.text %></div>
+<% } %>
+
+<%######################## Media #######################%>
+
+<% if ( data.step.medias[0] && data.step.medias[0] != '' ) { %>
+<div class="row">
+  <div class="col-md-12">
+    <video src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" autoplay="on" id="video1" width="80%" controls="on"></video>
+  </div>
+</div>
+<script>
+  <% if ( data.step.transitions[0].condition == 'endMedia' ) { %>
+    // transition 'endMedia'
+    $('#video1').on('ended', function(e) { 
+        console.log('endMedia...'); 
+        nextStep = '<%= data.step.transitions[0].id %>';
+        setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
+    });
+        
+  <% } %>
+</script>
+<% } %>
+
+<%###################### Choices #######################%>
+
+<% if ( data.step.choices && data.step.choices[0] != '' ) { %>
+	<% for(var i=0; i< data.step.choices.length; i++) {%>
+		<button class="btn btn-md btn-info choiceButton" id="but<%=i%>" name="<%= data.step.choices[i] %>"><%= data.step.choices[i] %></button>
+	<% } %>
+<script>
+$(".choiceButton").on('click', function(e) {
+  var choice = $(this).attr("name");
+  console.log("'" + choice + "' button was clicked !");
+  step_validation(choice);
+}); 
+</script>	
+<% } %>
+
+

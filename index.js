@@ -285,16 +285,17 @@ router.all('/*', function (req, res, next) {
 
 /* POST Builds scenario step templates (AJAX Request) */
 .post('/scenario/step-template', function(req, res, next) {
-
+  // By default the template is "content.ejs"
+  var tmpl = (step.template == "") ? "content" : step.template;
   // If the file does not exists go to error template
-  if (!fs.existsSync(CONFIG.app.scenario_view_path + step.template + ".ejs")) { 
-    console.log("The template " + CONFIG.app.scenario_view_path + step.template + ".ejs was not found.");
+  if (!fs.existsSync(CONFIG.app.scenario_view_path + tmpl + ".ejs")) { 
+    console.log("The template " + CONFIG.app.scenario_view_path + tmpl + ".ejs was not found.");
     next();
   } else {
     // Rendering template as a promise
-    var content = ejs.renderFile(CONFIG.app.scenario_view_path + step.template + ".ejs", {
+    var content = ejs.renderFile(CONFIG.app.scenario_view_path + tmpl + ".ejs", {
       data     : dataForTemplate,
-      filename : CONFIG.app.scenario_view_path + step.template + ".ejs"
+      filename : CONFIG.app.scenario_view_path + tmpl + ".ejs"
     }).then(function(content){
       res.send(content);
     });
