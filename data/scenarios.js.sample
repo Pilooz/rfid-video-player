@@ -1,31 +1,83 @@
-  // Scenarios configuration
-  /*
-  différents templates possibles  : 
+// Scenarios configuration
+
+/*------------------------------------------------------------------------------------------
+
+  1. Différents templates possibles
+  ---------------------------------
     - "video" : player vidéo.
       dans cet écran un bouton suivant est automatiquement inséeer pour passer le média avnt la fin
       nécessite de renseigner la propriété "media : []"
 
-    - "user-choice" : faire un choix sur l'écran, branching de scénario
+    - "user-choice" : faire un choice sur l'écran, branching de scénario
       nécessite de renseigner la propriété "choices : []"
 
-    - "content" : Contenu statique
+    - "content" :
       nécessite de renseigner la propriété "text"
 
     - "wrong" : Affichage d'une erreur utilisateur
 
-    - "right" : Affichage d'une réussite utilisateur
+    - "right" : Affichage d'une réussite utilisateur    
 
-    
-  Différentes transitions possibles : 
-    Ces transitions s'utilisent toutes seules
-    - timeElapsed : passer à l'étape suivante après un certain temps "duration"
-    - endMedia    : passer à l'étape suivante à la fin du média, possibilité d'ajouter un temps de latence avec "duration"
-    - manualStep  : passer à l'étape suivante sur commande du médiateur (on clique sur le bouton "suivant")
-    - selectObject   : sélection d'un objet.
-    - deselectObject : déselection d'un objet.
+  2. Construction d'une étape et attributs
+  ----------------------------------------
+    - stepId      : indentifiant unique d'une étape. Il doit être unique au sein d'un même scénario
+    - title       : titre de l'étape, affiché enhaut de page. => texte, nullable
+    - template    : modele d'affichage. Par défaut si rien n'est précisé 'content' est utilisé.
+                  le nom du template doit correspondre à un fichier .ejs dans views/scenario/
+    - choices     : tableau de choix possibles permettant le branching
+    - medias      : tableau de media présentés dans l'étape de type video/audio/image
+                    S'il y en a plusieurs les medias sont enchainés les un après les autres avec
+                    une temporisation définie dans l'attribut timeout. => nullable
+                    ( TODO ! pour le moment 1 seul média 'video' est géré )
+    - text        : Text à afficher. cela peut être du HMTL, ou du texte simple. => texte, nullable
+    - transitions : Tableau de transitions vers l'étape suivante. Plusieurs types de transistions 
+                    sont gérées. Elles sont décrite dans le paragraphe 4.
+                    - id        : identifiant de l'étape suivante si la condition est validée
+                    - condition : condition à évaluer pour passer à l'étape suivante.
+                                  Cela peut être une expression javascript (evaluable conditions) comme :
+                                    'choice == "Item-1"'
+                                    'choice != "Bibliotheque" && choice != "Laboratoire"'
+                                    'histo("step-1.7") && !histo("step-1.6")'
+                                  Cela peut aussi des conditions évenementielles pré-construite comme 
+                                  la fin de lecture d'un média, un temps écoulé, ...
+
+  3. Exemple de description d'étape
+  ---------------------------------
+      {
+        stepId : 'step-11',  
+        title : 'Youpi Tralala !',
+        template : 'content',
+        choices : ["choice1", "choice2"],
+        medias : ['myVideo.mp4', 'image.jpg', 'sound.mp3'],
+        text : 'Lorem Ipsum...',
+        transitions : 
+        [
+          {id : 'scenario0', condition : 'deselectObject' }
+        ]
+      }
+
+  4. Différentes transitions possibles
+  ------------------------------------
+  Evènements
+  - - - - - 
+    Ces transitions s'utilisent toutes seules, sans autres transistions dans la liste
+    - timeElapsed     : passer à l'étape suivante après un certain temps "duration"
+    - endMedia        : passer à l'étape suivante à la fin du média, possibilité d'ajouter un temps de latence avec "duration"
+    - manualStep      : passer à l'étape suivante sur commande du médiateur (on clique sur le bouton "suivant")
+    - selectObject    : sélection d'un objet.
+    - deselectObject  : déselection d'un objet.
+
     Cette transistion peut être répétée pour faire du branching
     - histo("step-xxx") : Vrai si on est déjà passée par l'étape "step-xxx", faux sinon
-  */
+  
+  Transitions à évaluer
+   - - - - - - - - - - 
+  Elles sont écrite sous forme d'expression javascript écrites entre simples quotes :
+    'choice == "Item-1"'
+    'choice != "Bibliotheque" && choice != "Laboratoire"'
+    'histo("step-1.7") && !histo("step-1.6")'
+
+------------------------------------------------------------------------------------------*/
 
 module.exports = 
 {
@@ -56,6 +108,7 @@ module.exports =
         template : 'user-choice',
         choices : ["Choice 1", "Choice 2", "Choice 3"],
         medias : [''],
+        text : '',
         transitions :  
           [ 
             { id : 'step-3', condition : 'choice == "Choice 1"' },
@@ -69,6 +122,7 @@ module.exports =
         template : 'right',
         choices : [],
         medias : [''],
+        text : '',
         transitions : 
         [
           {id : 'step-4', condition : 'timeElapsed', duration : 2000 }
@@ -92,6 +146,7 @@ module.exports =
         template : 'some-custom-template',
         choices : [],
         medias : [''],
+        text : '',
         transitions : 
         [
           {id : 'step-4', condition : 'timeElapsed', duration : 2000 }
