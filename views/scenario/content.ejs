@@ -32,6 +32,7 @@
   </div>
 </div>
 <script>
+
   <% if ( data.step.transitions[0].condition == 'endMedia' ) { %>
     // transition 'endMedia'
     if ($('#video1')) {
@@ -57,13 +58,14 @@
 	<% } %>
   </div>
 </div>
-<script>
-$(".choiceButton").on('click', function(e) {
-  var choice = $(this).attr("name");
-  console.log("'" + choice + "' button was clicked !");
-  step_validation(choice);
-}); 
-</script>	
 <% } %>
 
+<script>
+  // Choices button
+  $(".choiceButton").on('click', function(e) {
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+  }); 
+</script>  
 

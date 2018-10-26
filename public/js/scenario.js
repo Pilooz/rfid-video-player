@@ -178,6 +178,7 @@ function step_validation(choice) {
       nextStep = evaluableConditions[i].id;
       console.log("Go to next step ('" + nextStep + "'') !");
       goToNextStep();
+      // This first true encountered condition is taken in account
       break;
     }
   }
@@ -228,5 +229,7 @@ function setNextButton() {
     $('#nextButton').show();
   }
 }
+
+
 
 
