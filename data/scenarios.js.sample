@@ -25,6 +25,8 @@
     - template    : modele d'affichage. Par défaut si rien n'est précisé 'content' est utilisé.
                   le nom du template doit correspondre à un fichier .ejs dans views/scenario/
     - choices     : tableau de choix possibles permettant le branching
+                    Ces choix peuvent être un tableau de textes, ou un tableau d'objet texte + image :
+                    { text : "text", img : "image.gif" }
     - medias      : tableau de media présentés dans l'étape de type video/audio/image
                     S'il y en a plusieurs les medias sont enchainés les un après les autres avec
                     une temporisation définie dans l'attribut timeout. => nullable
