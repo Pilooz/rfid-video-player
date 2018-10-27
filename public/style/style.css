@@ -38,3 +38,13 @@ body > * {color:#afafaf;}
     opacity: 0;
   }
 }
+
+/* Progress bar */
+#progress {
+    position: absolute;
+    bottom: 0px;
+    left:40%;
+    margin: 20px;
+    width: 200px;
+    height: 100px;
+}

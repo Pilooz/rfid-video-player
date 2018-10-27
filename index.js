@@ -225,7 +225,7 @@ app.use('/medias', express.static(__dirname + CONFIG.app.mediaPath)); // redirec
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/socket.io/dist')); // Socket.io
-app.use('/js', express.static(__dirname + '/node_modules/json-editor/dist')); // Json-editor
+app.use('/js', express.static(__dirname + '/node_modules/progressbar.js/dist')); // Progressbar
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 //-----------------------------------------------------------------------------

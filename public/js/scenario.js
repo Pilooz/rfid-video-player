@@ -2,6 +2,7 @@
 var socket = io('http://localhost:3000'); //
 var scenario = {}; // Scenario given by the rfid reading
 var step = {};     // Current step in the scenario
+var stepIndex = 0; // Index of the step in scenario (this is an integer)
 var content = {}; // Rendered template of the current step
 var lsnr_content = {}; // Rendered event listeners template of the current step
 var nextStep = ""; // stepId for the next step of the scenario
@@ -12,6 +13,18 @@ var stepTimeout = undefined; // Timeout object for setTimeout function (timeElap
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
 var evaluableConditions = new Array(); // Array of evaluable conditions ( ie var == 'val' )
 
+// progressbar.js@1.0.0 version is used
+// Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
+var bar = new ProgressBar.SemiCircle(progress, {
+  strokeWidth: 6,
+  easing: 'easeInOut',
+  duration: 1400,
+  color: '#F79B34',
+  trailColor: '#ADA27F',
+  trailWidth: 6,
+  svgStyle: null
+});
+
 // End Global variables ---------------------------------------------
 
 // ------------------------------------------------------------------
@@ -19,6 +32,7 @@ var evaluableConditions = new Array(); // Array of evaluable conditions ( ie var
 // ------------------------------------------------------------------
 // Returns first step of the choosen scenario
 function getFirstStep(scenar) {
+  stepIndex = 0;
   return scenar.steps[0].stepId;
 }
 
@@ -27,6 +41,7 @@ function getCurrentStepDetails(){
   var stepItem = "";
   for (var i=0; i<scenario.steps.length; i++) {
     if(scenario.steps[i].stepId == scenario.currentStep) {
+      stepIndex = i;
       stepItem = scenario.steps[i];
       break;
     }
@@ -77,6 +92,7 @@ function loadStep(scenar){
   // Set UI elements
   setPrevButton();
   setNextButton();
+  updateProgressBar();
 }
 
 // change context to display next step
@@ -248,6 +264,10 @@ function setNextButton() {
   }
 }
 
+// Updating ProgressBar : this is used every step change
+function updateProgressBar(){
+  bar.animate((stepIndex + 1) / scenario.steps.length);  // Number from 0.0 to 1.0
+}
 
 
 
