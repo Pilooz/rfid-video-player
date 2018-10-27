@@ -1,0 +1,21 @@
+
+<!-- attribute template "choices" -->
+<div class="row">
+  <div class="col-md-12">
+	<% for(var i=0; i< data.step.choices.length; i++) { %>
+    <% if (data.step.choices[i].text) { %>
+    <label for="<%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %>"><%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %></label>
+    <% } %>
+		<button class="btn btn-md btn-default choiceButton" id="but<%=i%>" name="<%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %>"><%- (data.step.choices[i].img) ? '<img src=\'' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.choices[i].img + '\'/>' : data.step.choices[i] %></button>
+	<% } %>
+  </div>
+</div>
+
+<script>
+  // Choices button
+  $(".choiceButton").on('click', function(e) {
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+  }); 
+</script> 

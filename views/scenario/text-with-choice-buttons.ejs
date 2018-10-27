@@ -1,0 +1,15 @@
+
+<!-- 
+	This template is a mix between attr-text and attr-choices
+	because we need a specific display of choice buttons in the text.
+-->
+<%- include('attr-text.ejs', {data: data}) %>
+
+<script>
+  // Choices button
+  $(".choiceButton").on('click', function(e) {
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+  }); 
+</script> 

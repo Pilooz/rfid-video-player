@@ -171,6 +171,7 @@ function step_validation(choice) {
 
   // Evaluating conditions now
   for (var i = 0; i < evaluableConditions.length; i++) {
+    console.log(nav_history);
     console.log("choice : '" + choice + "'");
     console.log("Evaluating : " + evaluableConditions[i].condition + 
                 " => '" + eval(evaluableConditions[i].condition) + "'");

@@ -1,11 +1,6 @@
-<div class="row">
-  <div class="col-md-12">
-   <div id="textContent"><%= data.step.text %></div>
-  </div>
-</div>
+
+<%- include('attr-text.ejs', {data: data}) %>
 <script>
-    // cacher le bouton "prev"
-    //$('#prevButton').hide();
     // label du bouton "next"
     $('#nextButton').html("Démarrer");
 </script>

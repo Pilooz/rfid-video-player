@@ -1,0 +1,24 @@
+
+<!-- attribute template "medias" -->
+<div class="row">
+  <div class="col-md-12">
+    <% if ( ('avi', 'mov', 'mp4').indexOf(data.step.medias[0].split('.')[1]) >= 0 ) { %>
+    <video src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" autoplay="on" id="video1" width="80%" controls="on"></video>
+    <% } else { %>
+      <img id="image1" src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" />
+    <% } %>
+  </div>
+</div>
+<script>
+
+  <% if ( data.step.transitions[0].condition == 'endMedia' ) { %>
+    // transition 'endMedia'
+    if ($('#video1')) {
+      $('#video1').on('ended', function(e) { 
+          console.log('endMedia...'); 
+          nextStep = '<%= data.step.transitions[0].id %>';
+          setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
+      });
+    }
+  <% } %>
+</script>
