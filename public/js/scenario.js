@@ -6,6 +6,7 @@ var content = {}; // Rendered template of the current step
 var lsnr_content = {}; // Rendered event listeners template of the current step
 var nextStep = ""; // stepId for the next step of the scenario
 var nav_history = new Array(); // Navigation history in scenario
+var stepTimeout = undefined; // Timeout object for setTimeout function (timeElapsed, endMedia)
 
 // These transitions are treated as listener or setTimeout functions
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
@@ -50,6 +51,13 @@ function displayTemplate(content, domId) {
   $(domId).html(content);
 }
 
+// Adding a step in the nav history
+function addStepHistory(stp) {
+  nav_history.push(step.stepId);
+  // suppress dupplicates.
+  nav_history = nav_history.filter(function(val,ind) { return nav_history.indexOf(val) == ind; })
+}
+
 // Loading step into navigator
 function loadStep(scenar){
   // Tell the server which scenario and step we manage
@@ -65,7 +73,7 @@ function loadStep(scenar){
   // build transition conditions
   build_step_validation();
   // keep history of visited steps
-  nav_history.push(step.stepId);
+  addStepHistory(step.stepId);
   // Set UI elements
   setPrevButton();
   setNextButton();
@@ -73,10 +81,12 @@ function loadStep(scenar){
 
 // change context to display next step
 function goToNextStep() {
-  console.log("'goToNextStep' function called ! Next step is " + nextStep);
-  // 1. set the new currentStep attribut in 'scenario' object
+  console.log("Next step is " + nextStep);
+  // 1. Clearing running timeouts
+  clearStepTimeout();
+  // 2. set the new currentStep attribut in 'scenario' object
   scenario.currentStep = nextStep;
-  // 2. loading new template, and transitions template
+  // 3. loading new template, and transitions template
   loadStep(scenario);
 }
 
@@ -108,6 +118,14 @@ function getTemplate(url, data, resultDomId) {
 // ------------------------------------------------------------------
 // Transitions functions
 // ------------------------------------------------------------------
+// Clearing in use timeout if any
+// Usefull when #nextButton/#prevButton is click and endMedia/timeElapsed transitions are defined
+function clearStepTimeout() {
+  if (stepTimeout) {
+    clearTimeout(stepTimeout);
+    stepTimeout = undefined;
+  }
+}
 
 function build_step_validation() {
   evaluableConditions = new Array();
@@ -126,7 +144,7 @@ function build_step_validation() {
     if (step.transitions[i].condition == 'timeElapsed') {
       nextStep = step.transitions[i].id;
       console.log('timeElapsed transition. Next step in ' + (step.transitions[i].duration / 1000) + " seconde(s)");
-      setTimeout(goToNextStep, step.transitions[i].duration  || 2000 );
+      stepTimeout = setTimeout(goToNextStep, step.transitions[i].duration  || 2000 );
     }
 
     // 3. manualStep
@@ -164,20 +182,18 @@ function step_validation(choice) {
   if (evaluableConditions.length == 0) {
     // for non evaluable conditions, this should have only 1 transition, so take the first
     nextStep = step.transitions[0].id;
-    console.log("Go to next step ('" + nextStep + "'') !");
     goToNextStep();
     return true;
   }
 
   // Evaluating conditions now
+  console.log(nav_history);
   for (var i = 0; i < evaluableConditions.length; i++) {
-    console.log(nav_history);
     console.log("choice : '" + choice + "'");
     console.log("Evaluating : " + evaluableConditions[i].condition + 
                 " => '" + eval(evaluableConditions[i].condition) + "'");
     if (eval(evaluableConditions[i].condition)) {
       nextStep = evaluableConditions[i].id;
-      console.log("Go to next step ('" + nextStep + "'') !");
       goToNextStep();
       // This first true encountered condition is taken in account
       break;
@@ -199,6 +215,7 @@ $("#resetButton").on('click', function(){
 
 // Next button
 $('#nextButton').click(function() {
+  clearStepTimeout();
   step_validation();
 }); 
 

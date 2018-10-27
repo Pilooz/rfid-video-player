@@ -17,7 +17,7 @@
       $('#video1').on('ended', function(e) { 
           console.log('endMedia...'); 
           nextStep = '<%= data.step.transitions[0].id %>';
-          setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
+          stepTimeout = setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
       });
     }
   <% } %>
