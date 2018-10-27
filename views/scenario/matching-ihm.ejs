@@ -11,7 +11,7 @@
 	    margin: 20px;
 	}
 
-	.card {
+	.card, .card img {
 	    display:inline;
 	}
 
@@ -19,6 +19,7 @@
 	    background-color: green;
 	}
 </style>
+
 <div class="row txt">
 	<div class="col-lg-5">
 	  <img src="/medias/capsule/capsule-biere-bouteille.jpg" />
@@ -35,6 +36,9 @@
 	  </div>
 	  <div class="row">
 	  	<button id="Decor" class="critere btn btn-block">Décor crénelé</button>
+	  </div>
+	  <div class="row">
+	  	<button id="Inscription" class="critere btn btn-block">Inscription</button>
 	  </div>
 	</div>
 	<div class="col-lg-5">
@@ -56,6 +60,12 @@
 			<li class="card">
 				<img class="matching-img" src="/medias/capsule/roulette.jpg" id="roulette" />
 			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/pignon-vélo.jpg" id="pignon" />
+			</li>
+			<li class="card">
+				<img class="matching-img" src="/medias/capsule/boucles-d-oreilles.jpg" id="boucles" />
+			</li>
 	      </ul>
 	    </div>
 
@@ -64,34 +74,61 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		// Init
+		$('.critere').removeClass("matching-on");
+
+		// Highlighting element when matching.
+		function highlight(e) {
+			e.fadeOut(250).addClass("matching-on").fadeIn(500);
+		}
+
+		// click listener on all matching buttons
 		$('.matching-img').on('click', function(){
 			$('.critere').removeClass("matching-on");
 
 			switch ($(this).attr("id")) {
 				
 				case "plat-a-tarte" :
-					$('#Forme').addClass("matching-on");
-					$('#Matiere').addClass("matching-on");
-					$('#Decor').addClass("matching-on");
+					highlight($('#Forme'));
+					highlight($('#Matiere'));
+					highlight($('#Decor'));
+					highlight($('#Inscription'));
 					break;
 				
 				case "plat-a-tarte-verre" :
-					$('#Forme').addClass("matching-on");
+					highlight($('#Forme'));
+					highlight($('#Decor'));
 					break;
 				
 				case "coquillage" :
-					$('#Forme').addClass("matching-on");
-					$('#Decor').addClass("matching-on");
+					highlight($('#Decor'));
+					highlight($('#Dimensions'));
 					break;
 				
 				case "moule-charlotte" :
-					$('#Forme').addClass("matching-on");
-					$('#Matiere').addClass("matching-on");
+					highlight($('#Forme'));
+					highlight($('#Matiere'));
+					highlight($('#Decor'));
 					break;
 
 				case "roulette" :
-					$('#Forme').addClass("matching-on");
-					$('#Decor').addClass("matching-on");
+					highlight($('#Matiere'));
+					highlight($('#Dimensions'));
+					highlight($('#Decor'));
+					break;
+
+				case "pignon" :
+					highlight($('#Decor'));
+					highlight($('#Matiere'));
+					highlight($('#Dimensions'));
+					break;
+
+				case "boucles" :
+					highlight($('#Forme'));
+					highlight($('#Matiere'));
+					highlight($('#Dimensions'));
+					highlight($('#Decor'));
+					highlight($('#Inscription'));
 					break;
 			}
 		});
