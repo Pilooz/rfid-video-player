@@ -5,7 +5,11 @@
     <% if ( ('avi', 'mov', 'mp4').indexOf(data.step.medias[0].split('.')[1]) >= 0 ) { %>
     <video src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" autoplay="on" id="video1" width="80%" controls="on"></video>
     <% } else { %>
-      <img id="image1" src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" />
+      <% if (data.step.medias.length > 1) { %>
+        <%- include('attr-medias-caroussel.ejs', {data: data}) %>
+      <% } else { %>
+        <img id="image1" src="http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>" />
+      <% } %>
     <% } %>
   </div>
 </div>
