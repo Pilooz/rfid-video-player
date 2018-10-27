@@ -4,19 +4,24 @@
 
   1. Différents templates possibles
   ---------------------------------
-    - "video" : player vidéo.
-      dans cet écran un bouton suivant est automatiquement inséeer pour passer le média avnt la fin
-      nécessite de renseigner la propriété "media : []"
+    1.1 Les micro-templates
+      - attr-background.ejs : Ce template gère l'affichage de l'attribut background des étapes de scénario.
+      - attr-choices.ejs : Ce template gère l'affichage de l'attribut choices des étapes de scénario.
+      - attr-medias.ejs : Ce template gère l'affichage de l'attribut medias des étapes de scénario.
+      - attr-text.ejs : Ce template gère l'affichage de l'attribut text des étapes de scénario.
 
-    - "user-choice" : faire un choice sur l'écran, branching de scénario
-      nécessite de renseigner la propriété "choices : []"
-
+    1.2 Les micro-templates
     - "content" :
-      nécessite de renseigner la propriété "text"
+      Affiche toutes les propriétés background, choices, medias, et text
+      Si la propriété "template" n'est pas définie, ce template est utilisé par défaut.
 
     - "wrong" : Affichage d'une erreur utilisateur
 
-    - "right" : Affichage d'une réussite utilisateur    
+    - "right" : Affichage d'une réussite utilisateur 
+
+    Il est tout a fait possible d'ajouter d'autres templates (autant qu'on veut en fait...).
+    Il suffit de les placer dans le répertoire ./views/scenario/ 
+    puis de les référencer sans leur extension ".ejs" dans les étapes de scénarios.   
 
   2. Construction d'une étape et attributs
   ----------------------------------------
