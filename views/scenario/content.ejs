@@ -7,7 +7,7 @@
   <%- include('attr-text.ejs', {data: data}) %>
 <% } %>
 
-<% if ( data.step.medias[0] && data.step.medias[0] != '' ) { %>
+<% if ( data.step.medias && data.step.medias[0] != '' ) { %>
   <%- include('attr-medias.ejs', {data: data}) %>
 <% } %>
 
