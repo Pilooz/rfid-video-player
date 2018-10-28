@@ -266,7 +266,12 @@ function setNextButton() {
 
 // Updating ProgressBar : this is used every step change
 function updateProgressBar(){
-  bar.animate((stepIndex + 1) / scenario.steps.length);  // Number from 0.0 to 1.0
+  // Sometime, the critical pass is shorter than the total number of steps.
+  if (scenario.currentStep == scenario.steps[scenario.steps.length - 1].stepId) {
+    bar.animate(1.0);
+  } else {
+    bar.animate((stepIndex + 1) / scenario.steps.length);  // Number from 0.0 to 1.0
+  }
 }
 
 
