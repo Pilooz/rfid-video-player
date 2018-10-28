@@ -1,4 +1,5 @@
 
+<% if ( data.step.choices && data.step.choices[0] != '' ) { %>
 <!-- attribute template "choices" -->
 <div class="row">
   <div class="col-md-12">
@@ -19,3 +20,4 @@
     step_validation(choice);
   }); 
 </script> 
+<% } %>

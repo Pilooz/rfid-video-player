@@ -1,16 +1,10 @@
 
-<% if ( data.step.background &&  data.step.background != '' ) { %>
   <%- include('attr-background.ejs', {data: data}) %>
-<% } %>
 
-<% if ( data.step.text && data.step.text != '' ) { %>
+  <%- include('attr-icon.ejs', {data: data}) %>
+  
   <%- include('attr-text.ejs', {data: data}) %>
-<% } %>
 
-<% if ( data.step.medias && data.step.medias[0] != '' ) { %>
   <%- include('attr-medias.ejs', {data: data}) %>
-<% } %>
 
-<% if ( data.step.choices && data.step.choices[0] != '' ) { %>
   <%- include('attr-choices.ejs', {data: data}) %>
-<% } %>
