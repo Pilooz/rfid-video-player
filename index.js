@@ -80,9 +80,16 @@ io.on('connection', function(socket) {
         console.log("The client is managing '" + currentScenario.scenarId + 
                     "', step : " + currentScenario.currentStep);
       });
+
+      // When client wants to launch manually a scenario whitout rfid interaction
+      // socket.on('client.sendScenario', function(data){
+      //   currentScenario = data.currentScenario;
+      //   console.log("The client has launch manually '" + data.scenarId + "'");
+      // });
+
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
-        lastReadData.code = "";
-        sendingData();
+        // lastReadData.code = "";
+        // sendingData();
       // END OF SHITY DEBUG STUFF
     }
 
@@ -132,7 +139,7 @@ function sendingData() {
 //
 if (CONFIG.rfid.behavior == "emulated") {
   console.log("The Serial communication with RFID readers is in '" + CONFIG.rfid.behavior + "' mode.");
-  var testList = [ {tag: "presentation", reader:3}, {tag: "coderfid2", reader:2}, {tag:"presentation", reader:1}, {tag:"coderfid1", reader:1}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
+  var testList = [ {tag: "coderfid1", reader:3}, {tag: "coderfid2", reader:2}, {tag:"presentation", reader:1}, {tag:"coderfid1", reader:1}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
   var i = 0;
   var timeout = CONFIG.app.scenario_mode ? 10000000 : 10000;
 
@@ -319,7 +326,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');

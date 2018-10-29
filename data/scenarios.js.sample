@@ -93,7 +93,7 @@ module.exports =
     // First scenario
     { 
       scenarId : 'scenario1', 
-      rfid : 'coderfid1',
+      rfid : ['coderfid1', 'coderfid4'],
       title : 'Title Scenario',
       scenarioMediaPath : 'myPath/',
       steps : [

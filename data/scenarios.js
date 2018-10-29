@@ -99,7 +99,7 @@ module.exports =
      // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario0', // scénario de présentation
-      rfid : 'presentation', 
+      rfid : ['presentation'], 
       title : 'Dépôt’ware',
       scenarioMediaPath : 'presentation/',
       steps : [
@@ -156,7 +156,7 @@ module.exports =
      // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario1', // scénario de la pipette
-      rfid : 'coderfid1',
+      rfid : ['coderfid1'],
       title : 'Découverte d\'un nouvel objet bien curieux !',
       scenarioMediaPath : 'pipette/',
       steps : [
@@ -482,7 +482,7 @@ module.exports =
     // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario2', // scénario de la capsule
-      rfid : 'coderfid2',
+      rfid : ['coderfid2'],
       title : 'Ceci n\'est pas une capsule !',
       scenarioMediaPath : 'capsule/',
       steps : [
@@ -618,7 +618,7 @@ module.exports =
     // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario3', // scénario de l'amphorisque
-      rfid : 'coderfid3',
+      rfid : ['coderfid3'],
       title : 'Un objet bien singulier...',
       scenarioMediaPath : 'amphorisque/',
       steps : [
