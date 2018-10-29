@@ -9,6 +9,9 @@ var nav_history = new Array(); // Navigation history in scenario
 var scenario_history = new Array();
 var stepTimeout = undefined; // Timeout object for setTimeout function (timeElapsed, endMedia)
 
+var setTimeoutStepIsStarting;
+var setTimeoutStepIsEnding;
+
 // These transitions are treated as listener or setTimeout functions
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
 var evaluableConditions = new Array(); // Array of evaluable conditions ( ie var == 'val' )
@@ -76,8 +79,39 @@ function setStepTitle(t){
 }
 
 // Display rendered template
-function displayTemplate(content, domId) {
-  $(domId).html(content);
+function displayTemplate(content, domId, step) {
+	cleanRenderContainer();
+	
+  $(domId)
+  	.attr('data-step-id', step.stepId)
+  	.attr('data-scenario-id', step.scenarId)
+  	.attr('data-template', step.template)
+  	.html(content);
+  
+  stepIsStarting();
+}
+
+// Clean all transition classes of the previous step
+function cleanRenderContainer() {
+	$('body').removeClass('step-is-ending');
+}
+
+function stepIsEnding(cb) {
+	$('body').addClass('step-is-ending');
+	
+	clearTimeout(setTimeoutStepIsEnding);
+  setTimeoutStepIsEnding = setTimeout(function(){
+    cb();
+  }, 500);
+}
+
+function stepIsStarting() {
+	$('body').addClass('step-is-starting');
+	
+	clearTimeout(setTimeoutStepIsStarting);
+	setTimeoutStepIsStarting = setTimeout(function(){
+		$('body').removeClass('step-is-starting');
+	}, 500);
 }
 
 // Adding a step in the nav history
@@ -112,8 +146,6 @@ function loadStep(scenar, stepId = null){
   setNextButton();
   updateProgressBar();
   
-  console.log(scenario);
-  
   if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
 	  addScenarioHistory();
   }
@@ -144,6 +176,7 @@ function goToNextStep() {
 function getTemplate(url, data, resultDomId) {
   data.scenarId = scenario.scenarId;
   data.scenarioMediaPath = scenario.scenarioMediaPath;
+ 
 
   $.ajax({
      url: url,
@@ -152,12 +185,11 @@ function getTemplate(url, data, resultDomId) {
      type: 'POST',
      error: function(req, textStatus) {
       // TODO something clever to show error ! 
-      console.log(req);
-      displayTemplate(req.responseText, resultDomId);
+      displayTemplate(req.responseText, resultDomId, data.step);
      },
-     success: function(html) {
+     success: function(data) {
       // TODO : write a callback to update page
-      displayTemplate(html, resultDomId);
+      displayTemplate(data.content, resultDomId, data.step);
      }
   });
 }

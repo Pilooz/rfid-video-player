@@ -9,11 +9,23 @@ Début du jeu = Interface Clic 1 : Graphisme : visuel cliquable des 3 objets (p
 + Bandit manchot avec noms des 3 objets, dans une version remixée « Amphorule », « Pipisque » et « Capsette »  (ou autre mélange aléatoire)
 
 <script type="text/javascript">
+  
+  $(document).on('click', '.scenarioButtonOfDashboard', function(e) {
+	  stepIsEnding(function(){
+		  socket.emit('client.setScenarioWithScenarId', {
+		    scenarId: $(this).attr('name'),
+		    stepId: $(this).data('step-id') || undefined
+		  });
+	  });
+  }); 
+  
+  /*
 	console.log('nav_history');
 	console.log(nav_history);
 	
 	console.log('scenario_history');
 	console.log(scenario_history);
+	*/
 </script> 
 
  <%- include('attr-text.ejs', {data: data}) %>

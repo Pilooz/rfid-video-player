@@ -48,3 +48,11 @@ body > * {color:#afafaf;}
     width: 200px;
     height: 100px;
 }
+
+.scenarioButtonOfDashboard {
+	transition:all 500ms ease;
+}
+
+.step-is-ending .scenarioButtonOfDashboard {
+	opacity:0;
+}

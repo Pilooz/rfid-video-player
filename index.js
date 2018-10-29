@@ -312,7 +312,10 @@ router.all('/*', function (req, res, next) {
       data     : dataForTemplate,
       filename : CONFIG.app.scenario_view_path + tmpl + ".ejs"
     }).then(function(content){
-      res.send(content);
+      res.send({
+	      content: content,
+	      step: step
+	    });
     });
   }
 });
