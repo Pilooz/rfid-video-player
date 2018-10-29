@@ -3,7 +3,6 @@ node_modules/
 
 # directories
 videos/*
-medias/*
 data/keywords.js
 data/media.js
 data/sav/*.sav
