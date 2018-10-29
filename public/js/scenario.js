@@ -84,7 +84,7 @@ function displayTemplate(content, domId) {
 function addStepHistory(stp) {
   nav_history.push(step.stepId);
   // suppress dupplicates.
-  nav_history = nav_history.filter(function(val,ind) { return nav_history.indexOf(val) == ind; })
+//  nav_history = nav_history.filter(function(val,ind) { return nav_history.indexOf(val) == ind; })
 }
 
 // Loading step into navigator
@@ -270,6 +270,11 @@ $('#nextButton').click(function() {
 $('#prevButton').click(function() {
   // taking last visited step before the last one which is this one.
   nextStep = nav_history[nav_history.length-2] || getFirstStep(scenario);
+  // remove the last step id (where we were)…
+  nav_history.pop();
+  // and remove the last before last step id (where we're on). Why? Because goToNextStep() will add it
+  nav_history.pop();
+  
   goToNextStep();
 }); 
 
