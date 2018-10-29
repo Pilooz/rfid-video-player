@@ -27,6 +27,7 @@
   ----------------------------------------
     - stepId      : indentifiant unique d'une étape. Il doit être unique au sein d'un même scénario
     - title       : titre de l'étape, affiché enhaut de page. => texte, nullable
+    - icon        : Illustration de la page placée à côté du titre. Nullable
     - template    : modele d'affichage. Par défaut si rien n'est précisé 'content' est utilisé.
                   le nom du template doit correspondre à un fichier .ejs dans views/scenario/
     - choices     : tableau de choix possibles permettant le branching
@@ -35,7 +36,10 @@
     - medias      : tableau de media présentés dans l'étape de type video/audio/image
                     S'il y en a plusieurs les medias sont enchainés les un après les autres avec
                     une temporisation définie dans l'attribut timeout. => nullable
-                    ( TODO ! pour le moment 1 seul média 'video' est géré )
+                    ( TODO ! pour le moment seuls les tableaux d'images sont géré avec un petit carroussel)
+    - mediaTimeout: temps en ms entre l'enchainement de 2 médias lorsque le tableau des médias
+                    comporte plus d'un élément. Nullable/ défaut 3500 ms
+    - background  : Image de fond de l'étape. implémenté dans le template par défaut
     - text        : Text à afficher. cela peut être du HMTL, ou du texte simple. => texte, nullable
     - transitions : Tableau de transitions vers l'étape suivante. Plusieurs types de transistions 
                     sont gérées. Elles sont décrite dans le paragraphe 4.
@@ -99,10 +103,13 @@ module.exports =
       steps : [
       {
         stepId : 'step-1',
-        title : 'Title Step',
+        title : 'Attributes validation',
+        icon : 'icon.png',
         template : 'video',
-        choices : [],
-        medias : ['video1.mp4'],
+        background : 'image1.png',
+        choice : ["Choice 1", "Choice 2", "Choice 3"],
+        medias : ['image1.png', 'image2.png'],
+        text : 'text1',
         transitions : 
           [
             { id : 'step-2', condition : 'endMedia', duration : 2000 }
@@ -112,9 +119,8 @@ module.exports =
       {
         stepId : 'step-2',
         title : 'Title Step',
-        template : 'user-choice',
+        template : 'content',
         choices : ["Choice 1", "Choice 2", "Choice 3"],
-        medias : [''],
         text : '',
         transitions :  
           [ 
@@ -156,7 +162,19 @@ module.exports =
         text : '',
         transitions : 
         [
-          {id : 'step-4', condition : 'timeElapsed', duration : 2000 }
+          {id : 'step-5', condition : 'timeElapsed', duration : 2000 }
+        ]
+      },
+      {
+        stepId : 'step-5',
+        title : 'Title Step',
+        template : 'some-custom-template',
+        choices : [],
+        medias : [''],
+        text : '',
+        transitions : 
+        [
+          {id : 'step-1', condition : 'deselectObject' }
         ]
       },
       ]
