@@ -50,6 +50,20 @@ function getCurrentStepDetails(){
   return stepItem;
 }
 
+// Get details of a step with a given stepId
+function getStepDetailsOfStepId(stepId){
+  var stepItem = "";
+  for (var i=0; i<scenario.steps.length; i++) {
+    if(scenario.steps[i].stepId == stepId) {
+      stepIndex = i;
+      stepItem = scenario.steps[i];
+      break;
+    }
+  }
+  console.log(stepItem);
+  return stepItem;
+}
+
 // Set Scenario title
 function setScenarioTitle(t) {
   $('title').html(t);
@@ -74,13 +88,17 @@ function addStepHistory(stp) {
 }
 
 // Loading step into navigator
-function loadStep(scenar){
+function loadStep(scenar, stepId = null){
   // Tell the server which scenario and step we manage
   socket.emit('client.currentScenario', { currentScenario: scenar });
   // Set title
   setScenarioTitle(scenar.title);
   // get step
-  step = getCurrentStepDetails();
+  if (stepId != null) {
+  	step = getStepDetailsOfStepId(stepId);
+  } else {
+  	step = getCurrentStepDetails();
+  }
   // step title
   setStepTitle(step.title);
   // get step template
