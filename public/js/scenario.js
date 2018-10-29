@@ -1,5 +1,4 @@
 // Global variables -------------------------------------------------
-var socket = io('http://localhost:3000'); //
 var scenario = {}; // Scenario given by the rfid reading
 var step = {};     // Current step in the scenario
 var stepIndex = 0; // Index of the step in scenario (this is an integer)

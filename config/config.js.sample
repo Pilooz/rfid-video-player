@@ -24,18 +24,20 @@ module.exports = {
 
   // Application spcific conf
   app : {
+    socketServer : 'http://localhost:3000',
     dbPath : app_root + "/data",
     dbSavePath : app_root + "/data/sav",
     mediaPath : '/medias',
     simulateSearchTime : false,
     searchTimeout : 5000,
-    scenario_mode : false,
+    scenario_mode : true,
     scenario_view_path : app_root + '/views/scenario/', // directory where the server takes views to render a scenario
-    messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
+     messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
       msgWaitingMediaFile: "waitingForTag.mp4",
       msgMediaNotFoundMediaFile: "mediaNotFound.mp4",
       msgNoTagAssocMediaFile: "noTagAssociation.mp4",
       msgSearchingMediaFile: "searching.mp4"
   }
+}
 }
 

@@ -132,7 +132,7 @@ function sendingData() {
 //
 if (CONFIG.rfid.behavior == "emulated") {
   console.log("The Serial communication with RFID readers is in '" + CONFIG.rfid.behavior + "' mode.");
-  var testList = [ {tag: "coderfid3", reader:3}, {tag: "coderfid2", reader:2}, {tag:"presentation", reader:1}, {tag:"coderfid1", reader:1}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
+  var testList = [ {tag: "presentation", reader:3}, {tag: "coderfid2", reader:2}, {tag:"presentation", reader:1}, {tag:"coderfid1", reader:1}, {tag: "coderfid4", reader:1}, {tag: "coderfid5", reader:2}];
   var i = 0;
   var timeout = CONFIG.app.scenario_mode ? 10000000 : 10000;
 
