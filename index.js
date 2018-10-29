@@ -80,6 +80,15 @@ io.on('connection', function(socket) {
         console.log("The client is managing '" + currentScenario.scenarId + 
                     "', step : " + currentScenario.currentStep);
       });
+      
+      socket.on('client.setScenarioWithScenarId', function(data){
+        currentScenario = scenarDB.chooseScenarioWithScenarId(data.scenarId);
+        
+        // The scenario is already choosen and the client that has just refreshed
+        // want to keep its context (scenario and currentStep)
+				io.emit('server.play-scenario', currentScenario);
+     	});
+      
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
         lastReadData.code = "";
         sendingData();
