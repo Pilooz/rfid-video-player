@@ -3,9 +3,9 @@ node_modules/
 
 # directories
 videos/*
-medias/*mov
-medias/*m4v
-medias/*mp4
+medias/*/*.mov
+medias/*/*.m4v
+medias/*/*.mp4
 data/keywords.js
 data/media.js
 data/sav/*.sav
