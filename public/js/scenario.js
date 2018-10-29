@@ -6,6 +6,7 @@ var content = {}; // Rendered template of the current step
 var lsnr_content = {}; // Rendered event listeners template of the current step
 var nextStep = ""; // stepId for the next step of the scenario
 var nav_history = new Array(); // Navigation history in scenario
+var scenario_history = new Array();
 var stepTimeout = undefined; // Timeout object for setTimeout function (timeElapsed, endMedia)
 
 // These transitions are treated as listener or setTimeout functions
@@ -92,6 +93,19 @@ function loadStep(scenar){
   setPrevButton();
   setNextButton();
   updateProgressBar();
+  
+  console.log(scenario);
+  
+  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
+	  addScenarioHistory();
+  }
+}
+
+// Adding a step in the scenario history
+function addScenarioHistory() {
+  scenario_history.push(scenario.scenarId);
+  // suppress dupplicates.
+  scenario_history = scenario_history.filter(function(val,ind) { return scenario_history.indexOf(val) == ind; })
 }
 
 // change context to display next step

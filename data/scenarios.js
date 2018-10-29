@@ -140,7 +140,7 @@ module.exports =
       {
         stepId : 'step-0.4',
         title : 'Enquête archéologique',
-        template : 'jackpot',
+        template : 'dashboard',
         medias : [''],
         text : 'Saisissez un objet. Pour l’identifier, laissez-vous guider et expérimentez la démarche scientifique',
         transitions : 
