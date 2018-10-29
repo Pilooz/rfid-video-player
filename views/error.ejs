@@ -1,7 +1,8 @@
-<%- include('header') %>
+<%- include('header', { data: data }) %>
+
 
 <h1><%= message %></h1>
 <h2><%= error.status %></h2>
 <pre><%= error.stack %></pre>
 
-<%- include('footer') %>
+<%- include('footer', { data: data }) %>
