@@ -4,7 +4,8 @@ node_modules/
 # directories
 videos/*
 medias/*
-data/*.js
+data/keywords.js
+data/media.js
 data/sav/*.sav
 log/*
 config/*.js
