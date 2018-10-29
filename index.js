@@ -90,10 +90,14 @@ io.on('connection', function(socket) {
       socket.on('client.setScenarioWithScenarId', function(data){
         currentScenario = scenarDB.chooseScenarioWithScenarId(data.scenarId);
         
+        if (data.stepId) {
+	        currentScenario.currentStep = data.stepId;
+        }
+        
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
 				io.emit('server.play-scenario', currentScenario);
-     	});
+      });
       
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
         // lastReadData.code = "";
@@ -130,6 +134,8 @@ function sendingData() {
         }
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
+       console.log('server.play-scenario');
+        
        io.emit('server.play-scenario', currentScenario);
 
       } else {
@@ -312,7 +318,10 @@ router.all('/*', function (req, res, next) {
       data     : dataForTemplate,
       filename : CONFIG.app.scenario_view_path + tmpl + ".ejs"
     }).then(function(content){
-      res.send(content);
+      res.send({
+	      content: content,
+	      step: step
+	    });
     });
   }
 });

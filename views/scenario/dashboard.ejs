@@ -1,32 +1,31 @@
 Dashboard
 
-<div class="scenarioButton" name="scenario1">Scénario Pipette</div>
-<div class="scenarioButton" name="scenario2">Scénario Capsule</div>
-<div class="scenarioButton" name="scenario3">Scénario Amphorisque</div>
+<div class="scenarioButtonOfDashboard" name="scenario1">Scénario Pipette</div>
+<div class="scenarioButtonOfDashboard" name="scenario2">Scénario Capsule</div>
+<div class="scenarioButtonOfDashboard" name="scenario3">Scénario Amphorisque</div>
 
 
 Début du jeu = Interface Clic 1 : Graphisme : visuel cliquable des 3 objets (pipette et amphorisque aux formes complétées, capsule vue de dessus, représentés par leurs ombres ? cf. ICONO exemples graphisme : cartels) + texte « Objets à toucher »<br/>
 + Bandit manchot avec noms des 3 objets, dans une version remixée « Amphorule », « Pipisque » et « Capsette »  (ou autre mélange aléatoire)
 
 <script type="text/javascript">
+  
+  $(document).on('click', '.scenarioButtonOfDashboard', function(e) {
+	  stepIsEnding(function(){
+		  socket.emit('client.setScenarioWithScenarId', {
+		    scenarId: $(this).attr('name'),
+		    stepId: $(this).data('step-id') || undefined
+		  });
+	  });
+  }); 
+  
+  /*
 	console.log('nav_history');
 	console.log(nav_history);
 	
 	console.log('scenario_history');
 	console.log(scenario_history);
-
-  // Choices button
-  $(".scenarioButton").on('click', function(e) {
-    socket.emit('client.setScenarioWithScenarId', {
-	    scenarId: $(this).attr('name')
-	  });
-	  
-	  socket.on('server.play-scenario', function(data) {
-	    scenario = data;
-	    // Loading first step
-	    loadStep(scenario);
-	  });
-  }); 
+	*/
 </script> 
 
  <%- include('attr-text.ejs', {data: data}) %>

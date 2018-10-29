@@ -9,6 +9,9 @@ var nav_history = new Array(); // Navigation history in scenario
 var scenario_history = new Array();
 var stepTimeout = undefined; // Timeout object for setTimeout function (timeElapsed, endMedia)
 
+var setTimeoutStepIsStarting;
+var setTimeoutStepIsEnding;
+
 // These transitions are treated as listener or setTimeout functions
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
 var evaluableConditions = new Array(); // Array of evaluable conditions ( ie var == 'val' )
@@ -50,6 +53,20 @@ function getCurrentStepDetails(){
   return stepItem;
 }
 
+// Get details of a step with a given stepId
+function getStepDetailsOfStepId(stepId){
+  var stepItem = "";
+  for (var i=0; i<scenario.steps.length; i++) {
+    if(scenario.steps[i].stepId == stepId) {
+      stepIndex = i;
+      stepItem = scenario.steps[i];
+      break;
+    }
+  }
+  console.log(stepItem);
+  return stepItem;
+}
+
 // Set Scenario title
 function setScenarioTitle(t) {
   $('title').html(t);
@@ -62,25 +79,60 @@ function setStepTitle(t){
 }
 
 // Display rendered template
-function displayTemplate(content, domId) {
-  $(domId).html(content);
+function displayTemplate(content, domId, step) {
+	cleanRenderContainer();
+	
+  $(domId)
+  	.attr('data-step-id', step.stepId)
+  	.attr('data-scenario-id', step.scenarId)
+  	.attr('data-template', step.template)
+  	.html(content);
+  
+  stepIsStarting();
+}
+
+// Clean all transition classes of the previous step
+function cleanRenderContainer() {
+	$('body').removeClass('step-is-ending');
+}
+
+function stepIsEnding(cb) {
+	$('body').addClass('step-is-ending');
+	
+	clearTimeout(setTimeoutStepIsEnding);
+  setTimeoutStepIsEnding = setTimeout(function(){
+    cb();
+  }, 500);
+}
+
+function stepIsStarting() {
+	$('body').addClass('step-is-starting');
+	
+	clearTimeout(setTimeoutStepIsStarting);
+	setTimeoutStepIsStarting = setTimeout(function(){
+		$('body').removeClass('step-is-starting');
+	}, 500);
 }
 
 // Adding a step in the nav history
 function addStepHistory(stp) {
   nav_history.push(step.stepId);
   // suppress dupplicates.
-  nav_history = nav_history.filter(function(val,ind) { return nav_history.indexOf(val) == ind; })
+//  nav_history = nav_history.filter(function(val,ind) { return nav_history.indexOf(val) == ind; })
 }
 
 // Loading step into navigator
-function loadStep(scenar){
+function loadStep(scenar, stepId = null){
   // Tell the server which scenario and step we manage
   socket.emit('client.currentScenario', { currentScenario: scenar });
   // Set title
   setScenarioTitle(scenar.title);
   // get step
-  step = getCurrentStepDetails();
+  if (stepId != null) {
+  	step = getStepDetailsOfStepId(stepId);
+  } else {
+  	step = getCurrentStepDetails();
+  }
   // step title
   setStepTitle(step.title);
   // get step template
@@ -93,8 +145,6 @@ function loadStep(scenar){
   setPrevButton();
   setNextButton();
   updateProgressBar();
-  
-  console.log(scenario);
   
   if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
 	  addScenarioHistory();
@@ -126,6 +176,7 @@ function goToNextStep() {
 function getTemplate(url, data, resultDomId) {
   data.scenarId = scenario.scenarId;
   data.scenarioMediaPath = scenario.scenarioMediaPath;
+ 
 
   $.ajax({
      url: url,
@@ -134,12 +185,11 @@ function getTemplate(url, data, resultDomId) {
      type: 'POST',
      error: function(req, textStatus) {
       // TODO something clever to show error ! 
-      console.log(req);
-      displayTemplate(req.responseText, resultDomId);
+      displayTemplate(req.responseText, resultDomId, data.step);
      },
-     success: function(html) {
+     success: function(data) {
       // TODO : write a callback to update page
-      displayTemplate(html, resultDomId);
+      displayTemplate(data.content, resultDomId, data.step);
      }
   });
 }
@@ -252,6 +302,11 @@ $('#nextButton').click(function() {
 $('#prevButton').click(function() {
   // taking last visited step before the last one which is this one.
   nextStep = nav_history[nav_history.length-2] || getFirstStep(scenario);
+  // remove the last step id (where we were)…
+  nav_history.pop();
+  // and remove the last before last step id (where we're on). Why? Because goToNextStep() will add it
+  nav_history.pop();
+  
   goToNextStep();
 }); 
 
