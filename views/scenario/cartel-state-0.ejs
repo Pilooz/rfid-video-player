@@ -1,0 +1,9 @@
+<div class="cartel cartel-state-0">
+	<div class="cartel-image">
+		<div class="cartel-image-image<% if (data.step.templateData) { if (data.step.templateData.backgroundSize) { %> background-size-<%= data.step.templateData.backgroundSize %><% } } %>" 
+			style="background-image:url(http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>)"></div>
+	</div>
+	<div class="cartel-text">
+		<%- include('attr-text.ejs', {data: data}) %>
+	</div>
+</div>

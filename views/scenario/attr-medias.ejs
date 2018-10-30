@@ -54,9 +54,11 @@
     // transition 'endMedia'
     if ($('#module-media-video')) {
       $('#module-media-video').on('ended', function(e) { 
-          console.log('endMedia...'); 
-          nextStep = '<%= data.step.transitions[0].id %>';
-          stepTimeout = setTimeout(goToNextStep, <%= data.step.transitions[0].duration  || 2000 %>);
+        console.log('endMedia...'); 
+	      stepIsEnding(function(){});
+	      
+        nextStep = '<%= data.step.transitions[0].id %>';
+        stepTimeout = setTimeout(goToNextStep, <%= data.step.transitions[0].duration || 2000 %>);
       });
     }
   <% } %>

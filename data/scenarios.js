@@ -162,23 +162,26 @@ module.exports =
       steps : [
       {
         stepId : 'step-1.1',
-        title : 'Problématique',
+        title : '',
         template : 'content',
         medias : ['A1.mp4'],  //video-problematique-pipette.mp4
-        text : 'Nous avons trouvé au bord du Rhône un objet qu\'on ne connaissant pas auparavant.',
+        text : '', // Nous avons trouvé au bord du Rhône un objet qu\'on ne connaissant pas auparavant.
         transitions : 
           [
-            { id : 'step-1.2', condition : 'manualStep' }
-          //  { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 }
+          //  { id : 'step-1.2', condition : 'manualStep' }
+            { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 } // 2000
           ]
       },
 
       {
         stepId : 'step-1.1bis',
-        title : 'Problématique',
-        template : 'content',
+        title : '',
+        template : 'cartel-state-0',
+        templateData: {
+	        
+        },
         medias : ['AR3.3005.36_dessin_archeo.png'],
-        text : '<p>Fragment d’objet archéologique antique trouvé dans le Rhône à Arles</p>\n<p>dimensions H. 6,46 × Diam. 5,65 cm',
+        text : '<p>Fragment d’objet archéologique antique trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
         transitions : 
           [
             { id : 'step-1.2', condition : 'manualStep' }
@@ -188,21 +191,7 @@ module.exports =
 
       {
         stepId : 'step-1.2',
-        title : 'Description',
-        template : 'content',
-        choices : [''],
-        medias : [''],
-        text : "<p>Comment décrire cet objet ?</<>" + 
-               "<p>Quels sont les critères de description utilisés par les archéologues ? </p>",
-        transitions :  
-          [ 
-            { id : 'step-1.2bis', condition : 'manualStep' }
-          ]
-      },
-
-      {
-        stepId : 'step-1.2bis',
-        title : 'Description',
+        title : 'Comment décrire cet objet ?',
         template : 'content',
         choices : [
           { text : "Salière", img : '../capsule/roulette.jpg'}, 
@@ -227,11 +216,16 @@ module.exports =
       {
         stepId : 'step-1.3',
         title : 'Bravo!',
-        template : 'right',
-        medias : [''],
+        template : 'cartel-state-0',
+        templateData: {
+	        
+        },
+        medias : ['AR3.3005.36_dessin_archeo.png'],
+        text : '<p><span class="goal-content">Pipette antique en céramique</span> trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
         transitions : 
         [
-          {id : 'step-1.6', condition : 'timeElapsed', duration : 5000 }
+          { id : 'step-1.6', condition : 'manualStep' }
+          // { id : 'step-1.6', condition : 'timeElapsed', duration : 5000 }
         ]
       },
 
@@ -322,9 +316,12 @@ module.exports =
       {
         stepId : 'step-1.8.4',
         title : 'Bingo !',
-        template : 'right',
+        template : 'cartel-state-0',
+        templateData: {
+	        backgroundSize: 'cover'
+        },
         medias : ['reproduction_pipette.jpg'],
-        text : 'Pipette antique en céramique, trouvée dans le Rhône à Arles',
+        text : '<p>Pipette antique en céramique trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
         transitions : 
         [
           {id : 'step-1.9', condition : 'manualStep' }

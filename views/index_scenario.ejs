@@ -37,10 +37,16 @@
 	</div>
 </div>
 
-<nav>
+<div id="menu-trigger"></div>
+
+<nav id="menu">
+	<h2>MENU</h2>
 	<div class="scenarioButton" name="scenario0" data-step-id="step-0.4">Dashboard</div>
+<br><br>
 	<div class="scenarioButton" name="scenario1">Scénario Pipette</div>
+<br><br>
 	<div class="scenarioButton" name="scenario2">Scénario Capsule</div>
+<br><br>
 	<div class="scenarioButton" name="scenario3">Scénario Amphorisque</div>
 </nav>
 
@@ -57,6 +63,10 @@ $(document).ready(function(){
     scenario = data;
     // Loading first step
     loadStep(scenario);
+  });
+  
+  $('#menu-trigger').on('click', function(){
+	  $('body').toggleClass('is-menu-open');
   });
   
   $(document).on('click', '.scenarioButton', function(e) {
