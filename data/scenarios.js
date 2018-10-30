@@ -168,7 +168,8 @@ module.exports =
         text : 'Nous avons trouvé au bord du Rhône un objet qu\'on ne connaissant pas auparavant.',
         transitions : 
           [
-            { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 }
+            { id : 'step-1.2', condition : 'manualStep' }
+          //  { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 }
           ]
       },
 
@@ -191,8 +192,8 @@ module.exports =
         template : 'content',
         choices : [''],
         medias : [''],
-        text : "<p>Comment décrire cet objet ?</<>" + 
-               "<p>Quels sont les critères de description utilisés par les archéologues ? </p>",
+        text : "<p>Comment décrire cet objet ?</<>" + 
+               "<p>Quels sont les critères de description utilisés par les archéologues ? </p>",
         transitions :  
           [ 
             { id : 'step-1.2bis', condition : 'manualStep' }
@@ -332,13 +333,13 @@ module.exports =
 
       {
         stepId : 'step-1.9',
-        title : 'A quoi sert cet objet ?',
+        title : 'A quoi sert cet objet ?',
         template : 'text-with-choice-buttons',
         choices : [''],
         medias : [''],
-        text : '<ul><li>Quelle est l’utilité d’avoir une pipette ?</li>\n' + 
-                   '<li>A quoi ça sert concrètement ?</li>\n' + 
-                   '<li> Dans quel cas on l’utilise ?</li></ul>\n' + 
+        text : '<ul><li>Quelle est l’utilité d’avoir une pipette ?</li>\n' + 
+                   '<li>A quoi ça sert concrètement ?</li>\n' + 
+                   '<li> Dans quel cas on l’utilise ?</li></ul>\n' + 
                    '<p>La pipette sert à prélever \n' + 
                    '<button class="btn btn-md btn-default choiceButton" id="but0" name="quel liquide">quel liquide</button>\n' +
                    ' dans \n' + 
@@ -514,7 +515,7 @@ module.exports =
         stepId : 'step-3',
         title : 'Description',
         template : 'content',
-        text : 'Comment décrire cet objet ?',
+        text : 'Comment décrire cet objet ?',
         // medias : [ 'moule-charlotte.jpg', 'plat-a-tarte-verre.jpg', 'coquillage.jpg', 'roulette.jpg', 'capsule-biere-bouteille.jpg', 'plat-a-tarte.jpg'],
         transitions : 
           [
@@ -526,7 +527,7 @@ module.exports =
         stepId : 'step-4',
         title : 'Comparaison',
         template : 'matching-ihm',
-        text : 'Boîte à outils > Bibliothèque',
+        text : 'Boîte à outils > Bibliothèque',
         medias : [''],
         transitions : 
           [
@@ -565,8 +566,8 @@ module.exports =
         title : 'Archéologue',
         template : 'content',
         medias : ['C2.mp4'],
-        text : '<p>Certes un objet très courant mais on en retrouve de beaucoup plus grands uniquement dans des contextes culinaires avec parfois des traces d’usage (traces noires, de quoi s’agit-il ?).</p>' + 
-               '\n<p>Quel est le rapport entre ces tout petits objets et des objets plus grands qu’on ne retrouve que dans des contextes culinaires ?</p>',
+        text : '<p>Certes un objet très courant mais on en retrouve de beaucoup plus grands uniquement dans des contextes culinaires avec parfois des traces d’usage (traces noires, de quoi s’agit-il ?).</p>' + 
+               '\n<p>Quel est le rapport entre ces tout petits objets et des objets plus grands qu’on ne retrouve que dans des contextes culinaires ?</p>',
         transitions : 
           [
             { id : 'step-6', condition : '!histo("step-8")' },
@@ -579,7 +580,7 @@ module.exports =
         title : 'Laboratoire d\'analyses',
         template : 'content',
         medias : [''],
-        text : 'Datavisualisation de 2 graphiques, légende: « Traces chimiques identifiées » et indications portée sur chaque graphique « Alcool éthylique » (objet archéologique) et « Molécule de caramel » (sur le plat à tarte).',
+        text : 'Datavisualisation de 2 graphiques, légende: « Traces chimiques identifiées » et indications portée sur chaque graphique « Alcool éthylique » (objet archéologique) et « Molécule de caramel » (sur le plat à tarte).',
         transitions : 
           [
             { id : 'step-6', condition : '!histo("step-7")' },
@@ -591,7 +592,7 @@ module.exports =
         stepId : 'step-9',
         title : 'Bingo !',
         template : 'content',
-        text : 'Objet métallique dont la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier. Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. ',
+        text : 'Objet métallique dont la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier. Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. ',
         medias : [''],
         transitions : 
           [
@@ -649,7 +650,7 @@ module.exports =
         stepId : 'step-3',
         title : 'Description',
         template : 'content',
-        text : 'Comment décrire cet objet ?',
+        text : 'Comment décrire cet objet ?',
        transitions : 
           [
             { id : 'step-4', condition : 'manualStep' }
@@ -673,7 +674,7 @@ module.exports =
         stepId : 'step-5',
         title : 'Usage',
         template : 'content',
-        text : 'A quoi sert cet objet ?',
+        text : 'A quoi sert cet objet ?',
         medias : ['lampe-a-huile.jpg', 'hypothèse-bouchon-amphore.png', 'échantillon-commercial.jpg', 'dés-et-cornet.jpg', 'decapsuleur.jpg' ],
        transitions : 
           [
@@ -685,7 +686,7 @@ module.exports =
         stepId : 'step-5bis',
         title : 'Usage',
         template : 'content',
-        text : 'A quoi sert cet objet ?',
+        text : 'A quoi sert cet objet ?',
         medias : ['B2.m4v'],
        transitions : 
           [
@@ -697,7 +698,7 @@ module.exports =
         stepId : 'step-6',
         title : 'Usage',
         template : 'memory',
-        text : 'A quoi sert cet objet ?',
+        text : 'A quoi sert cet objet ?',
         choices : [
                     { text : "Lampe à huile", img : 'lampe-a-huile.jpg' },
                     { text : "Bouchon d'amphore", img : 'hypothèse-bouchon-amphore.png' },
@@ -731,7 +732,7 @@ module.exports =
         title : 'Boîte à outils > Archéologue',
         template : 'content',
         medias : ['B3.mp4'],
-        text : 'des analyses ont été effectuées : présence de décoctions de plantes et d\'excréments.',
+        text : 'des analyses ont été effectuées : présence de décoctions de plantes et d\'excréments.',
         transitions : 
           [
             { id : 'step-8bis', condition : 'manualStep' }
@@ -743,7 +744,7 @@ module.exports =
         title : 'Bingo !',
         template : 'right',
         medias : ['dessin-amphorisque-complete.png'],
-        text : ' Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, ayant contenu des ingrédients de la pharmacopée.',
+        text : ' Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, ayant contenu des ingrédients de la pharmacopée.',
         choices : '',
         transitions : 
           [
@@ -757,7 +758,7 @@ module.exports =
         title : 'Boîte à outil > Bibliothèque',
         template : 'content',
         medias : ['abecedaire_source_richard_sylvestre_universite_lausanne.jpg'],
-        text : '<p> ISOCHRYSO AB HERMEROT(I)S </p><p> ASYNTROPHO(N) </p>',
+        text : '<p> ISOCHRYSO AB HERMEROT(I)S </p><p> ASYNTROPHO(N) </p>',
         transitions : 
           [
             { id : 'step-10', condition : 'manualStep' }

@@ -316,10 +316,9 @@ $('#prevButton').click(function() {
 function setPrevButton() {
   // this isthe first step, hide prev button
   if(scenario.steps[0].stepId == scenario.currentStep) {
-    $('#prevButton').hide();
+    $('body').addClass('is-first-step-of-scenario');
   } else {
-    $('#nextButton').html("&lt;");
-    $('#prevButton').show();
+    $('body').removeClass('is-first-step-of-scenario');
   }
 }
 
@@ -327,10 +326,9 @@ function setPrevButton() {
 function setNextButton() {
   // this is the last step, hide next button
   if(scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
-    $('#nextButton').hide();
+    $('body').addClass('is-last-step-of-scenario');
   } else {
-    $('#nextButton').html("&gt;");
-    $('#nextButton').show();
+    $('body').removeClass('is-last-step-of-scenario');
   }
 }
 

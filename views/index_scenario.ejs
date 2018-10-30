@@ -14,8 +14,6 @@
 
   <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-md btn-default" id="prevButton" name="prevButton" value="prev">&lt;</button>
-        <button class="btn btn-md btn-default" id="nextButton" name="nextButton" value="next">&gt;</button>
 
     </div>
   </div>
@@ -25,6 +23,10 @@
 </div> 
 
 <p id="stepListeners"></p>
+
+
+<button class="nav-button" id="prevButton" name="prevButton" value="prev">&lt;</button>
+<button class="nav-button" id="nextButton" name="nextButton" value="next">&gt;</button>
 
 <div id="goals-sidebar">
 	<div id="goals-sidebar-image"></div>
@@ -50,6 +52,8 @@ $(document).ready(function(){
   // ------------------------------------------------------------------
   // Receiving scenario from server
   socket.on('server.play-scenario', function(data) {
+	  console.log('receive play scenario');
+	  console.log(data);
     scenario = data;
     // Loading first step
     loadStep(scenario);
@@ -63,14 +67,12 @@ $(document).ready(function(){
   }); 
   
   // Some debug
-  
-  /*
 	console.log('nav_history');
 	console.log(nav_history);
 	
 	console.log('scenario_history');
 	console.log(scenario_history);
-	*/
+	
 	
 }); // End document.ready
 </script>
