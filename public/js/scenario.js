@@ -69,13 +69,15 @@ function getStepDetailsOfStepId(stepId){
 
 // Set Scenario title
 function setScenarioTitle(t) {
+	/*
   $('title').html(t);
   $('#data-title').html(t);
+  */
 }
 
 // Set step title
 function setStepTitle(t){
-  $('#data-step-title').html(t);
+  $('#data-title').html(t);
 }
 
 // Display rendered template
@@ -93,18 +95,18 @@ function displayTemplate(content, domId, thisStep) {
   stepIsStarting();
 }
 
-// Clean all transition classes of the previous step
+// Clean all transition classes from the previous step
 function cleanRenderContainer() {
-	$('body').removeClass('step-is-ending');
+	$('body').removeClass('step-is-ending is-video-paused is-menu-open');
 }
 
-function stepIsEnding(cb) {
+function stepIsEnding(cb, delay = 500) {
 	$('body').addClass('step-is-ending');
 	
 	clearTimeout(setTimeoutStepIsEnding);
   setTimeoutStepIsEnding = setTimeout(function(){
     cb();
-  }, 500);
+  }, delay);
 }
 
 function stepIsStarting() {
