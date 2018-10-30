@@ -79,13 +79,15 @@ function setStepTitle(t){
 }
 
 // Display rendered template
-function displayTemplate(content, domId, step) {
+function displayTemplate(content, domId, thisStep) {
 	cleanRenderContainer();
 	
+	$('body')
+  	.attr('data-step-id', thisStep.stepId)
+  	.attr('data-scenario-id', thisStep.scenarId)
+  	.attr('data-template', thisStep.template);
+	
   $(domId)
-  	.attr('data-step-id', step.stepId)
-  	.attr('data-scenario-id', step.scenarId)
-  	.attr('data-template', step.template)
   	.html(content);
   
   stepIsStarting();
