@@ -1,4 +1,4 @@
-<div class="slideshow">
+<div class="module-media module-media-slideshow">
 	<ul>
 <% for(var i=0; i< data.step.medias.length; i++) { %>
 		<li>
@@ -8,21 +8,21 @@
 	</ul>
 </div>
 <style>
-.slideshow {
+.module-media-slideshow {
    width: 350px;
    height: 300px;
    overflow: hidden;
    border: 3px solid #F2F2F2;
 }
 
-.slideshow ul {
+.module-media-slideshow ul {
     /* <%=data.step.medias.length%> images donc <%=data.step.medias.length%> x 100% */
    width: <%=data.step.medias.length%>00%;
    height: 300px;
    padding:0; margin:0;
    list-style: none;
 }
-.slideshow li {
+.module-media-slideshow li {
    float: left;
 }
 </style>

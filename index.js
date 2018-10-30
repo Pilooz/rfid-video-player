@@ -134,7 +134,7 @@ function sendingData() {
         }
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
-       console.log('server.play-scenario');
+       console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
         
        io.emit('server.play-scenario', currentScenario);
 
@@ -242,6 +242,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/assets', express.static(__dirname + CONFIG.app.assetsPath)); // redirect media directory
 app.use('/medias', express.static(__dirname + CONFIG.app.mediaPath)); // redirect media directory
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
