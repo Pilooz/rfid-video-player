@@ -193,6 +193,9 @@ module.exports =
         stepId : 'step-1.2',
         title : 'Comment décrire cet objet ?',
         template : 'content',
+        templateData: {
+	        canNext: false
+        },
         choices : [
           { text : "Salière", img : '../capsule/roulette.jpg'}, 
           { text : "Tampon", img : '../capsule/roulette.jpg'}, 
@@ -203,8 +206,6 @@ module.exports =
           { text : "Autre", img : '../capsule/roulette.jpg'}, 
           { text : "Non identifié", img : '../capsule/roulette.jpg'}
         ],
-//        choices : ["Salière", "Tampon", "Saupoudroir", "Enfumoir", "Arrosoir", "Pipette", "Autre", "Non identifié"],
-        // ["Instrument de musique", "Salière", "Enfumoir", "Tampon", "Arrosoir", "Pipette", "Saupoudroir"],
         medias : [''],
         transitions :  
           [ 
@@ -233,6 +234,9 @@ module.exports =
         stepId : 'step-1.3-erreur',
         title : 'Bah non !',
         template : 'wrong',
+        templateData: {
+	        canNext: false
+        },
         medias : ['erreur.gif'],
         transitions : 
         [

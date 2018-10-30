@@ -97,7 +97,7 @@ function displayTemplate(content, domId, thisStep) {
 
 // Clean all transition classes from the previous step
 function cleanRenderContainer() {
-	$('body').removeClass('step-is-ending is-video-paused is-menu-open');
+	$('body').removeClass('step-is-ending is-video-paused is-menu-open cant-next');
 }
 
 function stepIsEnding(cb, delay = 500) {
@@ -129,30 +129,32 @@ function addStepHistory(stp) {
 function loadStep(scenar, stepId = null){
   // Tell the server which scenario and step we manage
   socket.emit('client.currentScenario', { currentScenario: scenar });
-  // Set title
-  setScenarioTitle(scenar.title);
   // get step
   if (stepId != null) {
   	step = getStepDetailsOfStepId(stepId);
   } else {
   	step = getCurrentStepDetails();
   }
-  // step title
-  setStepTitle(step.title);
-  // get step template
-  content = getTemplate('/scenario/step-template', step, "#stepTemplate");
-  // build transition conditions
-  build_step_validation();
-  // keep history of visited steps
-  addStepHistory(step.stepId);
-  // Set UI elements
-  setPrevButton();
-  setNextButton();
-  updateProgressBar();
   
-  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
-	  addScenarioHistory();
-  }
+  // get step template
+  content = getTemplate('/scenario/step-template', step, "#stepTemplate", function(){
+	  // Set title
+	  setScenarioTitle(scenar.title);
+	  // step title
+	  setStepTitle(step.title);
+	  // build transition conditions
+	  build_step_validation();
+	  // keep history of visited steps
+	  addStepHistory(step.stepId);
+	  // Set UI elements
+	  setPrevButton();
+	  setNextButton();
+	  updateProgressBar();
+	  
+	  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
+		  addScenarioHistory();
+	  }
+  });
 }
 
 // Adding a step in the scenario history
@@ -177,7 +179,7 @@ function goToNextStep() {
 // Getting embeded templates
 // ------------------------------------------------------------------
 
-function getTemplate(url, data, resultDomId) {
+function getTemplate(url, data, resultDomId, cb) {
   data.scenarId = scenario.scenarId;
   data.scenarioMediaPath = scenario.scenarioMediaPath;
  
@@ -190,10 +192,12 @@ function getTemplate(url, data, resultDomId) {
      error: function(req, textStatus) {
       // TODO something clever to show error ! 
       displayTemplate(req.responseText, resultDomId, data.step);
+      cb();
      },
      success: function(data) {
       // TODO : write a callback to update page
       displayTemplate(data.content, resultDomId, data.step);
+      cb();
      }
   });
 }
@@ -308,7 +312,7 @@ $('#prevButton').click(function() {
   nextStep = nav_history[nav_history.length-2] || getFirstStep(scenario);
   // remove the last step id (where we were)…
   nav_history.pop();
-  // and remove the last before last step id (where we're on). Why? Because goToNextStep() will add it
+  // and remove the last before the last step id (where we're on). Why? Because goToNextStep() will add it then
   nav_history.pop();
   
   goToNextStep();
@@ -331,6 +335,13 @@ function setNextButton() {
     $('body').addClass('is-last-step-of-scenario');
   } else {
     $('body').removeClass('is-last-step-of-scenario');
+  }
+  
+  console.log(step);
+  
+  if(step.templateData && step.templateData.canNext == false) {
+	  console.log('CANT NEXT');
+    $('body').addClass('cant-next');
   }
 }
 
