@@ -11,10 +11,13 @@ Début du jeu = Interface Clic 1 : Graphisme : visuel cliquable des 3 objets (p
 <script type="text/javascript">
   
   $(document).on('click', '.scenarioButtonOfDashboard', function(e) {
+	  var scenarId = $(this).attr('name');
+	  var stepId = $(this).data('step-id') || undefined;
+	  
 	  stepIsEnding(function(){
 		  socket.emit('client.setScenarioWithScenarId', {
-		    scenarId: $(this).attr('name'),
-		    stepId: $(this).data('step-id') || undefined
+		    scenarId: scenarId,
+		    stepId: stepId
 		  });
 	  });
   }); 
