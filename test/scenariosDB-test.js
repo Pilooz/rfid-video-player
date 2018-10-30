@@ -28,19 +28,25 @@ scenariosDB.init(db_sc);
 
 describe('#_buildScenarList', function() {
 	var a1 = _buildScenarList(cod1),
-			a3 = _buildScenarList(cod3),
+      a2 = _buildScenarList(cod2),
+      a3 = _buildScenarList(cod3),
 			a4 = _buildScenarList(cod4);
+      a5 = _buildScenarList("1234567890");
 
 	it('returns an array', function() {
 		a1.should.be.an('array');
-		a3.should.be.an('array');
-		a4.should.be.an('array');
+    a2.should.be.an('array');
+    a3.should.be.an('array');
+    a4.should.be.an('array');
+    a5.should.be.an('array');
 	});
 
   it('builds the scenario list, tests result array length', function() {
     a1.should.have.lengthOf(1);
-    a3.should.have.lengthOf(0);
+    a2.should.have.lengthOf(1);
+    a3.should.have.lengthOf(1);
     a4.should.have.lengthOf(1);
+    a5.should.have.lengthOf(0);
   });
 
   it('test properties', function(){
@@ -48,7 +54,8 @@ describe('#_buildScenarList', function() {
   });
   
   it('tests array content', function() {
-  	a1[0].scenarId.should.be.equal('scenario1');
+    a1[0].scenarId.should.be.equal('scenario1');
+    a2[0].scenarId.should.be.equal('scenario2');
   	a4[0].scenarId.should.be.equal("scenario1");
   });
 

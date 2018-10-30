@@ -129,9 +129,7 @@ function sendingData() {
       console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
       // Media or Scenario
       if (CONFIG.app.scenario_mode) {
-        if(!currentScenario.currentStep) {
           currentScenario = scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname);
-        }
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
        console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
