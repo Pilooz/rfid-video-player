@@ -178,6 +178,30 @@ module.exports =
         ]
       },
       ]
+    },
+
+    // Second scenario
+    { 
+      scenarId : 'scenario2', 
+      rfid : ['coderfid2', 'coderfid3'],
+      title : 'Title Scenario2',
+      scenarioMediaPath : 'myPath2/',
+      steps : [
+      {
+        stepId : 'step-1',
+        title : 'Attributes validation',
+        icon : 'icon.png',
+        template : 'video',
+        background : 'image1.png',
+        choice : ["Choice 1", "Choice 2", "Choice 3"],
+        medias : ['image1.png', 'image2.png'],
+        text : 'text1',
+        transitions : 
+          [
+            { id : 'step-2', condition : 'endMedia', duration : 2000 }
+          ]
+      }
+      ]
     }
   ]
 }
