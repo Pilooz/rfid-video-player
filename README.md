@@ -1,4 +1,4 @@
-# Fonctionnement de l'application
+# Fonctionnement de l'application JukeBox Rfid
 
 L'application fonctionne déjà de 2 façons :
  ### Le mode asynchrone :
@@ -33,3 +33,14 @@ le code rfid nécessaire pour remplir la base de mots clé.
 - arduino teensy 
 - 125KHz Grove Rfid Reader x2 
 - écran TFT LCD Kuman 
+
+# Fonctionnement en mode scénario
+Le mode "scénario" permet de jouer un scénario d'enchainement de médias, sur la base d'une lecture de code rfid.
+Configurer ce mode dans le fichier de configutation de l'application : 'config.js'.
+Les scénarios sont aussi configurables dans le fichier `data/scenarios.js`.
+
+# Installation et Configuration du serveur sur Raspberry PI
+
+## Réseau
+Mettre le raspberry pi en mode AP + Wifi
+https://pifi.imti.co/#connect-to-the-pi-over-wifi
