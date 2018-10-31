@@ -197,14 +197,14 @@ module.exports =
 	        canNext: false
         },
         choices : [
-          { text : "Salière", img : '../capsule/roulette.jpg'}, 
-          { text : "Tampon", img : '../capsule/roulette.jpg'}, 
-          { text : "Saupoudroir", img : '../capsule/roulette.jpg'}, 
-          { text : "Enfumoir", img : '../capsule/roulette.jpg'}, 
-          { text : "Arrosoir", img : '../capsule/roulette.jpg'}, 
-          { text : "Pipette", img : '../capsule/roulette.jpg'}, 
-          { text : "Autre", img : '../capsule/roulette.jpg'}, 
-          { text : "Non identifié", img : '../capsule/roulette.jpg'}
+          { text : "Salière", img : '../pipette/objet-saliere.svg'}, 
+          { text : "Tampon", img : '../pipette/objet-tampon.svg'}, 
+          { text : "Tamis", img : '../pipette/objet-tamis.svg'}, 
+          { text : "Encensoir", img : '../pipette/objet-encensoir.svg'}, 
+          { text : "Arrosoir", img : '../pipette/objet-arrosoir.svg'}, 
+          { text : "Pipette", img : '../pipette/objet-pipette.svg'}, 
+          { text : "Autre", img : '../pipette/objet-autre.svg'}, 
+          { text : "Non identifié", img : '../pipette/objet-ovni.svg'}
         ],
         medias : [''],
         transitions :  
