@@ -276,7 +276,17 @@ function step_validation(choice) {
   if (evaluableConditions.length == 0) {
     // for non evaluable conditions, this should have only 1 transition, so take the first
     nextStep = step.transitions[0].id;
-    goToNextStep();
+    if (step.transitions[0].isBingoTransition && step.transitions[0].isBingoTransition == true) {
+      setBingoTransition();
+      setTimeoutBingoTransition = setTimeout(function(){
+				goToNextStep();
+      }, 1000);
+    } 
+    // in any other case
+    else {
+    	goToNextStep();
+    }
+    
     return true;
   }
 
@@ -365,8 +375,8 @@ function setNextButton() {
   
   console.log(step);
   
+  // if the step does not want next button (because of choices, e.g.)
   if(step.templateData && step.templateData.canNext == false) {
-	  console.log('CANT NEXT');
     $('body').addClass('cant-next');
   }
 }

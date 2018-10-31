@@ -216,7 +216,7 @@ module.exports =
 
       {
         stepId : 'step-1.3',
-        title : 'Bravo!',
+        title : '',
         template : 'cartel-state-0',
         templateData: {
 	        
@@ -237,7 +237,7 @@ module.exports =
         templateData: {
 	        canNext: false
         },
-        medias : ['erreur.gif'],
+        medias : [],
         text: 'Eh non !',
         transitions : 
         [
@@ -274,25 +274,13 @@ module.exports =
 
       {
         stepId : 'step-1.6',
-        title : 'Boîte à outils > Bibliothèque',
-        template : 'content',
+        title : 'Bibliothèque',
+        template : 'library',
         medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
-        text : 'Recherche en bibliothèque. <em>Ecran de recherche / attente (la machine réfléchit) / résultat => </em>',
+        text : '',
         transitions : 
         [
-          {id : 'step-1.8', condition : 'manualStep' }
-        ]
-      },
-
-      {
-        stepId : 'step-1.8',
-        title : 'Comment ça fonctionne ?',
-        template : 'content',
-        medias : [''],
-        text : 'Pour en avoir une idée il faut il faut le fabriquer, le reproduire.',
-        transitions : 
-        [
-          {id : 'step-1.8.2', condition : 'timeElapsed', duration : 5000 }
+          {id : 'step-1.8.2', condition : 'manualStep' }
         ]
       },
 
@@ -314,7 +302,7 @@ module.exports =
         medias : ['A3.mp4'],
         transitions : 
         [
-          {id : 'step-1.8.4', condition : 'manualStep' }
+          {id : 'step-1.8.4', condition : 'manualStep', isBingoTransition: true }
         ]
       },
 
@@ -335,18 +323,11 @@ module.exports =
 
       {
         stepId : 'step-1.9',
-        title : 'A quoi sert cet objet ?',
-        template : 'text-with-choice-buttons',
+        title : 'À quoi sert cet objet ?',
+        template : 'use-of-pipette',
         choices : [''],
         medias : [''],
-        text : '<ul><li>Quelle est l’utilité d’avoir une pipette ?</li>\n' + 
-                   '<li>A quoi ça sert concrètement ?</li>\n' + 
-                   '<li> Dans quel cas on l’utilise ?</li></ul>\n' + 
-                   '<p>La pipette sert à prélever \n' + 
-                   '<button class="btn btn-md btn-default choiceButton" id="but0" name="quel liquide">quel liquide</button>\n' +
-                   ' dans \n' + 
-                   '<button class="btn btn-md btn-default choiceButton" id="but1" name="quel conteneur">quel conteneur</button>\n' +
-                   ' ?</p>\n',
+        text : '',
         transitions : 
         [
           {id : 'step-1.9.1', condition : 'choice == "quel liquide"' },
@@ -396,7 +377,7 @@ module.exports =
       },
 
       // toutes les erreurs 
-     {
+      {
         stepId : 'step-1.10-cruche',
         title : 'Bah non !',
         template : 'wrong',
@@ -407,7 +388,7 @@ module.exports =
         ]
       },
 
-     {
+      {
         stepId : 'step-1.10-amphore',
         title : 'Bah non !',
         template : 'wrong',
@@ -418,7 +399,7 @@ module.exports =
         ]
       },
 
-     {
+      {
         stepId : 'step-1.10-dolia',
         title : 'Bah non !',
         template : 'wrong',
@@ -429,7 +410,7 @@ module.exports =
         ]
       },
 
-     {
+      {
         stepId : 'step-1.10-tonneaux',
         title : 'Bingo !',
         template : 'right',

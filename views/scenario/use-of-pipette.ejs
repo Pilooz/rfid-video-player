@@ -1,0 +1,15 @@
+<div class="use-of-pipette">
+	La pipette sert à prélever 
+	<div class="choiceButton" id="but0" name="quel liquide">quel liquide</div>
+  dans
+  <div class="choiceButton" id="but1" name="quel conteneur">quel conteneur</div> ?
+</div>
+
+<script>
+  // Choices button
+  $(".choiceButton").on('click', function(e) {
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+  }); 
+</script> 

@@ -1,0 +1,25 @@
+<div class="library-pipette">
+	<div class="book-left"></div>
+	<div class="book-right"></div>
+	
+	<div class="ask-for-other-results-button">Interroger les résultats d'autres fouilles</div>
+	<div class="ask-for-other-results-loading">Recherche en cours…</div>
+	
+	<div class="ask-for-other-results-image">
+	  <%- include('attr-medias.ejs', {data: data}) %>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		
+		$('.ask-for-other-results-button').on('click', function(){
+			$('.library-pipette').addClass('is-loading');
+			
+			setTimeout(function(){
+				$('.library-pipette').addClass('is-loaded');
+			},1500);
+		});
+		
+	});
+</script>
