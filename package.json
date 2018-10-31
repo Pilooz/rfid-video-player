@@ -1,0 +1,50 @@
+{
+  "name": "rfid-video-player",
+  "version": "1.0.0",
+  "description": "Jukebox Video Player - Rfid detection driven",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "autotest": "./node_modules/.bin/supervisor -q -n exit -x ./node_modules/.bin/mocha -- -b --watch ./test/**/*test.js ./lib/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pilooz/rfid-video-player.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pilooz/rfid-video-player/issues"
+  },
+  "homepage": "https://github.com/Pilooz/rfid-video-player#readme",
+  "dependencies": {
+    "autotest": "^0.2.6",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.1",
+    "cookie-parser": "^1.4.3",
+    "cookieparser": "^0.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.2",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "in_array": "^1.1.0",
+    "ip": "^1.1.5",
+    "jquery": "^3.3.1",
+    "json-editor": "^0.7.28",
+    "node-math": "0.0.3",
+    "pipe": "^1.1.0",
+    "progressbar.js": "^1.0.1",
+    "serialport": "^6.2.0",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "supervisor": "~0.12.0"
+  }
+}
