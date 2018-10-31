@@ -292,11 +292,11 @@ body[data-template="cartel-state-0"] {
 
 .goal-content {
 	color:#70bf35;
-	animation: goal-content 2000ms ease forwards;
+	animation: goal-content 10000ms ease forwards;
 }
 
 @keyframes goal-content {
-	0%, 50% {
+	0%, 80% {
 		color:#70bf35;
 		transform:scale(1.3);
 	}
@@ -400,4 +400,73 @@ body[data-template="cartel-state-0"] {
   text-align: center;
   font-size: 30px;
   font-family: infinibold;
+}
+
+.module-text-wrong {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 30px 60px;
+	background: white;
+	border-radius: 90px;
+	font-size: 50px;
+	font-weight: bold;
+	box-shadow: 0 60px 100px #c5bdb4;
+	animation:module-text-wrong 200ms ease forwards
+}
+
+@keyframes module-text-wrong {
+	from {
+		transform:translate(-50%, -50%) scale(.5);
+		opacity:.5;
+	box-shadow: 0 0px 0px #c5bdb42e;
+	}
+	to {
+		transform:translate(-50%, -50%) scale(1);
+		opacity:1;
+	box-shadow: 0 60px 100px #c5bdb4;
+	}
+}
+
+
+#bingo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 120vw;
+	height: 120vw;
+	margin-top: -60vw;
+	margin-left: -60vw;
+	background: #FF8A01;
+	pointer-events: none;
+	opacity: 1;
+	border-radius: 60vw;
+	transition:all 500ms ease;
+	will-change: transform;
+	transform: scale(0) translateZ(0);
+	/* transform-origin: 50vw 50vh; */
+}
+
+.is-bingo-transition #bingo {
+	pointer-events: all;
+	opacity: 1;
+	transform: scale(1)  translateZ(0);
+}
+
+#bingo img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: scale(1) translate3d(-50%, -50%, 0);
+	opacity:0;
+	/* margin-top: -20px; */
+	transition:all 500ms ease;
+	transform-origin: center center;
+	will-change: transform;
+}
+
+.is-bingo-transition #bingo img {
+	/* transform: scale(1) translate(-50%, -50%); */
+	opacity:1;
 }

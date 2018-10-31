@@ -209,7 +209,7 @@ module.exports =
         medias : [''],
         transitions :  
           [ 
-            { id : 'step-1.3', condition : 'choice == "Pipette"' },
+            { id : 'step-1.3', condition : 'choice == "Pipette"', isBingoTransition: true },
             { id : 'step-1.3-erreur', condition : 'choice != "Pipette"' }
           ]
       },
@@ -232,15 +232,16 @@ module.exports =
 
       {
         stepId : 'step-1.3-erreur',
-        title : 'Bah non !',
+        title : '',
         template : 'wrong',
         templateData: {
 	        canNext: false
         },
         medias : ['erreur.gif'],
+        text: 'Eh non !',
         transitions : 
         [
-          {id : 'step-1.2bis', condition : 'timeElapsed', duration : 5000 }
+          {id : 'step-1.2', condition : 'timeElapsed', duration : 5000 }
         ]
       },
 

@@ -11,6 +11,7 @@ var stepTimeout = undefined; // Timeout object for setTimeout function (timeElap
 
 var setTimeoutStepIsStarting;
 var setTimeoutStepIsEnding;
+var setTimeoutBingoTransition;
 
 // These transitions are treated as listener or setTimeout functions
 var nonEvaluableConditions = new Array('endMedia', 'timeElapsed', 'manualStep', 'selectObject', 'deselectObject');
@@ -151,6 +152,12 @@ function loadStep(scenar, stepId = null){
 	  setNextButton();
 	  updateProgressBar();
 	  
+	  clearTimeout(setTimeoutBingoTransition);
+	  
+	  setTimeoutBingoTransition = setTimeout(function(){
+		  unsetBingoTransition();
+		}, 3000);
+	  
 	  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
 		  addScenarioHistory();
 	  }
@@ -281,11 +288,30 @@ function step_validation(choice) {
                 " => '" + eval(evaluableConditions[i].condition) + "'");
     if (eval(evaluableConditions[i].condition)) {
       nextStep = evaluableConditions[i].id;
-      goToNextStep();
+      
+      // if we have to trigger a "bingo" transition
+      if (evaluableConditions[i].isBingoTransition && evaluableConditions[i].isBingoTransition == true) {
+	      setBingoTransition();
+	      setTimeoutBingoTransition = setTimeout(function(){
+					goToNextStep();
+	      }, 1000);
+      } 
+      // in any other case
+      else {
+      	goToNextStep();
+      }
       // This first true encountered condition is taken in account
       break;
     }
   }
+}
+
+function setBingoTransition() {
+	$('body').addClass('is-bingo-transition');
+}
+
+function unsetBingoTransition() {
+	$('body').removeClass('is-bingo-transition');
 }
 
 // ------------------------------------------------------------------
