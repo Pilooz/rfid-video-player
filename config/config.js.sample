@@ -32,6 +32,7 @@ module.exports = {
     searchTimeout : 5000,
     scenario_mode : true,
     scenario_view_path : app_root + '/views/scenario/', // directory where the server takes views to render a scenario
+    default_scenario : 'scenario0', // default scénario played awaiting rfid first read
      messages: {  // service message by default. Could be overloaded by some files in 'mediaPath'/messages directory
       msgWaitingMediaFile: "waitingForTag.mp4",
       msgMediaNotFoundMediaFile: "mediaNotFound.mp4",

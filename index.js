@@ -129,10 +129,16 @@ function sendingData() {
       console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
       // Media or Scenario
       if (CONFIG.app.scenario_mode) {
-          currentScenario = scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname);
+        currentScenario = scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname);
+        // At startup, rfidData is a default value that point not on a scenario
+        // Let's load the default scenario defined by conf
+        if (currentScenario.scenarId == "") {
+          currentScenario = scenarDB.chooseScenarioWithScenarId(CONFIG.app.default_scenario);
+          console.log("palying default scenario : " + CONFIG.app.default_scenario);
+        }
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
-       console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
+       //console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
         
        io.emit('server.play-scenario', currentScenario);
 
@@ -344,7 +350,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {data: dataForTemplate});
 });
 
 module.exports = app;
