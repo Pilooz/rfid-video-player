@@ -45,7 +45,9 @@
 
 <nav id="menu">
 	<h2>MENU</h2>
-	<div class="scenarioButton" name="scenario0" data-step-id="step-0.4">Dashboard</div>
+	<div class="scenarioButton" name="presentation">Start (without refresh)</div>
+	<br><br>
+	<div class="scenarioButton" name="presentation" data-step-id="step-0.4">Dashboard</div>
 	<br><br>
 	<div class="scenarioButton" name="scenario1">Scénario Pipette</div>
 	<div class="scenarioButton" name="scenario1" data-step-id="step-1.9">(warp zone)</div>
@@ -58,6 +60,7 @@
 <script type='text/javascript' src='/js/scenario.js'></script> 
 <script>
 $(document).ready(function(){
+	
   // ------------------------------------------------------------------
   // Socket listening and emitting
   // ------------------------------------------------------------------
@@ -77,7 +80,7 @@ $(document).ready(function(){
   $(document).on('click', '.scenarioButton', function(e) {
     socket.emit('client.setScenarioWithScenarId', {
 	    scenarId: $(this).attr('name'),
-	    stepId: $(this).data('step-id') || undefined
+	    stepId: $(this).data('step-id') || null
 	  });
   }); 
   

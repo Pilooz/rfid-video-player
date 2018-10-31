@@ -90,18 +90,26 @@ io.on('connection', function(socket) {
       socket.on('client.setScenarioWithScenarId', function(data){
         currentScenario = scenarDB.chooseScenarioWithScenarId(data.scenarId);
         
-        if (data.stepId) {
-	        currentScenario.currentStep = data.stepId;
-        }
-        
-        // The scenario is already choosen and the client that has just refreshed
-        // want to keep its context (scenario and currentStep)
-				io.emit('server.play-scenario', currentScenario);
+        if (currentScenario.scenarId == '') {
+	        // TODO : handle error: scenario with currentScenario.scenarId == data.scenarId not found
+	        //        for now, nothing is sent to the client, so no template is loaded client-side
+        } else {
+	        
+	        if (data.stepId != undefined && data.stepId != null) {
+		        currentScenario.currentStep = data.stepId;
+	        }
+	        
+	        // The scenario is already choosen and the client that has just refreshed
+	        // want to keep its context (scenario and currentStep)
+					io.emit('server.play-scenario', currentScenario);
+				}
       });
       
+			
+			
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
-        // lastReadData.code = "";
-        // sendingData();
+        lastReadData.code = "";
+        sendingData();
       // END OF SHITY DEBUG STUFF
     }
 
@@ -112,8 +120,8 @@ io.on('connection', function(socket) {
 // Emit sockets to send media to the client
 //------------------------------------------------------------------------
 function sendingData() {
-  console.log("lastReadData.code = " + lastReadData.code);
-  console.log("rfidData.code = " + rfidData.code);
+  console.log("> lastReadData.code = " + lastReadData.code);
+  console.log("> rfidData.code = " + rfidData.code);
     
   // Emit Socket only if rfid is different of the last reading
   if (lastReadData.code != rfidData.code ) {  
@@ -126,7 +134,7 @@ function sendingData() {
 
     // if CONFIG.app.simulateSearchTime > 0 then timeout this code
     setTimeout(function() {
-      console.log("Tag : '" + rfidData.code + "', reader : #" + rfidData.reader);
+      console.log("[ Tag : '" + rfidData.code + "', reader : #" + rfidData.reader+' ]');
       // Media or Scenario
       if (CONFIG.app.scenario_mode) {
         currentScenario = scenarDB.chooseScenario(rfidData.code, rfidData.reader, __dirname);
@@ -134,13 +142,13 @@ function sendingData() {
         // Let's load the default scenario defined by conf
         if (currentScenario.scenarId == "") {
           currentScenario = scenarDB.chooseScenarioWithScenarId(CONFIG.app.default_scenario);
-          console.log("palying default scenario : " + CONFIG.app.default_scenario);
+          console.log("Playing default scenario : " + currentScenario.scenarId);
         }
         // The scenario is already choosen and the client that has just refreshed
         // want to keep its context (scenario and currentStep)
-       //console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
+        //console.log('server.play-scenario of '+rfidData.code+' of reader '+rfidData.reader);
         
-       io.emit('server.play-scenario', currentScenario);
+        io.emit('server.play-scenario', currentScenario);
 
       } else {
         io.emit('server.play-media', mediaDB.chooseMedia(rfidData.code, rfidData.reader, __dirname));        

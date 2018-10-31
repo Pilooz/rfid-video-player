@@ -131,6 +131,9 @@ function loadStep(scenar, stepId = null){
   // Tell the server which scenario and step we manage
   socket.emit('client.currentScenario', { currentScenario: scenar });
   // get step
+  console.log(stepId);
+  console.log(typeof stepId);
+  
   if (stepId != null) {
   	step = getStepDetailsOfStepId(stepId);
   } else {

@@ -98,7 +98,7 @@ module.exports =
      // Scenario de présentation
      // --------------------------------------------------------------------------------
     { 
-      scenarId : 'scenario0', // scénario de présentation
+      scenarId : 'presentation', // scénario de présentation
       rfid : ['presentation'], 
       title : 'Dépôt’ware',
       scenarioMediaPath : 'presentation/',
@@ -108,7 +108,7 @@ module.exports =
         title : 'Enquête archéologique',
         template : 'presentation',
         medias : [''],
-        text : '',
+        text : 'Hi',
         transitions : 
           [
             { id : 'step-0.2', condition : 'manualStep' }
@@ -325,6 +325,9 @@ module.exports =
         stepId : 'step-1.9',
         title : 'À quoi sert cet objet ?',
         template : 'use-of-pipette',
+        templateData: {
+	        canNext: false
+        },
         choices : [''],
         medias : [''],
         text : '',
@@ -673,7 +676,7 @@ module.exports =
         medias : ['B2.m4v'],
        transitions : 
           [
-            { id : 'step-6', condition : 'endMedia', duration : '2000' }
+            { id : 'step-6', condition : 'endMedia', duration : '2000', isBingoTransition: true }
           ]
       },
 
