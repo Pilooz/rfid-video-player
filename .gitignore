@@ -1,5 +1,5 @@
 # Compiled classes
-node_modules/*
+node_modules
 
 # directories
 videos/*
