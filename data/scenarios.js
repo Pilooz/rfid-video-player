@@ -589,7 +589,7 @@ module.exports =
         choices: [
 	        { 
 		        name: 'archaeologist', 
-		        text : 'Écouter l\'archéologue', 
+		        text : 'Interroger l\'archéologue', 
 		        img : '../../assets/images/toolbox-archaeologist.svg' 
 		      }
         ],
@@ -726,7 +726,7 @@ module.exports =
         	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
         	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
         	{ img: 'hypothèse-bouchon-amphore.png' }, 
-        	{ img: 'échantillon-commercial.jpg'}
+        	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
         ],
        transitions : 
           [
@@ -753,7 +753,7 @@ module.exports =
         text : '',
         cards : [
           { 
-	          recto : { text : "Lampe à huile", img : 'lampe-a-huile.jpg' },
+	          recto : { text : "Lampe à huile", img : 'objet-lampe-huile.svg' },
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
@@ -761,15 +761,15 @@ module.exports =
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
-	          recto : { text : "Échantillon", img : 'échantillon-commercial.jpg' },
+	          recto : { text : "Échantillon", img : 'objet-echantillon.svg' },
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
-	          recto : { text : "Cornet à dés", img : 'dés-et-cornet.jpg' },
+	          recto : { text : "Cornet à dés", img : 'objet-cornet-des.svg' },
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
-	          recto : { text : "Décapsuleur d'amphore", img : 'decapsuleur.jpg' },
+	          recto : { text : "Décapsuleur d'amphore", img : 'objet-decapsuleur.svg' },
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        }
         ],
@@ -790,7 +790,7 @@ module.exports =
         choices: [
 	        { 
 		        name: 'archaeologist', 
-		        text : 'Écouter l\'archéologue', 
+		        text : 'Interroger l\'archéologue', 
 		        img : '../../assets/images/toolbox-archaeologist.svg' 
 		      }
         ],
@@ -818,7 +818,7 @@ module.exports =
         title : 'Bingo !',
         template : 'cartel',
         medias : ['amphorisque-archeo-2.svg'],
-        text : '<p>Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span></p>',
+        text : 'Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span>',
         choices : '',
         transitions : 
           [
@@ -831,14 +831,12 @@ module.exports =
         stepId : 'step-8-post',
         title : 'À quoi sert l\'objet ?',
         template : 'carousel', // gallery
-        templateData: {
-	        backgroundSize: 'cover'
-        },
         medias : [
-        	{ img: 'abecedaire_source_richard_sylvestre_universite_lausanne.jpg', text: 'Lausanne' },
-        	{ img: '../capsule/capsule-archeo-comparaison.svg', text: 'Archeo' },
-        	{ img: 'abecedaire_source_richard_sylvestre_universite_lausanne.jpg', text: 'Lausanne 2' },
-        	{ img: '../capsule/capsule-archeo.svg', text: 'Archeo' }
+        	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
+        	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
+        	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
+        	{ img: 'hypothèse-bouchon-amphore.png' }, 
+        	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
         ],
         text : '',
         transitions : 
@@ -881,8 +879,7 @@ module.exports =
         choices : '',
         transitions : 
           [
-            { id : 'step-7', condition : '!histo("step-8")' },
-            { id : 'step-11', condition : 'histo("step-8")' }
+            { id : 'step-12', condition : 'manualStep' }
           ]
       },
 
