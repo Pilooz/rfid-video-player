@@ -718,10 +718,16 @@ module.exports =
 
         {
         stepId : 'step-5',
-        title : 'Usage',
-        template : 'content',
-        text : 'A quoi sert cet objet ?',
-        medias : ['lampe-a-huile.jpg', 'hypothèse-bouchon-amphore.png', 'échantillon-commercial.jpg', 'dés-et-cornet.jpg', 'decapsuleur.jpg' ],
+        title : 'À quoi sert cet objet ?',
+        template : 'carousel',
+        text : '',
+        medias : [
+        	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
+        	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
+        	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
+        	{ img: 'hypothèse-bouchon-amphore.png' }, 
+        	{ img: 'échantillon-commercial.jpg'}
+        ],
        transitions : 
           [
             { id : 'step-5bis', condition : 'manualStep' }

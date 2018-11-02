@@ -953,6 +953,16 @@ body[data-step-id="step-9"] .cartel-text {
 	margin: 0px 0 40px;
 }
 
+[data-step-id="step-5"][data-template="carousel"] .module-carousel-slide.swiper-slide {
+	width:40%;
+}
+
+
+[data-step-id="step-5"][data-template="carousel"] .module-carousel-slide-image {
+	height:300px;
+	margin:50px 0 15px;
+}
+
 .module-carousel-slide-image {
 	height:360px;
 	background-position: center center;
