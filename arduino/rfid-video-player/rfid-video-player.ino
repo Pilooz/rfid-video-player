@@ -52,11 +52,11 @@
 #define START 0x02
 #define END 0x03
 #define RFID_SPEED 9600 //transmission speed with rfid reader
-#define SERIAL_SPEED 115200 //transmission speed on Serial
+#define SERIAL_SPEED 9600 //transmission speed on Serial
 
 #define VCC2 12
 #define BUILD_LED 13
-#define BLINK_INTERVAL 1000
+#define BLINK_INTERVAL 2000
 
 #define RFID1 "1"
 #define RFID2 "2"
@@ -71,6 +71,10 @@
 String ReceivedCode1 = "";
 String ReceivedCode2 = "";
 String ReceivedCode3 = "";
+
+String LastReceivedCode1 = "";
+String LastReceivedCode2 = "";
+String LastReceivedCode3 = "";
 
 String readerName = "";
 
@@ -170,7 +174,10 @@ void decode_tag1(char c) {
   else Counter++;
   if (c == END)
   {
-    sendSerial(ReceivedCode1);
+    if (ReceivedCode1 != LastReceivedCode1) {
+      sendSerial(ReceivedCode1);
+      LastReceivedCode1 = ReceivedCode1;
+    }
     ReceivedCode1 = "";
   }
 }
@@ -185,7 +192,10 @@ void decode_tag2(char c) {
   else Counter++;
   if (c == END)
   {
-    sendSerial(ReceivedCode2);
+    if (ReceivedCode2 != LastReceivedCode2) {
+      sendSerial(ReceivedCode2);
+      LastReceivedCode2 = ReceivedCode2;
+    }
     ReceivedCode2 = "";
   }
 }
@@ -200,7 +210,10 @@ void decode_tag3(char c) {
   else Counter++;
   if (c == END)
   {
-    sendSerial(ReceivedCode3);
+    if (ReceivedCode3 != LastReceivedCode3) {
+      sendSerial(ReceivedCode3);
+      LastReceivedCode3 = ReceivedCode3;
+    }
     ReceivedCode3 = "";
   }
 }
