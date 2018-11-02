@@ -1,5 +1,8 @@
 # Compiled classes
-node_modules/*
+node_modules
+
+# MAC files
+.DS_Store
 
 # directories
 videos/*
