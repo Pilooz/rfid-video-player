@@ -1,0 +1,17 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+<circle cx="100" cy="100" r="100" fill="#E1D9D7"/>
+</mask>
+<g mask="url(#mask0)">
+<circle cx="100" cy="100" r="100" fill="#E5CBC3"/>
+<circle cx="100" cy="100" r="100" fill="url(#paint0_radial)"/>
+<path d="M148.5 67C142.5 57 120 61.5 93.4998 61C66.9996 60.5001 48.9998 59.5001 46.4998 64.5001C43.9998 69.5001 46.4998 88.0001 46.4998 97.5001C46.4998 107 44.9998 118.5 48.9998 128.5C52.9998 138.5 80.4998 135.5 90.4998 135.5H142C155.5 135.5 153 115 153 102C153 89 154.5 77 148.5 67Z" fill="#1A1616" fill-opacity="0.49" stroke="white" stroke-width="5"/>
+<path d="M115.079 95.357C117.186 96.4889 117.186 99.5111 115.079 100.643L92.1695 112.947C90.1709 114.02 87.75 112.573 87.75 110.304L87.75 85.696C87.75 83.4274 90.1709 81.9797 92.1694 83.053L115.079 95.357Z" fill="white"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(100 100) rotate(90) scale(100)">
+<stop stop-color="#61605F"/>
+<stop offset="1" stop-color="#302925"/>
+</radialGradient>
+</defs>
+</svg>

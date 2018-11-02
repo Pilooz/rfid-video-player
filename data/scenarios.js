@@ -108,7 +108,7 @@ module.exports =
         title : 'Enquête archéologique',
         template : 'presentation',
         medias : [''],
-        text : 'Hi',
+        text : 'Hi, le\'s go?',
         transitions : 
           [
             { id : 'step-0.2', condition : 'manualStep' }
@@ -162,26 +162,39 @@ module.exports =
       steps : [
       {
         stepId : 'step-1.1',
-        title : '',
-        template : 'content',
+        title : 'Au bord du Rhône, un objet qu\'on ne connaissant pas auparavant…',
+        template : 'video',
         medias : ['A1.mp4'],  //video-problematique-pipette.mp4
         text : '', // Nous avons trouvé au bord du Rhône un objet qu\'on ne connaissant pas auparavant.
         transitions : 
           [
           //  { id : 'step-1.2', condition : 'manualStep' }
-            { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 } // 2000
+            { id : 'step-1.1bis', condition : 'endMedia', duration : 2000 }
           ]
       },
 
       {
         stepId : 'step-1.1bis',
         title : '',
-        template : 'cartel-state-0',
+        template : 'cartel',
         templateData: {
 	        
         },
-        medias : ['AR3.3005.36_dessin_archeo.png'],
-        text : '<p>Fragment d’objet archéologique antique trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
+        medias : ['pipette-archeo.svg'],
+        text : '<p>Fragment d’objet archéologique antique trouvé dans le Rhône à Arles</p>',
+        transitions : 
+          [
+            { id : 'step-1.1-contexte', condition : 'manualStep' }
+            // { id : 'step-1.2', condition : 'timeElapsed', duration : 10000 }
+          ]
+      },
+
+      {
+        stepId : 'step-1.1-contexte',
+        title : 'Comment décrire cet objet ?',
+        template : 'context',
+        medias : ['pipette-archeo.svg'],
+        text : '',
         transitions : 
           [
             { id : 'step-1.2', condition : 'manualStep' }
@@ -192,92 +205,90 @@ module.exports =
       {
         stepId : 'step-1.2',
         title : 'Comment décrire cet objet ?',
-        template : 'content',
-        templateData: {
-	        canNext: false
-        },
-        choices : [
-          { text : "Salière", img : '../pipette/objet-saliere.svg'}, 
-          { text : "Tampon", img : '../pipette/objet-tampon.svg'}, 
-          { text : "Tamis", img : '../pipette/objet-tamis.svg'}, 
-          { text : "Encensoir", img : '../pipette/objet-encensoir.svg'}, 
-          { text : "Arrosoir", img : '../pipette/objet-arrosoir.svg'}, 
-          { text : "Pipette", img : '../pipette/objet-pipette.svg'}, 
-          { text : "Autre", img : '../pipette/objet-autre.svg'}, 
-          { text : "Non identifié", img : '../pipette/objet-ovni.svg'}
+        template : 'cards',
+        cards: [
+	        {
+		        recto: { text : "Salière", img : '../pipette/objet-saliere.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Tampon", img : '../pipette/objet-tampon.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Tamis", img : '../pipette/objet-tamis.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Encensoir", img : '../pipette/objet-encensoir.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Arrosoir", img : '../pipette/objet-arrosoir.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Pipette", img : '../pipette/objet-pipette.svg'},
+		        verso: { text : "Oui !", img : '../pipette/objet-yep.svg'}
+	        },
+	        {
+		        recto: { text : "Autre", img : '../pipette/objet-autre.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
+	        {
+		        recto: { text : "Non identifié", img : '../pipette/objet-ovni.svg'},
+		        verso: { text : "Eh non !", img : '../pipette/objet-nope.svg'}
+	        },
         ],
         medias : [''],
         transitions :  
           [ 
-            { id : 'step-1.3', condition : 'choice == "Pipette"', isBingoTransition: true },
-            { id : 'step-1.3-erreur', condition : 'choice != "Pipette"' }
+            { id : 'step-1.3', condition : 'manualStep', isBingoTransition: true },
+//             { id : 'step-1.3-erreur', condition : 'choice != "Pipette"' }
           ]
       },
 
       {
         stepId : 'step-1.3',
         title : '',
-        template : 'cartel-state-0',
-        templateData: {
-	        
-        },
-        medias : ['AR3.3005.36_dessin_archeo.png'],
-        text : '<p><span class="goal-content">Pipette antique en céramique</span> trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
+        template : 'cartel',
+        medias : ['pipette-archeo.svg'],
+        text : '<p><span class="goal-content">Pipette antique en céramique</span> trouvé dans le Rhône à Arles</p>',
         transitions : 
         [
-          { id : 'step-1.6', condition : 'manualStep' }
-          // { id : 'step-1.6', condition : 'timeElapsed', duration : 5000 }
+          { id : 'step-1.4', condition : 'manualStep' }
         ]
       },
 
       {
-        stepId : 'step-1.3-erreur',
-        title : '',
-        template : 'wrong',
+        stepId : 'step-1.4',
+        title : 'Comment ça fonctionne ?',
+        template : 'toolbox-choices',
         templateData: {
 	        canNext: false
         },
-        medias : [],
-        text: 'Eh non !',
+        choices: [
+	        { 
+		        name: 'library', 
+		        text : 'Consulter la bibliothèque', 
+		        img : '../../assets/images/toolbox-library.svg' 
+		      }
+        ],
+        text : '',
         transitions : 
         [
-          {id : 'step-1.2', condition : 'timeElapsed', duration : 5000 }
+          { id : 'step-1.6', condition : 'manualStep' }
         ]
       },
-
-      // {
-      //   stepId : 'step-1.4',
-      //   title : 'Mais quelle est l\'utilité de cette pipette ?',
-      //   template : 'content',
-      //   medias : ['test-labo.mp4'], // choice-usage-pipette.mp4
-      //   transitions : 
-      //   [
-      //     {id : 'step-1.5', condition : 'endMedia', duration : 2000 }
-      //   ]
-      // },
-
-      // {
-      //   stepId : 'step-1.5',
-      //   title : 'Boîte à outils > Bibliothèque',
-      //   template : 'content',
-      //   //choices : ["Bibliotheque", "Laboratoire"],
-      //   medias : [''],
-      //   text : "",
-      //   transitions : 
-      //   [
-      //     {id : 'step-1.6', condition : 'manualStep' }
-      //     //{id : 'step-1.6', condition : 'choice == "Bibliotheque"' }
-      //     // {id : 'step-1.7', condition : 'choice == "Laboratoire"' },
-      //     // {id : 'step-1.8', condition : 'choice != "Bibliotheque" && choice != "Laboratoire"' }
-      //   ]
-      // },
+      
+			
 
       {
         stepId : 'step-1.6',
         title : 'Bibliothèque',
         template : 'library',
         medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
-        text : '',
+        text : 'Les deux pipettes complètes découvertes sur l’épave Lardier 4, un navire de commerce romain',
         transitions : 
         [
           {id : 'step-1.8.2', condition : 'manualStep' }
@@ -287,7 +298,7 @@ module.exports =
       {
         stepId : 'step-1.8.2',
         title : 'Comment ça fonctionne ?',
-        template : 'content',
+        template : 'video',
         medias : ['A2_time_lapse_pipette.mp4'],
         transitions : 
         [
@@ -298,7 +309,7 @@ module.exports =
       {
         stepId : 'step-1.8.3',
         title : 'Testons la pipette avec un verre d’eau !',
-        template : 'content',
+        template : 'video',
         medias : ['A3.mp4'],
         transitions : 
         [
@@ -309,12 +320,9 @@ module.exports =
       {
         stepId : 'step-1.8.4',
         title : 'Bingo !',
-        template : 'cartel-state-0',
-        templateData: {
-	        backgroundSize: 'cover'
-        },
-        medias : ['reproduction_pipette.jpg'],
-        text : '<p>Pipette antique en céramique trouvé dans le Rhône à Arles</p>\n<p class="sub">Dimensions H. 6,46 × Diam. 5,65 cm</p>',
+        template : 'cartel',
+        medias : ['pipette-archeo-2.svg'],
+        text : '<p>Pipette antique en céramique trouvé dans le Rhône à Arles</p>',
         transitions : 
         [
           {id : 'step-1.9', condition : 'manualStep' }
@@ -346,20 +354,8 @@ module.exports =
         text : '',
         transitions : 
         [
-          {id : 'step-1.9.2', condition : 'manualStep' }
-        ]
-      },
-
-      {
-        stepId : 'step-1.9.2',
-        title : 'Laboratoire d\'analyses',
-        template : 'content',
-        medias : ['test-labo.mp4'],
-        text : '',
-        transitions : 
-        [
           {id : 'step-1.9', condition : '!histo("step-1.9.3")' },
-          {id : 'step-1.10.1', condition : 'histo("step-1.9.3")' }
+          {id : 'step-1.10', condition : 'histo("step-1.9.3")', isBingoTransition: true }
         ]
       },
 
@@ -367,18 +363,38 @@ module.exports =
       {
         stepId : 'step-1.9.3',
         title : 'Quel conteneur ?',
-        template : 'memory',
-        choices : ["Dolia", "Amphores", "Cruches", "Tonneaux"],
+        template : 'cards',
+        cards : [
+          { 
+	          recto: { text : "Dolium", img : '../pipette/objet-dolium.svg'},
+          	verso: { text : "Pipette trop petite", img : '../pipette/objet-dolium-verso.svg'} 
+          },
+          { 
+	          recto: { text : "Amphore", img : '../pipette/objet-amphore.svg'},
+          	verso: { text : "Pipette pas adaptée", img : '../pipette/objet-amphore-verso.svg'} 
+          },
+          { 
+	          recto: { text : "Cruche", img : '../pipette/objet-cruche.svg'},
+          	verso: { text : "Pipette trop large", img : '../pipette/objet-cruche-verso.svg'} 
+          },
+          { 
+	          recto: { text : "Tonneau", img : '../pipette/objet-tonneau.svg'},
+          	verso: { text : "Pipette parfaite !", img : '../pipette/objet-tonneau-verso.svg'} 
+          }
+        ],
         medias : [''],
          transitions : 
         [
-          {id : 'step-1.10-tonneaux', condition : 'choice == "Tonneaux"' },
+          {id : 'step-1.9', condition : '!histo("step-1.9.3")' },
+          {id : 'step-1.10', condition : 'histo("step-1.9.3")', isBingoTransition: true },
+          /*
           {id : 'step-1.10-cruche', condition : 'choice == "Cruches"' },
           {id : 'step-1.10-dolia', condition : 'choice == "Dolia"' },
           {id : 'step-1.10-amphore', condition : 'choice == "Amphores"' }
+          */
         ]
       },
-
+/*
       // toutes les erreurs 
       {
         stepId : 'step-1.10-cruche',
@@ -412,27 +428,56 @@ module.exports =
           {id : 'step-1.9.3', condition : 'timeElapsed', duration : 20000 }
         ]
       },
-
+*/
       {
-        stepId : 'step-1.10-tonneaux',
+        stepId : 'step-1.10',
         title : 'Bingo !',
-        template : 'right',
-        medias : [''],
-        text : 'Pipette antique en céramique, trouvée dans le Rhône à Arles et servant à prélever du ' + 
-               '<span class="blink_me">vin</span> [et seulement du vin] depuis <span class="blink_me">un tonneau</span>.',
+        template : 'cartel',
+        medias : ['pipette-archeo-2.svg'],
+        text : 'Pipette antique en céramique, trouvée dans le Rhône à Arles <span class="goal-content">et servant à prélever <span class="goal-maybe">du vin</span> depuis <span class="goal-maybe">un tonneau</span></span>',
         transitions : 
         [
-          {id : 'step-1.9', condition : '!histo("step-1.9.1")' },
-          {id : 'step-1.10.1', condition : 'histo("step-1.9.1")' }
+          {id : 'step-1.10.1', condition : 'manualStep' }
         ]
       },
 
-      // Etape suivante : tonneau, sauf si on n'est pas passé par l'étape 'quel liquide'
+
+
+
+
+      {
+        stepId : 'step-1.10.1',
+        title : 'Vérifions les hypothèses',
+        template : 'carousel',
+        templateData: {
+	        backgroundSize: 'cover'
+        },
+        medias : [
+        	{ 
+	        	img: 'fresque_pompei.jpg', 
+	        	text: 'Fresque de Pompéi représentant une dégustation de vin à partir d’amphores',
+	        	backgroundSize: 'cover' },
+        	{ 
+	        	img: 'moule_céramique_sigillée_Trêve.jpg', 
+	        	text: 'Moule de céramique sigillée en terre cuite figurant une embarcation chargée de tonneaux, Landesmuseum de Trêve' },
+        	{ 
+	        	img: 'sarcophage_ancone_detail2.jpg', 
+	        	text: 'Sarcophage d’Ancône représentant une vente de vin en tonneau',
+	        	backgroundSize: 'cover'
+	        }
+        ],
+        text : '',
+        transitions : 
+          [
+          {id : 'step-1.12', condition : 'manualStep' }
+          ]
+      },
+
       {
         stepId : 'step-1.10.1',
         title : 'Boîte à outils : Bibliothèque',
-        template : 'content',
-        medias : ['fresque_pompei.png', 'moule_céramique_sigillée_Trêve.jpg', 'sarcophage_ancone_detail.png'],
+        template : 'content', // carousel
+        medias : ['fresque_pompei.jpg', 'moule_céramique_sigillée_Trêve.jpg', 'sarcophage_ancone_detail2.jpg'],
         transitions : 
         [
           {id : 'step-1.12', condition : 'manualStep' }
@@ -453,9 +498,9 @@ module.exports =
       {
         stepId : 'step-1.12',
         title : 'Bingo !',
-        template : 'right',
-        medias : [''],
-        text : '<strong>Pipette</strong> antique en céramique, trouvée dans le Rhône à Arles et servant à prélever du vin depuis un tonneau. Cet objet permettrait d’attester l’usage de tonneaux à Arles dans l’Antiquité pour le commerce du vin.',
+        template : 'cartel',
+        medias : ['reproduction_pipette.jpg'],
+        text : '<p><strong>Pipette</strong> antique en céramique, trouvée dans le Rhône à Arles et servant à prélever du vin depuis un tonneau. <span class="goal-content">Cet objet permettrait d’attester l’usage de tonneaux à Arles dans l’Antiquité pour le commerce du vin.</span></p>',
         transitions : 
         [
           {id : 'step-1.1', condition : 'deselectObject' }
@@ -475,8 +520,8 @@ module.exports =
       steps : [
       {
         stepId : 'step-1',
-        title : 'Contexte',
-        template : 'content',
+        title : 'Petit objet en métal : quel est cet objet archéologique ?',
+        template : 'video',
         medias : ['C1.mp4'],
         transitions : 
           [
@@ -487,10 +532,9 @@ module.exports =
       {
         stepId : 'step-2',
         title : 'Contexte',
-        template : 'content',
-        text : 'Petit objet archéologique en métal trouvé dans le Rhône à Arles.' + 
-               '<em>les lettres apparaissent comme si quelqu’un était en train d’écrire</em>',
-        medias : ['capsule_mort_subite.png'],
+        template : 'cartel',
+        text : '<p>Petit objet archéologique en métal trouvé dans le Rhône à Arles.</p>',
+        medias : ['capsule-archeo.svg'],
         transitions : 
           [
             { id : 'step-3', condition : 'manualStep' }
@@ -499,9 +543,10 @@ module.exports =
 
       {
         stepId : 'step-3',
-        title : 'Description',
-        template : 'content',
-        text : 'Comment décrire cet objet ?',
+        title : 'Comment décrire cet objet ?',
+        template : 'context',
+        text : '',
+        medias : ['capsule-archeo.svg'],
         // medias : [ 'moule-charlotte.jpg', 'plat-a-tarte-verre.jpg', 'coquillage.jpg', 'roulette.jpg', 'capsule-biere-bouteille.jpg', 'plat-a-tarte.jpg'],
         transitions : 
           [
@@ -511,22 +556,22 @@ module.exports =
 
       {
         stepId : 'step-4',
-        title : 'Comparaison',
+        title : 'Comment décrire cet objet ?',
         template : 'matching-ihm',
         text : 'Boîte à outils > Bibliothèque',
         medias : [''],
         transitions : 
           [
-            { id : 'step-5', condition : 'manualStep' }
+            { id : 'step-5', condition : 'manualStep', isBingoTransition: true }
           ]
       },
 
       {
         stepId : 'step-5',
         title : 'Bingo !',
-        template : 'right',
-        text : 'Objet métallique trouvé dans le Rhône à Arles; la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier.',
-        medias : [''],
+        template : 'cartel',
+        text : 'Objet métallique trouvé dans le Rhône à Arles ; <span class="goal-content">la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier.</span>',
+        medias : ['capsule-archeo-2.svg'],
         transitions : 
           [
             { id : 'step-6', condition : 'manualStep' }
@@ -535,29 +580,57 @@ module.exports =
 
       {
         stepId : 'step-6',
-        title : 'Usage',
-        template : 'content',
-        text : 'A quoi sert cet objet ?',
-        choices : ['Archéologue', 'Laboratoire d\'analyses'],
+        title : 'À quoi sert cet objet ?',
+        template : 'toolbox-choices',
+        templateData: {
+	        canNext: false
+        },
+        text : '',
+        choices: [
+	        { 
+		        name: 'archaeologist', 
+		        text : 'Écouter l\'archéologue', 
+		        img : '../../assets/images/toolbox-archaeologist.svg' 
+		      }
+        ],
         medias : [''],
         transitions : 
           [
-            { id : 'step-7', condition : 'choice == "Archéologue"' },
-            { id : 'step-8', condition : 'choice == "Laboratoire d\'analyses"' }
+            { id : 'step-7', condition : 'manualStep' },
           ]
       },
 
       {
         stepId : 'step-7',
-        title : 'Archéologue',
-        template : 'content',
+        title : 'Des objets dans des contextes culinaires…',
+        template : 'video',
         medias : ['C2.mp4'],
-        text : '<p>Certes un objet très courant mais on en retrouve de beaucoup plus grands uniquement dans des contextes culinaires avec parfois des traces d’usage (traces noires, de quoi s’agit-il ?).</p>' + 
-               '\n<p>Quel est le rapport entre ces tout petits objets et des objets plus grands qu’on ne retrouve que dans des contextes culinaires ?</p>',
+        text : '',
         transitions : 
           [
-            { id : 'step-6', condition : '!histo("step-8")' },
-            { id : 'step-9', condition : 'histo("step-8")' }
+            { id : 'step-8-pre', condition : 'manualStep' }
+          ]
+      },
+      
+      {
+        stepId : 'step-8-pre',
+        title : 'À quoi sert cet objet ?',
+        template : 'toolbox-choices',
+        templateData: {
+	        canNext: false
+        },
+        text : '',
+        choices: [
+	        { 
+		        name: 'lab', 
+		        text : 'Entrer dans le laboratoire d\'analyse', 
+		        img : '../../assets/images/toolbox-lab.svg' 
+		      }
+        ],
+        medias : [''],
+        transitions : 
+          [
+            { id : 'step-8', condition : 'manualStep' },
           ]
       },
 
@@ -569,29 +642,16 @@ module.exports =
         text : 'Datavisualisation de 2 graphiques, légende: « Traces chimiques identifiées » et indications portée sur chaque graphique « Alcool éthylique » (objet archéologique) et « Molécule de caramel » (sur le plat à tarte).',
         transitions : 
           [
-            { id : 'step-6', condition : '!histo("step-7")' },
-            { id : 'step-9', condition : 'histo("step-7")' }
+            { id : 'step-9', condition : 'manualStep', isBingoTransition: true } // final
           ]
       },
 
       {
         stepId : 'step-9',
         title : 'Bingo !',
-        template : 'content',
-        text : 'Objet métallique dont la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier. Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. ',
-        medias : [''],
-        transitions : 
-          [
-            { id : 'step-10', condition : 'manualStep' }
-          ]
-      },
-
-      {
-        stepId : 'step-10',
-        title : 'Bingo !',
-        template : 'content',
-        text : '<strong>Plat</strong> métallique dont la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier. Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. Il permettait peut-être de présenter de petits aliments crus ou déjà cuits.',
-        medias : ['globi.png', 'globi2.png', 'dulcia-domestica.png'],
+        template : 'cartel',
+        text : '<strong>Plat</strong> métallique circulaire à décor de cannelures dentelées, de taille pouvant varier. <span class="goal-content">Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. Il permettait peut-être de présenter de petits aliments crus ou déjà cuits.</span>',
+        medias : ['capsule-archeo-3.svg'],
         transitions : 
           [
             { id : 'step-10', condition : 'deselectObject' }
@@ -611,8 +671,8 @@ module.exports =
       steps : [
       {
         stepId : 'step-1',
-        title : 'Contexte',
-        template : 'content',
+        title : 'Objet portant une inscription peinte : quel est cet objet ?',
+        template : 'video',
         medias : ['B1.mp4'],
         transitions : 
           [
@@ -622,10 +682,10 @@ module.exports =
 
       {
         stepId : 'step-2',
-        title : 'contexte',
-        template : 'content',
-        medias : ['dessin-archéo.png'],
-        text : 'Objet archéologique antique trouvé dans le Rhône et portant une inscription peinte',
+        title : '',
+        template : 'cartel',
+        medias : ['amphorisque-archeo.svg'],
+        text : '<p>Objet archéologique antique trouvé dans le Rhône et portant une inscription peinte</p>',
         transitions : 
           [
             { id : 'step-3', condition : 'manualStep' }
@@ -634,22 +694,22 @@ module.exports =
 
         {
         stepId : 'step-3',
-        title : 'Description',
-        template : 'content',
-        text : 'Comment décrire cet objet ?',
+        title : 'Comment décrire cet objet ?',
+        template : 'context',
+        text : '',
+        medias : ['amphorisque-archeo.svg'],
        transitions : 
           [
-            { id : 'step-4', condition : 'manualStep' }
+            { id : 'step-4', condition : 'manualStep', isBingoTransition:true }
           ]
       },
 
       {
         stepId : 'step-4',
         title : 'Bingo !',
-        template : 'right',
-        text : 'Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte.',
-        //medias : ['dessin-amphorisque-complete.png'],
-        //background : 'dessin-amphorisque-complete.png',
+        template : 'cartel',
+        medias : ['amphorisque-archeo.svg'],
+        text : '<p><span class="goal-content">Amphorisque</span> antique<br><span class="goal-content">en céramique</span> trouvée dans le Rhône et portant une inscription peinte.</p>',
         transitions : 
           [
             { id : 'step-5', condition : 'manualStep' }
@@ -670,28 +730,43 @@ module.exports =
 
         {
         stepId : 'step-5bis',
-        title : 'Usage',
-        template : 'content',
-        text : 'A quoi sert cet objet ?',
+        title : 'À quoi sert cet objet : 5 hypothèses…',
+        template : 'video',
+        text : '',
         medias : ['B2.m4v'],
        transitions : 
           [
-            { id : 'step-6', condition : 'endMedia', duration : '2000', isBingoTransition: true }
+            { id : 'step-6', condition : 'endMedia', duration : '2000' }
           ]
       },
 
         {
         stepId : 'step-6',
-        title : 'Usage',
-        template : 'memory',
-        text : 'A quoi sert cet objet ?',
-        choices : [
-                    { text : "Lampe à huile", img : 'lampe-a-huile.jpg' },
-                    { text : "Bouchon d'amphore", img : 'hypothèse-bouchon-amphore.png' },
-                    { text : "Échantillon commercial", img : 'échantillon-commercial.jpg' },
-                    { text : "Cornet à dés", img : 'dés-et-cornet.jpg' },
-                    { text : "Décapsuleur d'amphore", img : 'decapsuleur.jpg' }
-                  ],
+        title : 'À quoi sert cet objet ?',
+        template : 'cards',
+        text : '',
+        cards : [
+          { 
+	          recto : { text : "Lampe à huile", img : 'lampe-a-huile.jpg' },
+	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
+	        },
+          { 
+	          recto : { text : "Bouchon d'amphore", img : 'hypothèse-bouchon-amphore.png' },
+	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
+	        },
+          { 
+	          recto : { text : "Échantillon", img : 'échantillon-commercial.jpg' },
+	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
+	        },
+          { 
+	          recto : { text : "Cornet à dés", img : 'dés-et-cornet.jpg' },
+	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
+	        },
+          { 
+	          recto : { text : "Décapsuleur d'amphore", img : 'decapsuleur.jpg' },
+	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
+	        }
+        ],
        transitions : 
           [
             { id : 'step-7', condition : 'manualStep' }
@@ -700,49 +775,76 @@ module.exports =
 
       {
         stepId : 'step-7',
-        title : 'Usage',
-        template : 'content',
-        text : 'A quoi sert cet objet ?\n' + 
-               '<p>Aucune de ces hypothèse ne semble vraisemblable...</p>',
-        choices : ['Archéologue', 'Bibliothèque'],
+        title : 'À quoi sert l\'objet ?',
+        template : 'toolbox-choices',
+        text : '',
+        templateData: {
+	        canNext: false
+        },
+        choices: [
+	        { 
+		        name: 'archaeologist', 
+		        text : 'Écouter l\'archéologue', 
+		        img : '../../assets/images/toolbox-archaeologist.svg' 
+		      }
+        ],
         medias : [''],
         transitions : 
           [
-            { id : 'step-8', condition : 'choice == "Archéologue"' },
-            { id : 'step-9', condition : 'choice == "Bibliothèque"' }
+            { id : 'step-8', condition : 'manualStep' },
           ]
       },
 
       {
         stepId : 'step-8',
-        title : 'Boîte à outils > Archéologue',
-        template : 'content',
+        title : 'Présence de décoctions de plantes et d\'excréments dans les analyses…',
+        template : 'video',
         medias : ['B3.mp4'],
-        text : 'des analyses ont été effectuées : présence de décoctions de plantes et d\'excréments.',
+        text : '',
         transitions : 
           [
-            { id : 'step-8bis', condition : 'manualStep' }
+            { id : 'step-8bis', condition : 'manualStep', isBingoTransition:true }
           ]
       },
 
       {
         stepId : 'step-8bis',
         title : 'Bingo !',
-        template : 'right',
-        medias : ['dessin-amphorisque-complete.png'],
-        text : ' Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, ayant contenu des ingrédients de la pharmacopée.',
+        template : 'cartel',
+        medias : ['amphorisque-archeo-2.svg'],
+        text : '<p>Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span></p>',
         choices : '',
         transitions : 
           [
-            { id : 'step-7', condition : '!histo("step-9")' },
-            { id : 'step-10', condition : 'histo("step-9")' }
+            { id : 'step-8-post', condition : 'manualStep' }
+          ]
+      },
+
+
+      {
+        stepId : 'step-8-post',
+        title : 'À quoi sert l\'objet ?',
+        template : 'carousel', // gallery
+        templateData: {
+	        backgroundSize: 'cover'
+        },
+        medias : [
+        	{ img: 'abecedaire_source_richard_sylvestre_universite_lausanne.jpg', text: 'Lausanne' },
+        	{ img: '../capsule/capsule-archeo-comparaison.svg', text: 'Archeo' },
+        	{ img: 'abecedaire_source_richard_sylvestre_universite_lausanne.jpg', text: 'Lausanne 2' },
+        	{ img: '../capsule/capsule-archeo.svg', text: 'Archeo' }
+        ],
+        text : '',
+        transitions : 
+          [
+            { id : 'step-9', condition : 'manualStep' }
           ]
       },
 
       {
         stepId : 'step-9',
         title : 'Boîte à outil > Bibliothèque',
-        template : 'content',
+        template : 'amphorisque-abc',
         medias : ['abecedaire_source_richard_sylvestre_universite_lausanne.jpg'],
         text : '<p> ISOCHRYSO AB HERMEROT(I)S </p><p> ASYNTROPHO(N) </p>',
         transitions : 

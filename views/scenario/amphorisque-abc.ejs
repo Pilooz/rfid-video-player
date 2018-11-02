@@ -1,0 +1,16 @@
+
+  <%- include('attr-background.ejs', {data: data}) %>
+
+  <%- include('attr-icon.ejs', {data: data}) %>
+  
+  <%- include('attr-text.ejs', {data: data}) %>
+
+  <%- include('attr-medias.ejs', {data: data}) %>
+
+
+<div class="context">
+	<div class="context-image">
+		<div class="context-image-image<% if (data.step.templateData) { if (data.step.templateData.backgroundSize) { %> background-size-<%= data.step.templateData.backgroundSize %><% } } %>" 
+			style="background-image:url(http://<%= data.config.server.host + ':' + data.config.server.port +  data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[0] %>)"></div>
+	</div>
+</div>

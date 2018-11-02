@@ -1,89 +1,39 @@
-
-<style>
-	/*  Template matching capsule */
-	.critere {
-	    color : black;
-	 }
-
-	.matching-img {
-	    height: 100px;
-	    margin: 20px;
-	}
-
-	.card, .card img {
-	    display:inline;
-	}
-
-	.matching-on {
-	    background-color: green;
-	}
-</style>
-
-<div class="row txt">
-	<div class="col-lg-5">
-	  <img src="/medias/capsule/capsule-biere-bouteille.jpg" />
+<div class="matching-ihm">
+	
+	<div class="matching-ihm-image" style="background-image:url(/medias/capsule/capsule-archeo-comparaison.svg);"></div>
+	
+	<div class="matching-ihm-criteria">
+  	<div id="Forme" class="criteria">Même forme</div>
+  	<div id="Matiere" class="criteria">Matériau : métal</div>
+  	<div id="Dimensions" class="criteria">Petites dimensions</div>
+  	<div id="Decor" class="criteria">Décor crénelé</div>
+  	<div id="Inscription" class="criteria">Inscription</div>
 	</div>
-	<div class="col-lg-2">
-	  <div class="row">
-	  	<button id="Forme" class="critere btn btn-block">Forme</button>
-	  </div>
-	  <div class="row">
-	  	<button id="Matiere" class="critere btn btn-block">Matériau métal</button>
-	  </div>
-	  <div class="row">
-	  	<button id="Dimensions" class="critere btn btn-block">Dimensions petites</button>
-	  </div>
-	  <div class="row">
-	  	<button id="Decor" class="critere btn btn-block">Décor crénelé</button>
-	  </div>
-	  <div class="row">
-	  	<button id="Inscription" class="critere btn btn-block">Inscription</button>
-	  </div>
-	</div>
-	<div class="col-lg-5">
-
-	    <div class="cardcontainer list">
-	      <ul class="cardlist">
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/plat-a-tarte.jpg" id="plat-a-tarte" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/plat-a-tarte-verre.jpg" id="plat-a-tarte-verre" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/coquillage.jpg" id="coquillage" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/moule-charlotte.jpg" id="moule-charlotte" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/roulette.jpg" id="roulette" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/pignon-vélo.jpg" id="pignon" />
-			</li>
-			<li class="card">
-				<img class="matching-img" src="/medias/capsule/boucles-d-oreilles.jpg" id="boucles" />
-			</li>
-	      </ul>
-	    </div>
-
+	
+	<div class="matching-ihm-items">
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-plat-tarte-metal.svg);" id="plat-a-tarte"></div>
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-plat-tarte-verre.svg)" id="plat-a-tarte-verre"></div>
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-coquillage.svg)" id="coquillage"></div>
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-charlotte.svg)" id="moule-charlotte"></div>
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-roulette.svg)" id="roulette"></div>
+		<div class="matching-ihm-item" style="background-image:url(/medias/capsule/objet-engrenage.svg)" id="pignon"></div>
 	</div>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		// Init
-		$('.critere').removeClass("matching-on");
+		$('.matching-ihm-item, .criteria').removeClass("matching-on");
 
 		// Highlighting element when matching.
 		function highlight(e) {
-			e.fadeOut(250).addClass("matching-on").fadeIn(500);
+			e.addClass("matching-on");
 		}
 
-		// click listener on all matching buttons
-		$('.matching-img').on('click', function(){
-			$('.critere').removeClass("matching-on");
+		// click listener on all matching divs
+		$('.matching-ihm-item').on('click', function(){
+			$('.matching-ihm-item, .criteria').removeClass("matching-on");
+			$(this).addClass('matching-on');
 
 			switch ($(this).attr("id")) {
 				

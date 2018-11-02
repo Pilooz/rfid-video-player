@@ -130,10 +130,8 @@ function addStepHistory(stp) {
 function loadStep(scenar, stepId = null){
   // Tell the server which scenario and step we manage
   socket.emit('client.currentScenario', { currentScenario: scenar });
-  // get step
-  console.log(stepId);
-  console.log(typeof stepId);
   
+  // get step
   if (stepId != null) {
   	step = getStepDetailsOfStepId(stepId);
   } else {
@@ -332,11 +330,16 @@ function unsetBingoTransition() {
 // ------------------------------------------------------------------
 // Kevin's Reset button
 $("#resetButton").on('click', function(){
+	
+	location.reload();
+	
+	/*
   nextStep = getFirstStep(scenario);
   // trash navigation history
   nav_history = new Array();
   // Go
   goToNextStep();
+  */
 });
 
 // Next button

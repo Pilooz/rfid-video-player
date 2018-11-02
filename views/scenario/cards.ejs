@@ -1,0 +1,32 @@
+<!-- attribute template "cards" -->
+<div class="module-cards">
+
+	<% for(var i=0; i< data.step.cards.length; i++) { %>
+
+		<div class="module-cards-card cardButton" id="but<%=i%>" name="<%= (data.step.cards[i].recto.text) ? data.step.cards[i].recto.text : data.step.cards[i].recto %>">
+			<div class="module-cards-card-recto">
+				<%- (data.step.cards[i].recto.img) ? '<div class="module-cards-card-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.cards[i].recto.img + ')"></div>' : '' %>
+				<div class="module-cards-card-text"><%= (data.step.cards[i].recto.text) ? data.step.cards[i].recto.text : data.step.cards[i].recto %></div>
+			</div>
+			<div class="module-cards-card-verso">
+				<%- (data.step.cards[i].verso.img) ? '<div class="module-cards-card-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.cards[i].verso.img + ')"></div>' : '' %>
+				<div class="module-cards-card-text"><%= (data.step.cards[i].verso.text) ? data.step.cards[i].verso.text : data.step.cards[i].verso %></div>
+			</div>
+		</div>
+
+	<% } %>
+
+</div>
+
+<script>
+  // cards button
+  $(".cardButton").on('click', function(e) {
+    $(this).toggleClass('flipped');
+    /*
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+    */
+  }); 
+
+</script> 

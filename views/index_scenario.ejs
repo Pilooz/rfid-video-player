@@ -45,6 +45,13 @@
 
 <nav id="menu">
 	<h2>MENU</h2>
+	
+	<div>
+		<input type="text" value="scenario1" id="scenar-id"><br>
+		<input type="text" value="step-1.10" id="step-id"><br>
+		<button id="goto">Load step</button>
+	</div>
+	
 	<div class="scenarioButton" name="presentation">Start (without refresh)</div>
 	<br><br>
 	<div class="scenarioButton" name="presentation" data-step-id="step-0.4">Dashboard</div>
@@ -81,6 +88,15 @@ $(document).ready(function(){
     socket.emit('client.setScenarioWithScenarId', {
 	    scenarId: $(this).attr('name'),
 	    stepId: $(this).data('step-id') || null
+	  });
+  }); 
+  
+  
+  
+  $('#goto').on('click', function(e) {
+    socket.emit('client.setScenarioWithScenarId', {
+	    scenarId: $('#scenar-id').val(),
+	    stepId: $('#step-id').val()
 	  });
   }); 
   
