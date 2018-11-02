@@ -1,0 +1,30 @@
+<script src="/js/swiper.min.js"></script>
+<link rel="stylesheet" href="/style/swiper.min.css"/>
+
+<!-- attribute template "carousel" -->
+<div class="module-carousel swiper-container">
+	<div class="swiper-wrapper">
+	
+		<% for(var i=0; i< data.step.medias.length; i++) { %>
+	
+			<div class="module-carousel-slide swiper-slide <%- (data.step.medias[i].backgroundSize) ? 'background-'+data.step.medias[i].backgroundSize : '' %>">
+				<%- (data.step.medias[i].img) ? '<div class="module-carousel-slide-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.medias[i].img + ')"></div>' : '' %>
+				<% if (data.step.medias[i].text) { %><div class="module-carousel-slide-text"><%= (data.step.medias[i].text) ? data.step.medias[i].text : data.step.medias[i] %></div><% } %>
+			</div>
+	
+		<% } %>
+
+	</div>
+
+</div>
+
+<script>
+  
+  var carousel = new Swiper ('.swiper-container', {
+    loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 20
+  });
+
+</script> 

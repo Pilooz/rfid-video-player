@@ -6,8 +6,14 @@
 	<% for(var i=0; i< data.step.choices.length; i++) { %>
 
 		<div class="module-choices-choice choiceButton" id="but<%=i%>" name="<%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %>">
-			<%- (data.step.choices[i].img) ? '<div class="module-choices-choice-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.choices[i].img + ')"></div>' : '' %>
-			<div class="module-choices-choice-text"><%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %></div>
+			<div class="module-choices-choice-recto">
+				<%- (data.step.choices[i].img) ? '<div class="module-choices-choice-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.choices[i].img + ')"></div>' : '' %>
+				<div class="module-choices-choice-text"><%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %></div>
+			</div>
+			<div class="module-choices-choice-verso">
+				<%- (data.step.choices[i].img) ? '<div class="module-choices-choice-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.choices[i].img + ')"></div>' : '' %>
+				<div class="module-choices-choice-text"><%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %></div>
+			</div>
 		</div>
 
 	<% } %>

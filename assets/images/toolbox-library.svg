@@ -1,0 +1,34 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+<circle cx="100" cy="100" r="100" fill="#E1D9D7"/>
+</mask>
+<g mask="url(#mask0)">
+<circle cx="100" cy="100" r="100" fill="#E5CBC3"/>
+<circle cx="100" cy="100" r="100" fill="url(#paint0_radial)"/>
+<rect width="28.0245" height="83.4643" transform="matrix(-0.998436 -0.0559035 -0.0559035 0.998436 95.1289 59.9323)" fill="#9B8078"/>
+<rect width="16.9943" height="50.7699" transform="matrix(-0.999811 -0.0194448 -0.0194448 0.999811 111.794 92.8423)" fill="#C5ADA6"/>
+<rect width="11.5753" height="93.8212" transform="matrix(-0.999296 -0.0375114 -0.0375114 0.999296 144.763 51.6293)" fill="#C5ADA6"/>
+<rect width="11.5753" height="93.8212" transform="matrix(-0.999279 -0.0379608 -0.0379608 0.999279 126.142 53.1282)" fill="#F4F1F0"/>
+<rect width="9.74766" height="63.3598" transform="matrix(-0.998436 -0.0559035 -0.0559035 0.998436 153.889 78.4768)" fill="#DCC9C3"/>
+<rect width="15.2307" height="56.049" transform="matrix(-0.999777 -0.0210924 -0.0210924 0.999777 109.149 88.5371)" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="11.0215" height="89.114" transform="matrix(-0.997341 -0.0728811 -0.0728811 0.997341 129.49 56.6301)" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="11.0215" height="97.8363" transform="matrix(-0.999777 -0.0210924 -0.0210924 0.999777 140.738 47.6534)" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="11.0215" height="60.623" transform="matrix(-0.999526 0.030776 0.030776 0.999526 151.177 84.8746)" fill="#B3978E" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="27.7153" height="79.3217" transform="matrix(-0.999987 0.00508332 0.00508332 0.999987 90.1572 64.5353)" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="14.2322" height="66.7632" transform="matrix(-0.999469 -0.0325977 -0.0325977 0.999469 59.1201 77.6571)" fill="#B3978E" stroke="#3E3939" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path opacity="0.5" d="M80.5543 80.4725L80.6497 133.259" stroke="white" stroke-width="8" stroke-linecap="round"/>
+<path opacity="0.5" d="M72.6913 95.5919L72.7087 133.424" stroke="white" stroke-width="8" stroke-linecap="round"/>
+<path opacity="0.5" d="M101.855 97.835L101.281 135.329" stroke="#756565" stroke-width="6" stroke-linecap="round"/>
+<path opacity="0.5" d="M51.302 90.7333L49.9642 136.422" stroke="#756565" stroke-width="6" stroke-linecap="round"/>
+<path opacity="0.5" d="M134.38 99.9613L133.57 136.222" stroke="white" stroke-width="4" stroke-linecap="round"/>
+<path opacity="0.5" d="M146.493 101.555L147.374 134.859" stroke="#947870" stroke-width="4" stroke-linecap="round"/>
+<path opacity="0.5" d="M135.109 54.2385L134.766 65.8127" stroke="white" stroke-width="4" stroke-linecap="round"/>
+<path d="M122.815 77.6523L118.329 135.979" stroke="#C5ADA6" stroke-width="4" stroke-linecap="round"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(100 100) rotate(90) scale(100)">
+<stop stop-color="#C5ADA6"/>
+<stop offset="1" stop-color="#7B6A5F"/>
+</radialGradient>
+</defs>
+</svg>

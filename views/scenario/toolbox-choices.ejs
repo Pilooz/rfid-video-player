@@ -1,0 +1,27 @@
+
+<% if ( data.step.choices && data.step.choices[0] != '' ) { %>
+<!-- attribute template "toolbox-choices" -->
+<div class="module-toolbox">
+
+	<% for(var i=0; i< data.step.choices.length; i++) { %>
+
+		<div class="module-toolbox-choice choiceButton" id="but<%=i%>" name="<%= (data.step.choices[i].name) ? data.step.choices[i].name : data.step.choices[i].text %>">
+		
+			<%- (data.step.choices[i].img) ? '<div class="module-toolbox-choice-image" style="background-image:url(' + data.config.app.mediaPath + '/' +data.step.scenarioMediaPath + data.step.choices[i].img + ')"></div>' : '' %>
+			<div class="module-toolbox-choice-text"><%= (data.step.choices[i].text) ? data.step.choices[i].text : data.step.choices[i] %></div>
+			
+		</div>
+
+	<% } %>
+
+</div>
+
+<script>
+  // Choices button
+  $(".choiceButton").on('click', function(e) {
+    var choice = $(this).attr("name");
+    console.log("'" + choice + "' button was choosen !");
+    step_validation(choice);
+  }); 
+</script> 
+<% } %>
