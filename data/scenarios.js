@@ -105,10 +105,10 @@ module.exports =
       steps : [
       {
         stepId : 'step-0.1',
-        title : 'Enquête archéologique',
+        title : '',
         template : 'presentation',
         medias : [''],
-        text : 'Hi, le\'s go?',
+        text : '',
         transitions : 
           [
             { id : 'step-0.2', condition : 'manualStep' }
@@ -116,20 +116,20 @@ module.exports =
       },
       {
         stepId : 'step-0.2',
-        title : 'Enquête archéologique',
+        title : 'Objets issus d’un dépotoir archéologique<br>découvert dans le Rhône à Arles',
         template : 'content',
         medias : [''],
         background : ['fouilles_rhone_depotoir©Teddy_Seguin-O_Can-Ipso_Facto_Mdaa_Cd13_08.jpg'],
-        text : 'Objets issus d’un dépotoir archéologique découvert dans le Rhône à Arles',
+        text : '',
         transitions : 
           [
-            { id : 'step-0.3', condition : 'timeElapsed', duration : '3000' }
+            { id : 'step-0.3', condition : 'manualStep' }
           ]
       },
       {
         stepId : 'step-0.3',
-        title : 'Enquête archéologique',
-        template : 'content',
+        title : 'Contexte de découverte archéologique',
+        template : 'video',
         medias : ['ABC-0.mp4'],
         text : '',
         transitions : 
@@ -139,10 +139,10 @@ module.exports =
       },
       {
         stepId : 'step-0.4',
-        title : 'Enquête archéologique',
+        title : '',
         template : 'dashboard',
         medias : [''],
-        text : 'Saisissez un objet. Pour l’identifier, laissez-vous guider et expérimentez la démarche scientifique',
+        text : '',
         transitions : 
           [
             { id : 'step-0.5', condition : 'manualStep' }
@@ -162,7 +162,7 @@ module.exports =
       steps : [
       {
         stepId : 'step-1.1',
-        title : 'Au bord du Rhône, un objet qu\'on ne connaissant pas auparavant…',
+        title : 'Au bord du Rhône, un objet qu\'on ne connaissait pas auparavant…',
         template : 'video',
         medias : ['A1.mp4'],  //video-problematique-pipette.mp4
         text : '', // Nous avons trouvé au bord du Rhône un objet qu\'on ne connaissant pas auparavant.
@@ -349,9 +349,10 @@ module.exports =
       {
         stepId : 'step-1.9.1',
         title : 'Laboratoire d\'analyses',
-        template : 'labo-analyse-pipette',
+        template : 'labo',
         medias : [''],
         text : '',
+        background: 'labo2.svg',
         transitions : 
         [
           {id : 'step-1.9', condition : '!histo("step-1.9.3")' },
@@ -469,10 +470,11 @@ module.exports =
         text : '',
         transitions : 
           [
-          {id : 'step-1.12', condition : 'manualStep' }
+          {id : 'step-1.12', condition : 'manualStep', isBingoTransition: true, isFinalBingo: true }
           ]
       },
 
+/*
       {
         stepId : 'step-1.10.1',
         title : 'Boîte à outils : Bibliothèque',
@@ -483,6 +485,7 @@ module.exports =
           {id : 'step-1.12', condition : 'manualStep' }
         ]
       },
+*/
 
       // {
       //   stepId : 'step-1.11',
@@ -499,7 +502,10 @@ module.exports =
         stepId : 'step-1.12',
         title : 'Bingo !',
         template : 'cartel',
-        medias : ['reproduction_pipette.jpg'],
+        templateData: {
+// 	        backgroundColor: '#E9E7EA'
+        },
+        medias : ['pipette-cartel-final.svg'],
         text : '<p><strong>Pipette</strong> antique en céramique, trouvée dans le Rhône à Arles et servant à prélever du vin depuis un tonneau. <span class="goal-content">Cet objet permettrait d’attester l’usage de tonneaux à Arles dans l’Antiquité pour le commerce du vin.</span></p>',
         transitions : 
         [
@@ -637,12 +643,13 @@ module.exports =
       {
         stepId : 'step-8',
         title : 'Laboratoire d\'analyses',
-        template : 'content',
+        template : 'labo',
         medias : [''],
-        text : 'Datavisualisation de 2 graphiques, légende: « Traces chimiques identifiées » et indications portée sur chaque graphique « Alcool éthylique » (objet archéologique) et « Molécule de caramel » (sur le plat à tarte).',
+        background: 'labo1.svg',
+        text : '',
         transitions : 
           [
-            { id : 'step-9', condition : 'manualStep', isBingoTransition: true } // final
+            { id : 'step-9', condition : 'manualStep', isBingoTransition: true, isFinalBingo: true } // final
           ]
       },
 
@@ -651,7 +658,7 @@ module.exports =
         title : 'Bingo !',
         template : 'cartel',
         text : '<strong>Plat</strong> métallique circulaire à décor de cannelures dentelées, de taille pouvant varier. <span class="goal-content">Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. Il permettait peut-être de présenter de petits aliments crus ou déjà cuits.</span>',
-        medias : ['capsule-archeo-3.svg'],
+        medias : ['capsule-cartel-final.svg'],
         transitions : 
           [
             { id : 'step-10', condition : 'deselectObject' }
@@ -666,7 +673,7 @@ module.exports =
     { 
       scenarId : 'scenario3', // scénario de l'amphorisque
       rfid : ['00782B1A80C9'],
-      title : 'Un objet bien singulier...',
+      title : 'Un objet bien singulier…',
       scenarioMediaPath : 'amphorisque/',
       steps : [
       {
@@ -725,7 +732,7 @@ module.exports =
         	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
         	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
         	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
-        	{ img: 'hypothèse-bouchon-amphore.png' }, 
+        	{ img: 'objet-bouchon.svg', text: 'Bouchon d\'amphore ?' },
         	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
         ],
        transitions : 
@@ -757,7 +764,7 @@ module.exports =
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
-	          recto : { text : "Bouchon d'amphore", img : 'hypothèse-bouchon-amphore.png' },
+	          recto : { text : "Bouchon d'amphore", img : 'objet-bouchon.svg' },
 	          verso : { text : 'Eh non !', img: '../pipette/objet-nope.svg' }
 	        },
           { 
@@ -835,32 +842,75 @@ module.exports =
         	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
         	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
         	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
-        	{ img: 'hypothèse-bouchon-amphore.png' }, 
+        	{ img: 'objet-bouchon.svg', text: 'Bouchon d\'amphore ?' },
         	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
         ],
         text : '',
         transitions : 
           [
-            { id : 'step-9', condition : 'manualStep' }
+            { id : 'step-9-pre', condition : 'manualStep' }
           ]
       },
 
       {
+        stepId : 'step-9-pre',
+        title : 'Qu\'est ce qui est écrit sur l\'objet ?',
+        template : 'toolbox-choices',
+        templateData: {
+	        canNext: false
+        },
+        choices: [
+	        { 
+		        name: 'library', 
+		        text : 'Consulter la bibliothèque', 
+		        img : '../../assets/images/toolbox-library.svg' 
+		      }
+        ],
+        text : '',
+        transitions : 
+        [
+          { id : 'step-9', condition : 'manualStep' }
+        ]
+      },
+
+      {
         stepId : 'step-9',
-        title : 'Boîte à outil > Bibliothèque',
+        title : 'Bibliothèque',
         template : 'amphorisque-abc',
-        medias : ['abecedaire_source_richard_sylvestre_universite_lausanne.jpg'],
+        medias : ['abc.svg'],
         text : '<p> ISOCHRYSO AB HERMEROT(I)S </p><p> ASYNTROPHO(N) </p>',
         transitions : 
           [
-            { id : 'step-10', condition : 'manualStep' }
+            { id : 'step-9-post', condition : 'manualStep' }
+          ]
+      },
+
+      {
+        stepId : 'step-9-post',
+        title : 'Qu\'est ce qui est écrit sur l\'objet ?',
+        template : 'toolbox-choices',
+        templateData: {
+	        canNext: false
+        },
+        text : '',
+        choices: [
+	        { 
+		        name: 'archaeologist', 
+		        text : 'Interroger l\'archéologue', 
+		        img : '../../assets/images/toolbox-archaeologist.svg' 
+		      }
+        ],
+        medias : [''],
+        transitions : 
+          [
+            { id : 'step-10', condition : 'manualStep' },
           ]
       },
 
       {
         stepId : 'step-10',
-        title : 'Boite à outil > Archéologue',
-        template : 'content',
+        title : 'Un peu d\'aide pour traduire les inscriptions',
+        template : 'video',
         medias : ['B4.mp4'],
         text : 'Monsieur l\'archéologue, pourriez-vous nous aider à traduire les inscriptions ?',
         choices : '',
@@ -872,22 +922,22 @@ module.exports =
 
       {
         stepId : 'step-11',
-        title : 'Boite à outil > Archéologue',
-        template : 'content',
+        title : 'Une nouvelle hypothèse plus fiable',
+        template : 'video',
         medias : ['B5.mp4'],
-        text : 'La compréhension de l’inscription a permis de formuler une nouvelle hypothèse plus fiable, sachant qu\'il reste des questionnements non résolus',
+        text : '',
         choices : '',
         transitions : 
           [
-            { id : 'step-12', condition : 'manualStep' }
+            { id : 'step-12', condition : 'manualStep', isBingoTransition:true, isFinalBingo: true }
           ]
       },
 
       {
         stepId : 'step-12',
         title : 'Bingo !',
-        template : 'right',
-        medias : [''],
+        template : 'cartel',
+        medias : ['amphorisque-cartel-final.svg'],
         text : '<strong>Amphorisque</strong> antique en céramique trouvée dans le Rhône. L’inscription peinte et une analyse chimique indiquent qu’elle contenait de l’asyntrophon, nom grec de la ronce de murier, ainsi que des excréments, ingrédients de la pharmacopée antique.',
         transitions : 
           [

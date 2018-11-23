@@ -1,0 +1,162 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1271" measuredH="623" mockupW="1218" mockupH="597">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::RoundButton" x="570" y="379" w="90" h="90" measuredW="32" measuredH="32" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <shape>dottedRect</shape>
+        <text>Lecteur%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::RoundButton" x="830" y="379" w="90" h="90" measuredW="32" measuredH="32" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <shape>dottedRect</shape>
+        <text>Lecteur%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::RoundButton" x="1090" y="379" w="90" h="90" measuredW="32" measuredH="32" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <shape>dottedRect</shape>
+        <text>Lecteur%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Label" x="552" y="482" w="-1" h="-1" measuredW="126" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Poser%20un%20personnage</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="837" y="482" w="-1" h="-1" measuredW="77" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Poser%20un%20lieu</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Label" x="1075" y="482" w="-1" h="-1" measuredW="120" measuredH="21" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Poser%20une%20anecdote</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::StickyNote" x="53" y="26" w="400" h="411" measuredW="109" measuredH="123" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>*Les%20Cadavre%20Exquis%20de%20Quartier*%0A%20%0A-%203%20contenus%20sonores%20sur%20des%20personnages%20%28des%20habitants%20du%20quartier%2C%20des%20enfants%29%0A-%203%20descriptions%20de%20lieu%20du%20quartier%0A-%203%20anectdotes%20%28ou%20actions%29%20racont%E9es%0A%20%0ACela%20fait%2027%20possibilit%E9s%20de%20cadavres%20exquis%203x3x3%0A%20%0A*Personnage*%0A%09Je%20suis%20...%2C%20je%20m%27appelle%20...%20j%27habite%20ici%20depuis....%20%0A%20%0A*Lieu*%0A%09Dans%20mon%20quartier%20il%20y%20a%20un%20endroit...%20%0A%20%0A*Annecdote*%0A%09L%27autre%20jour%20%E0%20cet%20endroit%20pr%E9cis%2C%20alors%20que%20....%2C%20bla%20bla%20bla%20%5C%5Bannectdote%5C%5D%0A%20%0AIl%20faut%20trouver%20des%20trames%20pour%20les%20perso/lieu/annectdote%20qui%20soient%20suffisamment%20g%E9n%E9rale%20pour%20permettre%20facilement%20les%20m%E9langes%20%281-2-3%2C%201-3-2%2C%203-2-3%2C%20....%29%2C%20tout%20en%20constituant%20un%20enchainement%20qui%20se%20tient.</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="599" y="508" w="-1" h="-1" measuredW="32" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Qui%20%3F</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="861" y="508" w="-1" h="-1" measuredW="29" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>O%F9%20%3F</text>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="1119" y="503" w="-1" h="-1" measuredW="39" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Quoi%20%3F</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="__group__" x="526" y="215" w="178" h="134" measuredW="178" measuredH="134" zOrder="4" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPadPopover" x="0" y="0" w="178" h="134" measuredW="222" measuredH="187" zOrder="0" locked="false" isInGroup="25">
+          <controlProperties>
+            <popoverArrowSide>bottom</popoverArrowSide>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="__group__" x="44" y="11" w="93" h="81" measuredW="93" measuredH="81" zOrder="1" locked="false" isInGroup="25">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::RoundButton" x="3" y="49" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="0" locked="false" isInGroup="1"/>
+            <control controlID="1" controlTypeID="com.balsamiq.mockups::RoundButton" x="61" y="32" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="1" locked="false" isInGroup="1"/>
+            <control controlID="2" controlTypeID="com.balsamiq.mockups::RoundButton" x="0" y="0" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="2" locked="false" isInGroup="1"/>
+          </groupChildrenDescriptors>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="26" controlTypeID="__group__" x="786" y="215" w="178" h="134" measuredW="178" measuredH="134" zOrder="6" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPadPopover" x="0" y="0" w="178" h="134" measuredW="222" measuredH="187" zOrder="0" locked="false" isInGroup="26">
+          <controlProperties>
+            <popoverArrowSide>bottom</popoverArrowSide>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="__group__" x="41" y="11" w="66" h="90" measuredW="66" measuredH="90" zOrder="1" locked="false" isInGroup="26">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::RoundButton" x="0" y="12" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="0" locked="false" isInGroup="1"/>
+            <control controlID="1" controlTypeID="com.balsamiq.mockups::RoundButton" x="34" y="0" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="1" locked="false" isInGroup="1"/>
+            <control controlID="2" controlTypeID="com.balsamiq.mockups::RoundButton" x="34" y="58" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="2" locked="false" isInGroup="1"/>
+          </groupChildrenDescriptors>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="31" controlTypeID="__group__" x="1046" y="215" w="178" h="134" measuredW="178" measuredH="134" zOrder="5" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="__group__" x="0" y="0" w="178" h="134" measuredW="178" measuredH="134" zOrder="0" locked="false" isInGroup="31">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::iPadPopover" x="0" y="0" w="178" h="134" measuredW="222" measuredH="187" zOrder="0" locked="false" isInGroup="0">
+              <controlProperties>
+                <popoverArrowSide>bottom</popoverArrowSide>
+              </controlProperties>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+        <control controlID="1" controlTypeID="__group__" x="45" y="10" w="84" h="91" measuredW="84" measuredH="91" zOrder="1" locked="false" isInGroup="31">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::RoundButton" x="52" y="0" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="0" locked="false" isInGroup="1"/>
+            <control controlID="1" controlTypeID="com.balsamiq.mockups::RoundButton" x="20" y="21" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="1" locked="false" isInGroup="1"/>
+            <control controlID="2" controlTypeID="com.balsamiq.mockups::RoundButton" x="0" y="59" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="2" locked="false" isInGroup="1"/>
+          </groupChildrenDescriptors>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::RoundButton" x="479" y="348" w="792" h="194" measuredW="32" measuredH="32" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <shape>roundRect</shape>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="1244" y="428" w="-1" h="-1" measuredW="21" measuredH="37" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Totem</text>
+        <textOrientation>up</textOrientation>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="1244" y="234" w="-1" h="-1" measuredW="21" measuredH="74" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Objets%20RFID</text>
+        <textOrientation>up</textOrientation>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::CallOut" x="53" y="449" w="-1" h="-1" measuredW="33" measuredH="39" zOrder="16" locked="false" isInGroup="-1"/>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="107" y="458" w="-1" h="-1" measuredW="234" measuredH="21" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>On%20pose%20un%20personnage%20sur%20le%20lecteur%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::CallOut" x="53" y="494" w="-1" h="-1" measuredW="41" measuredH="39" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="107" y="503" w="-1" h="-1" measuredW="188" measuredH="21" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>On%20pose%20un%20lieu%20sur%20le%20lecteur%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::CallOut" x="53" y="539" w="-1" h="-1" measuredW="38" measuredH="40" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>3</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="107" y="548" w="-1" h="-1" measuredW="237" measuredH="21" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>On%20pose%20une%20annecdote%20sur%20le%20lecteur%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::CallOut" x="53" y="584" w="-1" h="-1" measuredW="37" measuredH="39" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>4</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Label" x="107" y="593" w="-1" h="-1" measuredW="319" measuredH="21" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Le%20totem%20raconte%20l%27histoire%20en%20enchainant%20les%20contenus</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

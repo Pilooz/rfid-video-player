@@ -89,9 +89,47 @@ function displayTemplate(content, domId, thisStep) {
   	.attr('data-step-id', thisStep.stepId)
   	.attr('data-scenario-id', thisStep.scenarId)
   	.attr('data-template', thisStep.template);
-	
+  	
   $(domId)
   	.html(content);
+  	
+  	console.log(scenario_history);
+  	
+	$(domId).find('[data-toggle-if-scenar-in-histo]').each(function(){
+		if (scenar_histo($(this).data('toggle-if-scenar-in-histo')) == true) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
+  	
+	$(domId).find('[data-toggle-if-scenar-not-in-histo]').each(function(){
+		if (scenar_histo($(this).data('toggle-if-scenar-not-in-histo')) == true) {
+			$(this).hide();
+		} else {
+			$(this).show();
+		}
+	});
+  	
+	$(domId).find('[data-toggle-if-all-scenars-not-in-histo]').each(function(){
+		if (scenar_histo('scenario1') == true
+		 && scenar_histo('scenario2') == true
+		 && scenar_histo('scenario3') == true) {
+			$(this).hide();
+		} else {
+			$(this).show();
+		}
+	});
+  	
+	$(domId).find('[data-toggle-if-all-scenars-in-histo]').each(function(){
+		if (scenar_histo('scenario1') == true
+		 && scenar_histo('scenario2') == true
+		 && scenar_histo('scenario3') == true) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
   
   stepIsStarting();
 }
@@ -153,22 +191,24 @@ function loadStep(scenar, stepId = null){
 	  setNextButton();
 	  updateProgressBar();
 	  
+	  /*
 	  clearTimeout(setTimeoutBingoTransition);
 	  
 	  setTimeoutBingoTransition = setTimeout(function(){
 		  unsetBingoTransition();
 		}, 3000);
+		*/
 	  
-	  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
+	//  if (scenario.steps[scenario.steps.length-1].stepId == scenario.currentStep) {
 		  addScenarioHistory();
-	  }
+	//  }
   });
 }
 
 // Adding a step in the scenario history
 function addScenarioHistory() {
   scenario_history.push(scenario.scenarId);
-  // suppress dupplicates.
+  // suppress duplicates.
   scenario_history = scenario_history.filter(function(val,ind) { return scenario_history.indexOf(val) == ind; })
 }
 
@@ -269,6 +309,14 @@ function histo(stp) {
   return false;
 }
 
+// returns true if the scenario (in param) has been visited (it is in history array)
+function scenar_histo(scenarId) {
+  if ( scenario_history.indexOf(scenarId) >= 0 ) {
+    return true;
+  }
+  return false;
+}
+
 // Validation function for the current step. This allows to go to the next one
 function step_validation(choice) {
   // First, if there is no conditions to evaluate, we should have
@@ -278,10 +326,15 @@ function step_validation(choice) {
     // for non evaluable conditions, this should have only 1 transition, so take the first
     nextStep = step.transitions[0].id;
     if (step.transitions[0].isBingoTransition && step.transitions[0].isBingoTransition == true) {
-      setBingoTransition();
+      if (step.transitions[0].isFinalBingo) {
+      	setBingoTransition(true);
+      } else {
+	    	setBingoTransition();
+      }
+      
       setTimeoutBingoTransition = setTimeout(function(){
 				goToNextStep();
-      }, 1000);
+      }, 300);
     } 
     // in any other case
     else {
@@ -302,10 +355,15 @@ function step_validation(choice) {
       
       // if we have to trigger a "bingo" transition
       if (evaluableConditions[i].isBingoTransition && evaluableConditions[i].isBingoTransition == true) {
-	      setBingoTransition();
+	      if (evaluableConditions[i].isFinalBingo) {
+	      	setBingoTransition(true);
+	      } else {
+		    	setBingoTransition();
+	      }
+	      
 	      setTimeoutBingoTransition = setTimeout(function(){
 					goToNextStep();
-	      }, 1000);
+	      }, 300);
       } 
       // in any other case
       else {
@@ -317,12 +375,16 @@ function step_validation(choice) {
   }
 }
 
-function setBingoTransition() {
-	$('body').addClass('is-bingo-transition');
+function setBingoTransition(isFinal = false) {
+	if (isFinal == true) {
+		$('body').addClass('is-bingo-transition is-final-bingo');
+	} else {
+		$('body').addClass('is-bingo-transition');
+	}
 }
 
 function unsetBingoTransition() {
-	$('body').removeClass('is-bingo-transition');
+	$('body').removeClass('is-bingo-transition is-final-bingo');
 }
 
 // ------------------------------------------------------------------
@@ -344,9 +406,17 @@ $("#resetButton").on('click', function(){
 
 // Next button
 $('#nextButton').click(function() {
-  clearStepTimeout();
-  step_validation();
+	if ($('body').hasClass('is-bingo-transition')) {
+		unsetBingoTransition();
+	} else {
+	  clearStepTimeout();
+	  step_validation();
+  }
 }); 
+
+$('#bingo').on('click', function(){
+	unsetBingoTransition();
+});
 
 // Prev button
 $('#prevButton').click(function() {
@@ -356,6 +426,8 @@ $('#prevButton').click(function() {
   nav_history.pop();
   // and remove the last before the last step id (where we're on). Why? Because goToNextStep() will add it then
   nav_history.pop();
+  
+  unsetBingoTransition();
   
   goToNextStep();
 }); 

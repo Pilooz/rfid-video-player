@@ -1,15 +1,74 @@
-Dashboard
-
-<br><br>
-<div class="scenarioButtonOfDashboard" name="scenario1">Scénario Pipette</div>
-<br><br>
-<div class="scenarioButtonOfDashboard" name="scenario2">Scénario Capsule</div>
-<br><br>
-<div class="scenarioButtonOfDashboard" name="scenario3">Scénario Amphorisque</div>
 
 
-Début du jeu = Interface Clic 1 : Graphisme : visuel cliquable des 3 objets (pipette et amphorisque aux formes complétées, capsule vue de dessus, représentés par leurs ombres ? cf. ICONO exemples graphisme : cartels) + texte « Objets à toucher »<br/>
-+ Bandit manchot avec noms des 3 objets, dans une version remixée « Amphorule », « Pipisque » et « Capsette »  (ou autre mélange aléatoire)
+<div class="dashboard-item dashboard-item-1 scenarioButtonOfDashboard" name="scenario1">
+	<div data-toggle-if-scenar-in-histo="scenario1">
+		<div class="dashboard-item-image" style="background-image:url(../medias/pipette/pipette-cartel-final.svg);"></div>
+		<div class="dashboard-item-title">PIPETTE</div>
+	</div>
+	
+	<div data-toggle-if-scenar-not-in-histo="scenario1">
+		<div class="dashboard-item-image" style="background-image:url(../medias/pipette/pipette-archeo.svg);"></div>
+		<div class="dashboard-item-title">
+			<div class="casino">
+				<div class="casino-roll">
+					<div class="casino-roll-item">PIPULE</div>
+					<div class="casino-roll-item">PIPISQUE</div>
+					<div class="casino-roll-item">PIPETTE</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="dashboard-item dashboard-item-2 scenarioButtonOfDashboard" name="scenario2">
+	<div data-toggle-if-scenar-in-histo="scenario2">
+		<div class="dashboard-item-image" style="background-image:url(../medias/capsule/capsule-cartel-final.svg);"></div>
+		<div class="dashboard-item-title">CAPSULE</div>
+	</div>
+	
+	<div data-toggle-if-scenar-not-in-histo="scenario2">
+		<div class="dashboard-item-image" style="background-image:url(../medias/capsule/capsule-archeo.svg);"></div>
+		<div class="dashboard-item-title">
+			<div class="casino">
+				<div class="casino-roll">
+					<div class="casino-roll-item">CAPSULE</div>
+					<div class="casino-roll-item">CAPSISQUE</div>
+					<div class="casino-roll-item">CAPSETTE</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="dashboard-item dashboard-item-3 scenarioButtonOfDashboard" name="scenario3">
+	<div data-toggle-if-scenar-in-histo="scenario3">
+		<div class="dashboard-item-image" style="background-image:url(../medias/amphorisque/amphorisque-cartel-final.svg);"></div>
+		<div class="dashboard-item-title">AMPHORISQUE</div>
+	</div>
+	
+	<div data-toggle-if-scenar-not-in-histo="scenario3">
+		<div class="dashboard-item-image" style="background-image:url(../medias/amphorisque/amphorisque-archeo.svg);"></div>
+		<div class="dashboard-item-title">
+			<div class="casino">
+				<div class="casino-roll">
+					<div class="casino-roll-item">AMPHORULE</div>
+					<div class="casino-roll-item">AMPHORISQUE</div>
+					<div class="casino-roll-item">AMPHORETTE</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="dashboard-text" data-toggle-if-all-scenars-not-in-histo><strong>Saisissez un objet</strong>Pour l’identifier, laissez-vous guider et expérimentez la démarche scientifique</div>
+<div class="dashboard-text" data-toggle-if-all-scenars-in-histo><strong>Bingo !</strong>Retrouvez ces objets dans le musée…</div>
+
+
 
 <script type="text/javascript">
   
