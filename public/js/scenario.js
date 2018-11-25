@@ -93,7 +93,21 @@ function displayTemplate(content, domId, thisStep) {
   $(domId)
   	.html(content);
   	
-  	console.log(scenario_history);
+	$(domId).find('[data-toggle-if-step-id-in-histo]').each(function(){
+		if (histo($(this).data('toggle-if-step-id-in-histo')) == true) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
+  	
+	$(domId).find('[data-toggle-if-step-id-not-in-histo]').each(function(){
+		if (histo($(this).data('toggle-if-step-id-not-in-histo')) == true) {
+			$(this).hide();
+		} else {
+			$(this).show();
+		}
+	});
   	
 	$(domId).find('[data-toggle-if-scenar-in-histo]').each(function(){
 		if (scenar_histo($(this).data('toggle-if-scenar-in-histo')) == true) {

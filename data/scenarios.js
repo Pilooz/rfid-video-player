@@ -142,10 +142,24 @@ module.exports =
         title : '',
         template : 'dashboard',
         medias : [''],
+        templateData: {
+	        canNext: false
+        },
         text : '',
         transitions : 
           [
             { id : 'step-0.5', condition : 'manualStep' }
+          ]
+      },
+      {
+        stepId : 'step-end-1',
+        title : '',
+        template : 'credits',
+        medias : [''],
+        text : '',
+        transitions : 
+          [
+            { id : 'step-0.4', condition : 'manualStep' }
           ]
       },
       ]
@@ -319,7 +333,7 @@ module.exports =
 
       {
         stepId : 'step-1.8.4',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         medias : ['pipette-archeo-2.svg'],
         text : '<p>Pipette antique en céramique trouvé dans le Rhône à Arles</p>',
@@ -386,8 +400,8 @@ module.exports =
         medias : [''],
          transitions : 
         [
-          {id : 'step-1.9', condition : '!histo("step-1.9.3")' },
-          {id : 'step-1.10', condition : 'histo("step-1.9.3")', isBingoTransition: true },
+          {id : 'step-1.9', condition : '!histo("step-1.9.1")' },
+          {id : 'step-1.10', condition : 'histo("step-1.9.1")', isBingoTransition: true },
           /*
           {id : 'step-1.10-cruche', condition : 'choice == "Cruches"' },
           {id : 'step-1.10-dolia', condition : 'choice == "Dolia"' },
@@ -432,7 +446,7 @@ module.exports =
 */
       {
         stepId : 'step-1.10',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         medias : ['pipette-archeo-2.svg'],
         text : 'Pipette antique en céramique, trouvée dans le Rhône à Arles <span class="goal-content">et servant à prélever <span class="goal-maybe">du vin</span> depuis <span class="goal-maybe">un tonneau</span></span>',
@@ -500,7 +514,7 @@ module.exports =
 
       {
         stepId : 'step-1.12',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         templateData: {
 // 	        backgroundColor: '#E9E7EA'
@@ -574,7 +588,7 @@ module.exports =
 
       {
         stepId : 'step-5',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         text : 'Objet métallique trouvé dans le Rhône à Arles ; <span class="goal-content">la typologie indique une forme circulaire et un décor de cannelures dentelées constants, pour une taille pouvant varier.</span>',
         medias : ['capsule-archeo-2.svg'],
@@ -655,7 +669,7 @@ module.exports =
 
       {
         stepId : 'step-9',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         text : '<strong>Plat</strong> métallique circulaire à décor de cannelures dentelées, de taille pouvant varier. <span class="goal-content">Les archéologues en retrouvent fréquemment en contexte de dépotoir (cas du Rhône à Arles) ou domestique. Il permettait peut-être de présenter de petits aliments crus ou déjà cuits.</span>',
         medias : ['capsule-cartel-final.svg'],
@@ -713,7 +727,7 @@ module.exports =
 
       {
         stepId : 'step-4',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         medias : ['amphorisque-archeo.svg'],
         text : '<p><span class="goal-content">Amphorisque</span> antique<br><span class="goal-content">en céramique</span> trouvée dans le Rhône et portant une inscription peinte.</p>',
@@ -822,7 +836,7 @@ module.exports =
 
       {
         stepId : 'step-8bis',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         medias : ['amphorisque-archeo-2.svg'],
         text : 'Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span>',
@@ -935,7 +949,7 @@ module.exports =
 
       {
         stepId : 'step-12',
-        title : 'Bingo !',
+        title : '',
         template : 'cartel',
         medias : ['amphorisque-cartel-final.svg'],
         text : '<strong>Amphorisque</strong> antique en céramique trouvée dans le Rhône. L’inscription peinte et une analyse chimique indiquent qu’elle contenait de l’asyntrophon, nom grec de la ronce de murier, ainsi que des excréments, ingrédients de la pharmacopée antique.',
@@ -945,7 +959,7 @@ module.exports =
           ]
       },
 
-    ]
+      ]
     }
   ]
 }
