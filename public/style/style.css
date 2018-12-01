@@ -156,7 +156,7 @@ body[data-template="amphorisque-abc"] {
   bottom: -10px;
   left: -20px;
   border-radius: 100px 100px 100px 0;
-  background: url(../assets/images/arrow-left.svg) no-repeat top 33px left 40px white;
+  background: url(../assets/images/arrow-left.svg) no-repeat top 33px left 38px white;
   transform-origin: bottom left;
   box-shadow: 5px 0px 30px rgba(0,0,0,.25);
 }
@@ -171,7 +171,7 @@ body[data-template="amphorisque-abc"] {
   bottom: -10px;
   right: -20px;
   border-radius: 100px 100px 0 100px;
-  background: url(../assets/images/arrow-right.svg) no-repeat top 33px left 40px white;
+  background: url(../assets/images/arrow-right.svg) no-repeat top 33px left 32px white;
   transform-origin: bottom right;
   box-shadow: -5px 0px 30px rgba(0,0,0,.25);
 }

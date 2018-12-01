@@ -560,7 +560,7 @@ module.exports =
 
       {
         stepId : 'step-2',
-        title : 'Contexte',
+        title : '',
         template : 'cartel',
         text : '<p>Petit objet archéologique en métal trouvé dans le Rhône à Arles.</p>',
         medias : ['capsule-archeo.svg'],
@@ -652,7 +652,7 @@ module.exports =
         choices: [
 	        { 
 		        name: 'lab', 
-		        text : 'Effectuer une analyse en laboratoire', 
+		        text : 'Effectuer une analyse en laboratoire', 
 		        img : '../../assets/images/toolbox-lab.svg' 
 		      }
         ],
