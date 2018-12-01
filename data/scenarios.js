@@ -192,20 +192,55 @@ module.exports =
         title : '',
         template : 'cartel',
         templateData: {
-	        
+	        creditsLine: 'numéro d’inventaire AR3.3005.36'
         },
-        medias : ['pipette-archeo.svg'],
+        medias : ['pipette-archeo-dashboard.svg'],
         text : '<p>Fragment d’objet archéologique antique trouvé dans le Rhône à Arles</p>',
         transitions : 
           [
-            { id : 'step-1.1-contexte', condition : 'manualStep' }
+            { id : 'step-1.4', condition : 'manualStep' }
             // { id : 'step-1.2', condition : 'timeElapsed', duration : 10000 }
           ]
       },
 
       {
+        stepId : 'step-1.4',
+        title : 'A-t-on déjà découvert ce type d’objet ?',
+        template : 'toolbox-choices',
+        templateData: {
+	        canNext: false
+        },
+        choices: [
+	        { 
+		        name: 'library', 
+		        text : 'Consulter la bibliothèque', 
+		        img : '../../assets/images/toolbox-library.svg' 
+		      }
+        ],
+        text : '',
+        transitions : 
+        [
+          { id : 'step-1.6', condition : 'manualStep' }
+        ]
+      },
+      
+			
+
+      {
+        stepId : 'step-1.6',
+        title : '',
+        template : 'library',
+        medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
+        text : 'Les deux pipettes complètes découvertes sur l’épave Lardier 4, un navire de commerce romain',
+        transitions : 
+        [
+          {id : 'step-1.1-contexte', condition : 'manualStep' }
+        ]
+      },
+
+      {
         stepId : 'step-1.1-contexte',
-        title : 'Comment décrire cet objet ?',
+        title : 'Forme et fonction de cet objet : hypothèses',
         template : 'context',
         medias : ['pipette-archeo.svg'],
         text : '',
@@ -218,7 +253,7 @@ module.exports =
 
       {
         stepId : 'step-1.2',
-        title : 'Comment décrire cet objet ?',
+        title : 'Forme et fonction de cet objet : hypothèses',
         template : 'cards',
         cards: [
 	        {
@@ -266,54 +301,22 @@ module.exports =
         stepId : 'step-1.3',
         title : '',
         template : 'cartel',
-        medias : ['pipette-archeo.svg'],
-        text : '<p><span class="goal-content">Pipette antique en céramique</span> trouvé dans le Rhône à Arles</p>',
-        transitions : 
-        [
-          { id : 'step-1.4', condition : 'manualStep' }
-        ]
-      },
-
-      {
-        stepId : 'step-1.4',
-        title : 'Comment ça fonctionne ?',
-        template : 'toolbox-choices',
         templateData: {
-	        canNext: false
+	        creditsLine: 'numéro d’inventaire AR3.3005.36'
         },
-        choices: [
-	        { 
-		        name: 'library', 
-		        text : 'Consulter la bibliothèque', 
-		        img : '../../assets/images/toolbox-library.svg' 
-		      }
-        ],
-        text : '',
+        medias : ['pipette-archeo.svg'],
+        text : '<p><span class="goal-content">Pipette antique en céramique</span> trouvée dans le Rhône à Arles</p>',
         transitions : 
         [
-          { id : 'step-1.6', condition : 'manualStep' }
-        ]
-      },
-      
-			
-
-      {
-        stepId : 'step-1.6',
-        title : 'Bibliothèque',
-        template : 'library',
-        medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
-        text : 'Les deux pipettes complètes découvertes sur l’épave Lardier 4, un navire de commerce romain',
-        transitions : 
-        [
-          {id : 'step-1.8.2', condition : 'manualStep' }
+          { id : 'step-1.8.2', condition : 'manualStep' }
         ]
       },
 
       {
         stepId : 'step-1.8.2',
-        title : 'Comment ça fonctionne ?',
+        title : 'Pour vérifier cette hypothèse…',
         template : 'video',
-        medias : ['A2_time_lapse_pipette.mp4'],
+        medias : ['A2.mp4'],
         transitions : 
         [
           {id : 'step-1.8.3', condition : 'endMedia', duration : 3000 }
@@ -322,7 +325,7 @@ module.exports =
 
       {
         stepId : 'step-1.8.3',
-        title : 'Testons la pipette avec un verre d’eau !',
+        title : '…testons la pipette avec un verre d’eau !',
         template : 'video',
         medias : ['A3.mp4'],
         transitions : 
@@ -335,8 +338,11 @@ module.exports =
         stepId : 'step-1.8.4',
         title : '',
         template : 'cartel',
+        templateData: {
+	        creditsLine: 'numéro d’inventaire AR3.3005.36'
+        },
         medias : ['pipette-archeo-2.svg'],
-        text : '<p>Pipette antique en céramique trouvé dans le Rhône à Arles</p>',
+        text : '<p>Pipette antique en céramique trouvée dans le Rhône à Arles</p>',
         transitions : 
         [
           {id : 'step-1.9', condition : 'manualStep' }
@@ -382,19 +388,19 @@ module.exports =
         cards : [
           { 
 	          recto: { text : "Dolium", img : '../pipette/objet-dolium.svg'},
-          	verso: { text : "Pipette trop petite", img : '../pipette/objet-dolium-verso.svg'} 
+          	verso: { text : " ", img : '../pipette/objet-dolium-verso.svg'} 
           },
           { 
 	          recto: { text : "Amphore", img : '../pipette/objet-amphore.svg'},
-          	verso: { text : "Pipette pas adaptée", img : '../pipette/objet-amphore-verso.svg'} 
+          	verso: { text : " ", img : '../pipette/objet-amphore-verso.svg'} 
           },
           { 
 	          recto: { text : "Cruche", img : '../pipette/objet-cruche.svg'},
-          	verso: { text : "Pipette trop large", img : '../pipette/objet-cruche-verso.svg'} 
+          	verso: { text : " ", img : '../pipette/objet-cruche-verso.svg'} 
           },
           { 
 	          recto: { text : "Tonneau", img : '../pipette/objet-tonneau.svg'},
-          	verso: { text : "Pipette parfaite !", img : '../pipette/objet-tonneau-verso.svg'} 
+          	verso: { text : " ", img : '../pipette/objet-tonneau-verso.svg'} 
           }
         ],
         medias : [''],
@@ -448,6 +454,9 @@ module.exports =
         stepId : 'step-1.10',
         title : '',
         template : 'cartel',
+        templateData: {
+	        creditsLine: 'numéro d’inventaire AR3.3005.36'
+        },
         medias : ['pipette-archeo-2.svg'],
         text : 'Pipette antique en céramique, trouvée dans le Rhône à Arles <span class="goal-content">et servant à prélever <span class="goal-maybe">du vin</span> depuis <span class="goal-maybe">un tonneau</span></span>',
         transitions : 
@@ -517,7 +526,7 @@ module.exports =
         title : '',
         template : 'cartel',
         templateData: {
-// 	        backgroundColor: '#E9E7EA'
+	        creditsLine: 'numéro d’inventaire AR3.3005.36'
         },
         medias : ['pipette-cartel-final.svg'],
         text : '<p><strong>Pipette</strong> antique en céramique, trouvée dans le Rhône à Arles et servant à prélever du vin depuis un tonneau. <span class="goal-content">Cet objet permettrait d’attester l’usage de tonneaux à Arles dans l’Antiquité pour le commerce du vin.</span></p>',
@@ -563,7 +572,7 @@ module.exports =
 
       {
         stepId : 'step-3',
-        title : 'Comment décrire cet objet ?',
+        title : 'Réunir 4 critères de comparaison',
         template : 'context',
         text : '',
         medias : ['capsule-archeo.svg'],
@@ -643,7 +652,7 @@ module.exports =
         choices: [
 	        { 
 		        name: 'lab', 
-		        text : 'Entrer dans le laboratoire d\'analyse', 
+		        text : 'Effectuer une analyse en laboratoire', 
 		        img : '../../assets/images/toolbox-lab.svg' 
 		      }
         ],
@@ -705,7 +714,10 @@ module.exports =
         stepId : 'step-2',
         title : '',
         template : 'cartel',
-        medias : ['amphorisque-archeo.svg'],
+        templateData: {
+	        creditsLine: 'numéro d’inventaire RHO.2011.2007.78'
+        },
+        medias : ['amphorisque-archeo-dashboard.svg'],
         text : '<p>Objet archéologique antique trouvé dans le Rhône et portant une inscription peinte</p>',
         transitions : 
           [
@@ -729,6 +741,9 @@ module.exports =
         stepId : 'step-4',
         title : '',
         template : 'cartel',
+        templateData: {
+	        creditsLine: 'numéro d’inventaire RHO.2011.2007.78'
+        },
         medias : ['amphorisque-archeo.svg'],
         text : '<p><span class="goal-content">Amphorisque</span> antique<br><span class="goal-content">en céramique</span> trouvée dans le Rhône et portant une inscription peinte.</p>',
         transitions : 
@@ -739,7 +754,7 @@ module.exports =
 
         {
         stepId : 'step-5',
-        title : 'À quoi sert cet objet ?',
+        title : 'Forme et fonction de cet objet : hypothèses',
         template : 'carousel',
         text : '',
         medias : [
@@ -757,10 +772,10 @@ module.exports =
 
         {
         stepId : 'step-5bis',
-        title : 'À quoi sert cet objet : 5 hypothèses…',
+        title : 'Forme et fonction de cet objet : hypothèses',
         template : 'video',
         text : '',
-        medias : ['B2.m4v'],
+        medias : ['B2.mp4'],
        transitions : 
           [
             { id : 'step-6', condition : 'endMedia', duration : '2000' }
@@ -769,7 +784,7 @@ module.exports =
 
         {
         stepId : 'step-6',
-        title : 'À quoi sert cet objet ?',
+        title : 'Forme et fonction de cet objet : hypothèses',
         template : 'cards',
         text : '',
         cards : [
@@ -796,79 +811,15 @@ module.exports =
         ],
        transitions : 
           [
-            { id : 'step-7', condition : 'manualStep' }
-          ]
-      },
-
-      {
-        stepId : 'step-7',
-        title : 'À quoi sert l\'objet ?',
-        template : 'toolbox-choices',
-        text : '',
-        templateData: {
-	        canNext: false
-        },
-        choices: [
-	        { 
-		        name: 'archaeologist', 
-		        text : 'Interroger l\'archéologue', 
-		        img : '../../assets/images/toolbox-archaeologist.svg' 
-		      }
-        ],
-        medias : [''],
-        transitions : 
-          [
-            { id : 'step-8', condition : 'manualStep' },
-          ]
-      },
-
-      {
-        stepId : 'step-8',
-        title : 'Présence de décoctions de plantes et d\'excréments dans les analyses…',
-        template : 'video',
-        medias : ['B3.mp4'],
-        text : '',
-        transitions : 
-          [
-            { id : 'step-8bis', condition : 'manualStep', isBingoTransition:true }
-          ]
-      },
-
-      {
-        stepId : 'step-8bis',
-        title : '',
-        template : 'cartel',
-        medias : ['amphorisque-archeo-2.svg'],
-        text : 'Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span>',
-        choices : '',
-        transitions : 
-          [
-            { id : 'step-8-post', condition : 'manualStep' }
-          ]
-      },
-
-
-      {
-        stepId : 'step-8-post',
-        title : 'À quoi sert l\'objet ?',
-        template : 'carousel', // gallery
-        medias : [
-        	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
-        	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
-        	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
-        	{ img: 'objet-bouchon.svg', text: 'Bouchon d\'amphore ?' },
-        	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
-        ],
-        text : '',
-        transitions : 
-          [
             { id : 'step-9-pre', condition : 'manualStep' }
           ]
       },
+      
+      
 
       {
         stepId : 'step-9-pre',
-        title : 'Qu\'est ce qui est écrit sur l\'objet ?',
+        title : 'Qu\'est-ce qui est écrit sur cet objet ?',
         template : 'toolbox-choices',
         templateData: {
 	        canNext: false
@@ -898,10 +849,12 @@ module.exports =
             { id : 'step-9-post', condition : 'manualStep' }
           ]
       },
+      
+      
 
       {
         stepId : 'step-9-post',
-        title : 'Qu\'est ce qui est écrit sur l\'objet ?',
+        title : 'Qu\'est-ce qui est écrit sur cet objet ?',
         template : 'toolbox-choices',
         templateData: {
 	        canNext: false
@@ -925,12 +878,84 @@ module.exports =
         stepId : 'step-10',
         title : 'Un peu d\'aide pour traduire les inscriptions',
         template : 'video',
-        medias : ['B4.mp4'],
+        medias : ['B3.mp4'],
         text : 'Monsieur l\'archéologue, pourriez-vous nous aider à traduire les inscriptions ?',
         choices : '',
         transitions : 
           [
-            { id : 'step-11', condition : 'manualStep' }
+            { id : 'step-8bis', condition : 'manualStep', isBingoTransition:true }
+          ]
+      },   
+
+
+      {
+        stepId : 'step-8bis',
+        title : '',
+        template : 'cartel',
+        templateData: {
+	        creditsLine: 'numéro d’inventaire RHO.2011.2007.78'
+        },
+        medias : ['amphorisque-archeo-2.svg'],
+        text : 'Amphorisque antique en céramique trouvée dans le Rhône et portant une inscription peinte, <span class="goal-content">ayant contenu des ingrédients de la pharmacopée.</span>',
+        choices : '',
+        transitions : 
+          [
+            { id : 'step-7', condition : 'manualStep' }
+          ]
+      },
+
+
+			
+      {
+        stepId : 'step-7',
+        title : 'À quoi sert cet objet ?',
+        template : 'toolbox-choices',
+        text : '',
+        templateData: {
+	        canNext: false
+        },
+        choices: [
+	        { 
+		        name: 'archaeologist', 
+		        text : 'Interroger l\'archéologue', 
+		        img : '../../assets/images/toolbox-archaeologist.svg' 
+		      }
+        ],
+        medias : [''],
+        transitions : 
+          [
+            { id : 'step-8', condition : 'manualStep' },
+          ]
+      },
+      
+
+      {
+        stepId : 'step-8',
+        title : 'Présence de décoctions de plantes et d\'excréments dans les analyses…',
+        template : 'video',
+        medias : ['B4.mp4'],
+        text : '',
+        transitions : 
+          [
+            { id : 'step-12', condition : 'manualStep', isBingoTransition:true, isFinalBingo: true }
+          ]
+      },
+      /*
+      {
+        stepId : 'step-8-post',
+        title : 'À quoi sert l\'objet ?',
+        template : 'carousel', // gallery
+        medias : [
+        	{ img: 'objet-lampe-huile.svg', text: 'Pied à lampe à huile ?' }, 
+        	{ img: 'objet-cornet-des.svg', text: 'Cornet à dés ?' }, 
+        	{ img: 'objet-decapsuleur.svg', text: 'Décapsuleur ?' },
+        	{ img: 'objet-bouchon.svg', text: 'Bouchon d\'amphore ?' },
+        	{ img: 'objet-echantillon.svg', text: 'Échantillon ?'}
+        ],
+        text : '',
+        transitions : 
+          [
+            { id : 'step-9-pre', condition : 'manualStep' }
           ]
       },
 
@@ -946,11 +971,15 @@ module.exports =
             { id : 'step-12', condition : 'manualStep', isBingoTransition:true, isFinalBingo: true }
           ]
       },
+      */
 
       {
         stepId : 'step-12',
         title : '',
         template : 'cartel',
+        templateData: {
+	        creditsLine: 'numéro d’inventaire RHO.2011.2007.78'
+        },
         medias : ['amphorisque-cartel-final.svg'],
         text : '<strong>Amphorisque</strong> antique en céramique trouvée dans le Rhône. L’inscription peinte et une analyse chimique indiquent qu’elle contenait de l’asyntrophon, nom grec de la ronce de murier, ainsi que des excréments, ingrédients de la pharmacopée antique.',
         transitions : 

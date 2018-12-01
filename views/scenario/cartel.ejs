@@ -5,6 +5,6 @@
 	</div>
 	<div class="cartel-text">
 		<%- include('attr-text.ejs', {data: data}) %>
-		<div class="cartel-credits">Musée départemental Arles antique</div>
+		<div class="cartel-credits">Musée départemental Arles antique<% if (data.step.templateData) { if (data.step.templateData.creditsLine) { %><br><%= data.step.templateData.creditsLine %><% } } %></div>
 	</div>
 </div>

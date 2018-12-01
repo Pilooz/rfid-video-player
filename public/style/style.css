@@ -57,8 +57,8 @@ body {
   position:absolute;
   top:0;
   right:0;
-  width:50px;
-  height:50px;
+  width: 20px;
+  height: 20px;
   z-index:10000;
 }
 
@@ -114,31 +114,20 @@ body[data-template="cartel"] {
 	background: radial-gradient(#B9B1AA, #77706A);
 }
 
+body[data-template="cartel"].is-last-step-of-scenario {
+	background:#dc8c36
+}
+
+body[data-template="credits"] {
+	/* background: radial-gradient(#ce934a, #e48c2c); */
+	background: radial-gradient(#b1806b, #774d3c);
+}
+
 body[data-template^="library"],
 body[data-template="amphorisque-abc"] {
 	background: radial-gradient(#C7B0A8, #6A5B4F);
 }
 
-#goals-sidebar-image {
-	width:100%;
-	height: 150px;
-	background: white;
-}
-
-#goals-sidebar-goals {
-	display: flex;
-	background: rgba(255, 255, 255, 0.5);
-}
-
-.goals-sidebar-goal {
-	width: 100px;
-	height: 40px;
-	/* background: #dcd4d4; */
-}
-
-.goals-sidebar-goal.done {
-	background:yellow;
-}
 
 .nav-button {
   position: absolute;
@@ -278,13 +267,26 @@ body[data-template="amphorisque-abc"] {
   border-radius: 15px;
 }
 
+.is-last-step-of-scenario .cartel {
+	background:#f7ece0;
+	color: #5a3b14;
+}
+
+.is-last-step-of-scenario .goal-content {
+	color: #5a3b14;
+}
+
+.is-last-step-of-scenario .cartel-credits {
+	color: #5a3b145e;
+}
+
 .cartel-text {
   /* flex: 0 0 50%; */
   font-size: 44px;
   padding: 10px 90px 10px 40px;
   width: 70%;
   align-self: center;
-  text-shadow:0 3px 2px #d8d5d5, -2px -4px 2px #ffffff, 2px -4px 2px #eaeacd, -2px 3px 3px #ece0e0, 2px 3px 3px #bbb4b4;
+  /* text-shadow: 0 3px 2px #d8d5d5, 2px -4px 2px #eaeacd, -2px 3px 3px #ece0e0, 2px 3px 3px #bbb4b4; */
   position: relative;
 }
 
@@ -302,8 +304,8 @@ body[data-template="amphorisque-abc"] {
 	left: 40px;
 	letter-spacing: 2px;
 	font-weight: bold;
-	color: #cac7bd;
-	text-shadow: -1px -2px 0px #8c8a8500, 0px -2px 0px #8c8a8500, 1px -2px 0px #8c8a8500, -1px 2px 0px #ffffff, 0px 2px 0px #ffffff, 1px 2px 0px #ffffff;
+	color: #0000004d;
+	text-shadow: -1px -2px 0px #8c8a8500, 0px -2px 0px #8c8a8500, 1px -2px 0px #8c8a8500;
 }
 
 .cartel-image {
@@ -332,13 +334,13 @@ body[data-template="amphorisque-abc"] {
 }
 
 .goal-content {
-	color:#108DBB;
-	animation: goal-content 10000ms ease forwards;
+	font-weight:bold;
+	/*animation: goal-content 10000ms ease forwards;*/
 }
 
 @keyframes goal-content {
 	0%, 80% {
-		color:#108DBB;
+		color:#8e6666;
 /* 		text-shadow:0 3px 2px #d5d8d5, -2px -4px 2px #ffffff, 2px -4px 2px #d3dcd3, -2px 3px 3px #e1ece0, 2px 3px 3px #b5bfb6; */
 
 	}
@@ -366,8 +368,8 @@ body[data-template="amphorisque-abc"] {
 	position:absolute;
 	top:0;
 	left:0;
-	width: 80px;
-	height: 80px;
+	width: 70px;
+	height: 56px;
 	z-index: 100001;
 	background: url(../assets/images/icon-dashboard.svg) no-repeat center / 50% auto #00000000;
 	border-radius: 70px;
@@ -441,7 +443,7 @@ body[data-template="amphorisque-abc"] {
   pointer-events: none;
   line-height: 1.1;
   z-index: 998;
-  transition:all 300ms ease;
+  transition:opacity 300ms ease;
 }
 
 .is-bingo-transition #data-title {
@@ -788,7 +790,7 @@ body[data-step-id="step-1.9.3"] .module-cards-card-image {
 	margin: 110px auto 0;
 	line-height: 1.2;
 	text-align: center;
-	border: solid 4px #3e3939;
+	/* border: solid 4px #3e3939; */
 	border-radius: 20px;
 	padding: 40px;
 	background: #ffffffa1;
@@ -801,9 +803,10 @@ body[data-step-id="step-1.9.3"] .module-cards-card-image {
 	border-radius: 100px;
 	box-shadow: 0 20px 50px #cac6c078;
 	border: solid 5px #757068;
-	color: #757068;
+	color: #443c2e;
 	width: fit-content;
 	margin: 20px auto;
+	font-weight: bold;
 }
 
 
@@ -1189,6 +1192,7 @@ body[data-step-id="step-12"] .cartel-image {
 
 [data-template="dashboard"] {
 	background: radial-gradient(#C7B0A8, #6A5B4F);
+	background: radial-gradient(#b1806b, #774d3c);
 }
 
 [data-template="presentation"] {
@@ -1198,13 +1202,17 @@ body[data-step-id="step-12"] .cartel-image {
 
 [data-step-id="step-0.2"] #data-title {
 	color: white;
-	text-align: center;
 	padding-left: 40px;
 	top: auto;
-	bottom: 30px;
+	bottom: 190px;
 	text-shadow: 0 5px 10px #00000066;
 	line-height: 1.2;
+	font-size: 55px;
+	left: 0;
+	text-align: left;
 }
+
+[data-step-id="step-0.2"] #stepTemplate {/* display:none; */width: 100%;height: 100%;background: linear-gradient(to left, #00000047, #0000000a);position: absolute;top: 0;left: 0;}
 
 .onboarding-title {
   text-align: center;
@@ -1231,16 +1239,16 @@ body[data-step-id="step-12"] .cartel-image {
 }
 
 .credits-cols {
-    display: flex;
-    font-size: 20px;
-    margin: 40px 20px 0 50px;
+    /* display: flex; */
+    font-size: 18px;
+    margin: 50px 20px 0 50px;
+    color: #ffffffcc;
+    text-shadow: 0 2px 5px #71402d;
 }
 
 .credits-col1,
 .credits-col2,
-.credits-col3 {
-    /* flex: 0; */
-}
+.credits-col3 {display: inline-block;vertical-align: top;}
 
 .credits-col1 {
     /* flex: 0 0 100px; */
@@ -1248,39 +1256,59 @@ body[data-step-id="step-12"] .cartel-image {
     /* flex: none; */
     /* width: 100%; */
     /* height: 50px; */
-    word-break: break-word;
-    width: 190px;
+    /* word-break: break-word; */
+    width: 250px;
 }
 
 .credits-col2 {
-    width: 700px;
+    width: 460px;
     margin-right: 30px;
 }
 
 .credits-col2 .credits-item {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
 
-.credits-col2 strong { display:block; }
+.credits-col2 strong {/* display:block; */}
 
 .credits-col3 {
     /* margin-top: 66px; */
-    /* width: 200px; */
-    flex: 0 1 720px;
+    width: 710px;
 }
 
 .credits-cols h2 {
-    font-size: 26px;
+    font-size: 16px;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #292626;
 }
 
 .credits-cols h3 {
-    font-size: 20px;
-    margin: 30px 0 20px;
+    font-size: 18px;
+    margin: 0px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .credits-cols img {
-    max-height: 39px;
-    max-width: 170px;
-    margin: 20px 20px 0px 0;
+    max-height: 40px;
+    max-width: 220px;
+    margin: 0px 50px 30px 0;
     vertical-align: middle;
+}
+
+.credits-logos {
+	text-align: center;
+	/* width: 1000px; */
+	margin: 0px auto 0;
+	background: #f1e8e5;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 180px;
+	padding: 35px 150px;
 }
