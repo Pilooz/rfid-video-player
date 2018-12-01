@@ -170,7 +170,7 @@ module.exports =
      // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario1', // scénario de la pipette
-      rfid : ['00782B1A2D64'],
+      rfid : ['00782B1A2D64', '00782B1BF5BD'],
       title : 'Découverte d\'un nouvel objet bien curieux !',
       scenarioMediaPath : 'pipette/',
       steps : [
@@ -482,7 +482,7 @@ module.exports =
 	        	text: 'Fresque de Pompéi représentant une dégustation de vin à partir d’amphores',
 	        	backgroundSize: 'cover' },
         	{ 
-	        	img: 'moule_céramique_sigillée_Trêve.jpg', 
+	        	img: 'moule_céramique_sigillée_Trêve.jpg', 
 	        	text: 'Moule de céramique sigillée en terre cuite figurant une embarcation chargée de tonneaux, Landesmuseum de Trêve' },
         	{ 
 	        	img: 'sarcophage_ancone_detail2.jpg', 
@@ -543,7 +543,7 @@ module.exports =
     // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario2', // scénario de la capsule
-      rfid : ['00782B1A88C1'],
+      rfid : ['00782B1A88C1', '00782B19ECA6'],
       title : 'Ceci n\'est pas une capsule !',
       scenarioMediaPath : 'capsule/',
       steps : [
@@ -695,7 +695,7 @@ module.exports =
     // --------------------------------------------------------------------------------
     { 
       scenarId : 'scenario3', // scénario de l'amphorisque
-      rfid : ['00782B1A80C9'],
+      rfid : ['00782B1A80C9', '00782B1996DC'],
       title : 'Un objet bien singulier…',
       scenarioMediaPath : 'amphorisque/',
       steps : [
