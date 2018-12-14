@@ -585,7 +585,7 @@ module.exports =
 
       {
         stepId : 'step-4',
-        title : 'Comment décrire cet objet ?',
+        title : 'Réunir 4 critères de comparaison',
         template : 'matching-ihm',
         text : 'Boîte à outils > Bibliothèque',
         medias : [''],
