@@ -74,6 +74,12 @@ io.on('connection', function(socket) {
     // Specific socket for scenario_mode
     //
     if (CONFIG.app.scenario_mode) {
+      // Reset lastRFID Read and current one.
+      socket.on('client.resetRFID', function(data){
+      	lastReadData = { code: "", reader: "" };
+      	rfidData     = { code: "x", reader: "1"};
+      });
+      
       // Client is managing a scenario, let the server know what !
       socket.on('client.currentScenario', function(data){
         currentScenario = data.currentScenario;
