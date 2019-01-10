@@ -230,7 +230,7 @@ module.exports =
         stepId : 'step-1.6',
         title : '',
         template : 'library',
-        medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
+        medias : ['pipettes_epave_lardier_subaquatique.jpg'],
         text : 'Les deux pipettes complètes découvertes sur l’épave Lardier 4, un navire de commerce romain',
         transitions : 
         [
@@ -482,10 +482,10 @@ module.exports =
 	        	text: 'Fresque de Pompéi représentant une dégustation de vin à partir d’amphores',
 	        	backgroundSize: 'cover' },
         	{ 
-	        	img: 'moule_céramique_sigillée_Trêve.jpg', 
+	        	img: 'moule_céramique_sigillée_Trêve-round.jpg', 
 	        	text: 'Moule de céramique sigillée en terre cuite figurant une embarcation chargée de tonneaux, Landesmuseum de Trêve' },
         	{ 
-	        	img: 'sarcophage_ancone_detail2.jpg', 
+	        	img: 'sarcophage_ancone_detail2-round.jpg', 
 	        	text: 'Sarcophage d’Ancône représentant une vente de vin en tonneau',
 	        	backgroundSize: 'cover'
 	        }
