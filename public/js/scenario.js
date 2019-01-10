@@ -405,18 +405,18 @@ function unsetBingoTransition() {
 // button functions / UI functions
 // ------------------------------------------------------------------
 // Kevin's Reset button
-$("#resetButton").on('click', function(){
-	
-	location.reload();
-	
-	/*
-  nextStep = getFirstStep(scenario);
-  // trash navigation history
-  nav_history = new Array();
-  // Go
-  goToNextStep();
-  */
-});
+//$("#resetButton").on('click', function(){
+//	
+//	location.reload();
+//	
+//	/*
+//  nextStep = getFirstStep(scenario);
+//  // trash navigation history
+//  nav_history = new Array();
+//  // Go
+//  goToNextStep();
+//  */
+//});
 
 // Next button
 $('#nextButton').click(function() {

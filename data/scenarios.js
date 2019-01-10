@@ -230,7 +230,7 @@ module.exports =
         stepId : 'step-1.6',
         title : '',
         template : 'library',
-        medias : ['pipettes_epave_lardier_subaquatique.jpg'],
+        medias : ['pipettes_épave_Lardier_4_subaquatique.jpg'],
         text : 'Les deux pipettes complètes découvertes sur l’épave Lardier 4, un navire de commerce romain',
         transitions : 
         [

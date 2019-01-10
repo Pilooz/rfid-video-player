@@ -74,6 +74,12 @@ io.on('connection', function(socket) {
     // Specific socket for scenario_mode
     //
     if (CONFIG.app.scenario_mode) {
+      // Reset lastRFID Read and current one.
+      socket.on('client.resetRFID', function(data){
+      	lastReadData = { code: "", reader: "" };
+      	rfidData     = { code: "x", reader: "1"};
+      });
+      
       // Client is managing a scenario, let the server know what !
       socket.on('client.currentScenario', function(data){
         currentScenario = data.currentScenario;
@@ -108,8 +114,8 @@ io.on('connection', function(socket) {
 			
 			
       // THIS A TEMPORARY DEBUG STUFF TO SEND SCENARIO IMMEDIATELY
-        lastReadData.code = "";
-        sendingData();
+      //  lastReadData.code = "";
+      //  sendingData();
       // END OF SHITY DEBUG STUFF
     }
 
@@ -125,6 +131,7 @@ function sendingData() {
     
   // Emit Socket only if rfid is different of the last reading
   if (lastReadData.code != rfidData.code ) {  
+    lastReadData.code = rfidData.code;
     io.emit('server.rfidData', {tag: rfidData.code, reader: rfidData.reader});
 
     // Simulating a search time in the extra super big media database !
@@ -155,7 +162,6 @@ function sendingData() {
       }
     }, timeBeforeSendingMedia);
 
-    lastReadData.code = rfidData.code;
   }
 }
 
@@ -206,7 +212,7 @@ if (CONFIG.rfid.behavior == "real") {
     rfidData.code = rfid.extractTag(msg); 
     if (rfidData.code != "") {
       rfidData.reader = rfid.extractReader(msg);  
-      console.log("extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
+      console.log("real mode : extracted rfid code : " + rfidData.code + " on reader #" + rfidData.reader);
       // Choosing between scenario or simple media, by config
       sendingData();
     }
