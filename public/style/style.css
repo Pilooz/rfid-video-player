@@ -167,6 +167,10 @@ body[data-template="amphorisque-abc"] {
 	transform:scale(0) translateZ(0);
 }
 
+.is-last-step-of-scenario.is-final-bingo #nextButton {
+	transform:scale(1) translateZ(0);
+}
+
 #nextButton {
   bottom: -10px;
   right: -20px;

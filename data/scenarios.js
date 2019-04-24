@@ -482,10 +482,10 @@ module.exports =
 	        	text: 'Fresque de Pompéi représentant une dégustation de vin à partir d’amphores',
 	        	backgroundSize: 'cover' },
         	{ 
-	        	img: 'moule_céramique_sigillée_Trêve.jpg', 
+	        	img: 'moule_céramique_sigillée_Trêve-round.jpg', 
 	        	text: 'Moule de céramique sigillée en terre cuite figurant une embarcation chargée de tonneaux, Landesmuseum de Trêve' },
         	{ 
-	        	img: 'sarcophage_ancone_detail2.jpg', 
+	        	img: 'sarcophage_ancone_detail2-round.jpg', 
 	        	text: 'Sarcophage d’Ancône représentant une vente de vin en tonneau',
 	        	backgroundSize: 'cover'
 	        }
